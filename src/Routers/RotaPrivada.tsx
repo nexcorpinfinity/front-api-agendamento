@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Navigate, useLocation } from 'react-router-dom';
 import React, { ReactNode } from 'react';
+import { useSelector } from 'react-redux';
+import { jwtDecode } from 'jwt-decode';
 
 interface MyRouteProps {
     children: ReactNode | (() => ReactNode);
@@ -11,14 +14,27 @@ interface LocationState {
     prevPath: string;
 }
 
-const PrivateRoute: React.FC<MyRouteProps> = ({ children, isClosed = false, requiredPermission }) => {
-    // const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
-    const isLoggedIn = false;
-    // const state = useSelector((state: any) => state.auth);
-    // console.log(state);
+export interface Decoded {
+    idUser: string;
+    nomeDoUsuario: string;
+    permission: string;
+    exp: number;
+    iat: number;
+}
 
-    // const userPermission = useSelector((state: any) => state.auth.user.permission);
-    const userPermission = 'admin';
+const PrivateRoute: React.FC<MyRouteProps> = ({ children, isClosed = false, requiredPermission }) => {
+    const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
+    const token = useSelector((state: any) => state.auth.token);
+
+    if (token === null) {
+        return <Navigate to="/unauthorized" />;
+    }
+
+    const decoded: Decoded = jwtDecode(token);
+
+    console.log(decoded);
+
+    const userPermission = decoded.permission;
 
     const location = useLocation();
 

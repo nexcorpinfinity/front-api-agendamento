@@ -1,8 +1,12 @@
 import React from 'react';
 
 import { ContainerNav } from './styled';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/modules/rootReducer';
 
 const NavbarHome: React.FC = () => {
+    const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+
     return (
         <ContainerNav>
 
@@ -18,8 +22,15 @@ const NavbarHome: React.FC = () => {
             </div>
 
             <div className='auth'>
-                <a href="/criar-conta">Registre-se</a>
-                <a href="/login">Login</a>
+
+                {isLoggedIn ? (
+                    <a href="/login">Dashboard</a>
+                ) : (
+                    <>
+                        <a href="/login">Login</a>
+                        <a href="/criar-conta">Registre-se</a>
+                    </>
+                )}
             </div>
         </ContainerNav>
     );

@@ -1,5 +1,5 @@
 import React from 'react';
-import NavbarAdmin from '../../components/NavbarAdmin';
+import NavbarAdmin from '../../../components/NavbarAdmin';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -8,15 +8,12 @@ export const Container = styled.div`
     flex-direction: row;
  `;
 
-const Admin: React.FC = () => {
+const AdminConfiguration: React.FC = () => {
     return (
         <Container>
             <NavbarAdmin />
-            <div>
-                <h1>Pagina admin </h1>
-                <h1>dashboard</h1>
-            </div>
+            <h1>Pagina AdminConfiguration </h1>
         </Container>
     );
 };
-export default Admin;
+export default AdminConfiguration;

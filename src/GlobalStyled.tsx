@@ -21,6 +21,9 @@ body {
             margin-top: 4%;
         }
     }
+    .container {
+        display: flex;
+    }
 }
 
 `;
