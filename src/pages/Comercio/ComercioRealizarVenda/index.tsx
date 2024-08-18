@@ -8,14 +8,12 @@ export const Container = styled.div`
     flex-direction: row;
  `;
 
-const ComercioControleDeEstoque: React.FC = () => {
+const ComercioRealizarVenda: React.FC = () => {
     return (
         <Container>
             <NavbarComercio />
-            <h1>Pagina ComercioControleDeEstoque </h1>
-            <p>cadastro de produtos </p>
-            <p>editar protps </p>
+            <h1>Pagina ComercioRealizarVenda </h1>
         </Container>
     );
 };
-export default ComercioControleDeEstoque;
+export default ComercioRealizarVenda;

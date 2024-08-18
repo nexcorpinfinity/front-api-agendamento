@@ -8,12 +8,12 @@ export const Container = styled.div`
     flex-direction: row;
  `;
 
-const ComercioControleDeEstoque: React.FC = () => {
+const ComercioRelatorioMensal: React.FC = () => {
     return (
         <Container>
             <NavbarComercio />
-            <h1>Pagina ComercioControleDeEstoque </h1>
+            <h1>Pagina ComercioRelatorioMensal </h1>
         </Container>
     );
 };
-export default ComercioControleDeEstoque;
+export default ComercioRelatorioMensal;

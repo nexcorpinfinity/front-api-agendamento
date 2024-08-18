@@ -1,7 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-// import PrivateRoute from './RotaPrivada';
-
+import PrivateRoute from './RotaPrivada';
 import Home from '../pages/Home';
 import Error404 from '../pages/Error404';
 import Comercio from '../pages/Comercio';
@@ -10,19 +9,21 @@ import Register from '../pages/Registrer';
 import Login from '../pages/Login';
 import Contato from '../pages/Contato';
 import Planos from '../pages/Planos';
-import PrivateRoute from './RotaPrivada';
 import Admin from '../pages/Admin';
 import AdminDashboard from '../pages/Admin/AdminDashboard';
 import AdminNotifications from '../pages/Admin/AdminNotifications';
 import AdminGestaoDeComercios from '../pages/Admin/AdminGestaoDeComercios';
 import AdminGestaoDePagamentos from '../pages/Admin/AdminGestaoDePagamentos';
 import AdminGestaoDeUsuarios from '../pages/Admin/AdminGestaoDeUsuarios';
-import AdminTickets from '../pages/Admin/AdminConfiguration';
-import AdminConfiguration from '../pages/Admin/AdminTickets';
-import ComercioControleDeEstoque from '../pages/Comercio/ComercioControleDeProdutos';
-import ComercioControleDeProdutos from '../pages/Comercio/ComercioControleDeEstoque';
+import AdminConfiguration from '../pages/Admin/AdminConfiguration';
+import AdminTickets from '../pages/Admin/AdminTickets';
+import AdminPerfil from '../pages/Admin/AdminPerfil';
+import ComercioRealizarVenda from '../pages/Comercio/ComercioRealizarVenda';
 import ComercioConfiguration from '../pages/Comercio/ComercioConfiguration';
 import ComercioPerfil from '../pages/Comercio/ComercioPerfil';
+import ComercioControleDeEstoque from '../pages/Comercio/ComercioControleDeEstoque';
+import ComercioRelatorioMensal from '../pages/Comercio/ComercioRelatorioMensal';
+import ComercioCadastrarProdutos from '../pages/Comercio/ComercioCadastrarProdutos';
 import Unauthorized from '../pages/Unauthorized';
 import Redirect from '../pages/Redirect';
 
@@ -33,17 +34,8 @@ const RotasRegistradas: React.FC = () => {
             <Route path="/sobre" element={<Sobre />} />
             <Route path="/contato" element={<Contato />} />
             <Route path="/planos" element={<Planos />} />
-
             <Route path="/login" element={<Login />} />
             <Route path="/criar-conta" element={<Register />} />
-            {/* <Route
-                path="/contas"
-                element={
-                    <PrivateRoute isClosed={true}>
-                        <Error404 />
-                    </PrivateRoute>
-                }
-            /> */}
 
             <Route
                 path="/admin"
@@ -109,12 +101,36 @@ const RotasRegistradas: React.FC = () => {
                     </PrivateRoute>
                 }
             />
+            <Route
+                path="/admin/perfil"
+                element={
+                    <PrivateRoute isClosed={true} requiredPermission="admin">
+                        <AdminPerfil />
+                    </PrivateRoute>
+                }
+            />
 
             <Route
                 path="/comercio"
                 element={
                     <PrivateRoute isClosed={true} requiredPermission="costumer">
                         <Comercio />
+                    </PrivateRoute>
+                }
+            />
+            <Route
+                path="/comercio/cadastrar-produtos"
+                element={
+                    <PrivateRoute isClosed={true} requiredPermission="costumer">
+                        <ComercioCadastrarProdutos />
+                    </PrivateRoute>
+                }
+            />
+            <Route
+                path="/comercio/realizar-venda"
+                element={
+                    <PrivateRoute isClosed={true} requiredPermission="costumer">
+                        <ComercioRealizarVenda />
                     </PrivateRoute>
                 }
             />
@@ -127,10 +143,10 @@ const RotasRegistradas: React.FC = () => {
                 }
             />
             <Route
-                path="/comercio/controle-de-produtos"
+                path="/comercio/relatorios"
                 element={
                     <PrivateRoute isClosed={true} requiredPermission="costumer">
-                        <ComercioControleDeProdutos />
+                        <ComercioRelatorioMensal />
                     </PrivateRoute>
                 }
             />

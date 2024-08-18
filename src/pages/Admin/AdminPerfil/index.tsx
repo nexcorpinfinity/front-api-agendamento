@@ -8,14 +8,14 @@ export const Container = styled.div`
     flex-direction: row;
  `;
 
-const AdminTickets: React.FC = () => {
+const AdminPerfil: React.FC = () => {
     return (
         <Container>
             <NavbarAdmin />
             <div>
-                <h1>Pagina AdminTickets </h1>
+                <h1>Pagina AdminPerfil </h1>
             </div>
         </Container>
     );
 };
-export default AdminTickets;
+export default AdminPerfil;

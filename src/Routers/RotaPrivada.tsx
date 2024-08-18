@@ -32,7 +32,7 @@ const PrivateRoute: React.FC<MyRouteProps> = ({ children, isClosed = false, requ
 
     const decoded: Decoded = jwtDecode(token);
 
-    console.log(decoded);
+    // console.log(decoded);
 
     const userPermission = decoded.permission;
 
