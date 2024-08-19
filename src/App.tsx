@@ -4,7 +4,7 @@ import RotasRegistradas from './Routers/RotasRegistradas';
 
 import { BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { GlobalStyled } from './GlobalStyled';
+import { GlobalStyled } from './styles/GlobalStyled';
 
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';

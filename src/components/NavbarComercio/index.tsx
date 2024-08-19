@@ -9,10 +9,11 @@ import logo from '../../assets/5074297.png';
 import AxiosRequest from '../../services/axios/AxiosRequest';
 import { RootState } from '../../store/modules/rootReducer';
 import { toggleTheme } from '../../store/modules/theme/actions';
+import { temaGlobal } from '../../styles/theme';
 
 export const Container = styled.div<{ $active: string | boolean }>`
-    background-color: ${(props) => (props.$active ? '#4267ce' : 'white')};
-    color: ${(props) => (props.$active ? 'white' : 'black')};
+    background-color: ${(props) => (props.$active ? temaGlobal.backgroundDark : temaGlobal.backgroundLight)};
+    color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
     border: 1px solid #000;
     width: 230px;
     height: 100vh;

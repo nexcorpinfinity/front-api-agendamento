@@ -10,7 +10,6 @@ export const GlobalStyled = createGlobalStyle`
 }
 
 body {
-
     .Toastify {
         font-family: 'Roboto', sans-serif;
 

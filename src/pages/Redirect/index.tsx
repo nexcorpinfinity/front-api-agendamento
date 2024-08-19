@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { RootState } from '../../store/modules/rootReducer';
+import { temaGlobal } from '../../styles/theme';
 
 const Title = styled.h1`
     margin-top: 50px;
@@ -11,8 +12,8 @@ const Title = styled.h1`
 `;
 
 export const Container = styled.nav<{ $active: string | boolean }>`
-    background-color: ${(props) => (props.$active ? '#4267ce' : 'white')};
-    color: ${(props) => (props.$active ? 'white' : 'black')};
+    background-color: ${(props) => (props.$active ? temaGlobal.backgroundDark : temaGlobal.backgroundLight)};
+    color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
     display: flex;
     flex-direction: column;
     justify-content: center;

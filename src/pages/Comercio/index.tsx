@@ -3,12 +3,13 @@ import NavbarComercio from '../../components/NavbarComercio';
 import styled from 'styled-components';
 import { RootState } from '../../store/modules/rootReducer';
 import { useSelector } from 'react-redux';
+import { temaGlobal } from '../../styles/theme';
 
 export const Container = styled.div<{ $active: string | boolean }>`
     width: 100%;
     transition: background-color 0.3s ease, color 0.3s ease;
-    background-color: ${(props) => (props.$active ? '#4267ce' : 'white')};
-    color: ${(props) => (props.$active ? 'white' : 'black')};
+    background-color: ${(props) => (props.$active ? temaGlobal.backgroundDark : temaGlobal.backgroundLight)};
+    color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
     position: absolute;
     display: flex;
     flex-direction: row;
