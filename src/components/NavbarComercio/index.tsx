@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -11,22 +12,26 @@ import { RootState } from '../../store/modules/rootReducer';
 import { toggleTheme } from '../../store/modules/theme/actions';
 import { temaGlobal } from '../../styles/theme';
 
+import { FaHome, FaBox, FaShoppingCart, FaFileAlt, FaCog, FaUser, FaSignOutAlt } from 'react-icons/fa';
+
 export const Container = styled.div<{ $active: string | boolean }>`
     background-color: ${(props) => (props.$active ? temaGlobal.backgroundDark : temaGlobal.backgroundLight)};
     color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
     border: 1px solid #000;
-    width: 230px;
+    width: 300px;
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    transition: width 0.3s ease-in-out;
+    overflow: hidden;
 `;
 
 export const Links = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 5px;
-    gap: 5px;
+    justify-content: center;
+    gap: 7px;
 `;
 
 export const LogoSaas = styled.div`
@@ -46,61 +51,58 @@ export const LogoSaas = styled.div`
 export const Profile = styled.div`
     display: flex;
     flex-direction: row;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     gap: 10px;
     align-items: center;
-    border: 1px solid black;
     margin: 15px 0px;
     padding: 10px 0;
     border-radius: 5px;
-    .foto {
-        margin-left: 10px;
-        width: 50px;
-        height: 50px;
-        border-radius: 10px;
-        border: 1px solid black;
-    }
+
 `;
 
-const StyledLink = styled(Link) <{ $active: boolean }>`
-    transition: background-color 0.3s ease, color 0.4s ease;
-    background-color: ${(props) => (props.$active ? '#4267ce' : 'white')};
-    color: ${(props) => (props.$active ? 'white' : 'black')};
-    border: 1px solid ${(props) => (props.$active ? 'blue' : 'black')};
-    padding: 10px 20px;
+export const StyledLink = styled(Link) <{ $active: boolean }>`
+    display: flex;
+    align-items: center;
+    padding: 10px;
     border-radius: 5px;
-    font-size: 0.9rem;
-    cursor: pointer;
+    gap: 10px;
     text-decoration: none;
-    transition: background-color 0.5s ease;
+    color: #000000;
+    background-color: ${(props) => (props.$active ? '#4267ce' : 'white')};
+    border: 1px solid ${(props) => (props.$active ? 'blue' : 'black')};
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    .icon {
+        font-size: 1.2rem;
+    }
+
+    span {
+        transition: opacity 0.3s ease;
+    }
 
     &:hover {
         background-color: ${(props) => (props.$active ? 'darkblue' : '#0083bf')};
-        color: #ffffff;
+        color: #000000;
     }
-    &:focus {
-        outline: none;
-    }
-    &:active {
-        transform: scale(0.95);
+
+    &:hover span {
+        display: block;
+        color: #000000;
+
     }
 `;
-
 const NavbarComercio: React.FC = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const location = useLocation();
-
     const [comercioName, setComercioName] = useState<string | null>(null);
-
     const theme = useSelector((state: RootState) => state.theme.theme);
-
-    console.log(theme);
 
     useEffect(() => {
         async function loadComercio() {
             try {
                 const response = await AxiosRequest.get('/commerce/usuario');
-                console.log(response.data);
                 const comercioData = Array.isArray(response.data)
                     ? response.data.map((item) => ({
                         id: item.id,
@@ -113,9 +115,7 @@ const NavbarComercio: React.FC = () => {
                         },
                     ];
                 setComercioName(comercioData[0]?.nomeDoComercio || 'Nome não disponível');
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } catch (error: any) {
-                console.log(error);
                 if (error.response && error.response.status === 403) {
                     dispatch(actions.loginFailure({ error: 'Unauthorized' }));
                     navigate('/login');
@@ -144,22 +144,26 @@ const NavbarComercio: React.FC = () => {
                 <LogoSaas>
                     <a href="/"><img src={logo} alt="logo" /></a>
                 </LogoSaas>
-                <Profile>
+                <Profile className='perfil'>
                     <div className='foto'></div>
                     <h4>{comercioName}</h4>
                 </Profile>
                 <br />
                 <StyledLink to="/comercio" $active={location.pathname === '/comercio'}>
-                    Dashboard
+                    <FaHome className="icon" />
+                    <span>Dashboard</span>
                 </StyledLink>
                 <StyledLink to="/comercio/controle-de-estoque" $active={location.pathname === '/comercio/controle-de-estoque'}>
-                    Estoque
+                    <FaBox className="icon" />
+                    <span>Estoque</span>
                 </StyledLink>
                 <StyledLink to="/comercio/realizar-venda" $active={location.pathname === '/comercio/realizar-venda'}>
-                    Realizar venda
+                    <FaShoppingCart className="icon" />
+                    <span>Realizar Venda</span>
                 </StyledLink>
                 <StyledLink to="/comercio/relatorios" $active={location.pathname === '/comercio/relatorios'}>
-                    Relatorio Mensal
+                    <FaFileAlt className="icon" />
+                    <span>Relatórios</span>
                 </StyledLink>
             </Links>
 
@@ -172,13 +176,16 @@ const NavbarComercio: React.FC = () => {
                     </label>
                 </div>
                 <StyledLink to="/comercio/configuracao" $active={location.pathname === '/comercio/configuracao'}>
-                    Configurações
+                    <FaCog className="icon" />
+                    <span>Configurações</span>
                 </StyledLink>
                 <StyledLink to="/comercio/perfil" $active={location.pathname === '/comercio/perfil'}>
-                    Perfil
+                    <FaUser className="icon" />
+                    <span>Perfil</span>
                 </StyledLink>
                 <StyledLink to="/comercio/perfil" onClick={handleLogout} $active={false}>
-                    Sair
+                    <FaSignOutAlt className="icon" />
+                    <span>Sair</span>
                 </StyledLink>
             </Links>
         </Container>
