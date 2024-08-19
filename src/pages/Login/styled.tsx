@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const Container = styled.nav<{ $active: string | boolean }>`
+    background-color: ${(props) => (props.$active ? '#4267ce' : 'white')};
+    color: ${(props) => (props.$active ? 'white' : 'black')};
     width: 1440px;
     margin: 0 auto;
     display: flex;

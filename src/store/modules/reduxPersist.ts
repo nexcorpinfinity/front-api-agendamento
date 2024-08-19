@@ -16,6 +16,8 @@ interface AuthState {
 
 interface RootState {
     auth: AuthState;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    theme: any;
 }
 
 type PersistedState = {
@@ -28,7 +30,7 @@ type PersistedState = {
 const persistConfig: PersistConfig<RootState> = {
     key: 'token-saas',
     storage,
-    whitelist: ['auth'],
+    whitelist: ['auth', 'theme'],
 };
 
 const createPersistedReducer = (reducers: Reducer<RootState>): Reducer<PersistedState> => {

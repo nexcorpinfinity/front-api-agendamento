@@ -9,8 +9,12 @@ import * as actions from '../../store/modules/auth/actions';
 import logo from '../../assets/5074297.png';
 import { Decoded } from '../../Routers/RotaPrivada';
 import { jwtDecode } from 'jwt-decode';
+import { RootState } from '../../store/modules/rootReducer';
+import { toggleTheme } from '../../store/modules/theme/actions';
 
-export const Container = styled.div`
+export const Container = styled.div<{ $active: string | boolean }>`
+    background-color: ${(props) => (props.$active ? '#4267ce' : 'white')};
+    color: ${(props) => (props.$active ? 'white' : 'black')};
     border: 1px solid #000;
     width: 230px;
     height: 100vh;
@@ -107,9 +111,13 @@ const NavbarAdmin: React.FC = () => {
     useEffect(() => {
 
     }, []);
+    const theme = useSelector((state: RootState) => state.theme.theme);
 
+    const handleToggleTheme = () => {
+        dispatch(toggleTheme());
+    };
     return (
-        <Container>
+        <Container $active={theme}>
 
             <Links>
                 <LogoSaas>
@@ -164,10 +172,13 @@ const NavbarAdmin: React.FC = () => {
                     <p>
                         Modo Dark
                     </p>
-                    <label className="switch">
-                        <input type="checkbox" />
-                        <span className="slider round"></span>
-                    </label>
+                    <div>
+                        <p>Modo {theme === true ? 'escuro ativo' : 'escuro desativado' }</p>
+                        <label className="switch">
+                            <input type="checkbox" checked={theme === true} onChange={handleToggleTheme} />
+                            <span className="slider round"></span>
+                        </label>
+                    </div>
                 </div>
                 <StyledLink
                     to="/admin/configuracao"

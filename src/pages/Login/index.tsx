@@ -64,10 +64,12 @@ const Login: React.FC = () => {
 
     }, [isLoggedIn, user, navigate]);
 
+    const theme = useSelector((state: RootState) => state.theme.theme);
+
     return (
         <>
             <NavbarHome />
-            <Container>
+            <Container $active={theme}>
                 <Loading isLoading={isLoading} />
                 <div>
 

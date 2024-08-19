@@ -2,14 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { AppDispatch } from '../../store';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import * as actions from '../../store/modules/auth/actions';
 import logo from '../../assets/5074297.png';
-
 import AxiosRequest from '../../services/axios/AxiosRequest';
+import { RootState } from '../../store/modules/rootReducer';
+import { toggleTheme } from '../../store/modules/theme/actions';
 
-export const Container = styled.div`
+export const Container = styled.div<{ $active: string | boolean }>`
+    background-color: ${(props) => (props.$active ? '#4267ce' : 'white')};
+    color: ${(props) => (props.$active ? 'white' : 'black')};
     border: 1px solid #000;
     width: 230px;
     height: 100vh;
@@ -23,7 +26,6 @@ export const Links = styled.div`
     flex-direction: column;
     padding: 5px;
     gap: 5px;
-
 `;
 
 export const LogoSaas = styled.div`
@@ -55,12 +57,11 @@ export const Profile = styled.div`
         height: 50px;
         border-radius: 10px;
         border: 1px solid black;
-
     }
-
 `;
 
 const StyledLink = styled(Link) <{ $active: boolean }>`
+    transition: background-color 0.3s ease, color 0.4s ease;
     background-color: ${(props) => (props.$active ? '#4267ce' : 'white')};
     color: ${(props) => (props.$active ? 'white' : 'black')};
     border: 1px solid ${(props) => (props.$active ? 'blue' : 'black')};
@@ -84,38 +85,21 @@ const StyledLink = styled(Link) <{ $active: boolean }>`
 `;
 
 const NavbarComercio: React.FC = () => {
-
-    // const token = useSelector((state: any) => state.auth.token);
-
-    // if (token === null) {
-    //     return <Navigate to="/unauthorized" />;
-    // }
-
-    // const decoded: Decoded = jwtDecode(token);
-
-    // console.log(decoded.idUser);
-
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const location = useLocation();
 
     const [comercioName, setComercioName] = useState<string | null>(null);
 
-    const handleLogout = (e: { preventDefault: () => void }) => {
-        e.preventDefault();
-        dispatch(actions.loginFailure({ error: 'Unauthorized' }));
-        navigate('/');
-        toast.info('Você fez Logout no Sistema', { theme: 'colored' });
-    };
+    const theme = useSelector((state: RootState) => state.theme.theme);
+
+    console.log(theme);
 
     useEffect(() => {
         async function loadComercio() {
-            // setComercioName(decoded.nomeDoUsuario);
             try {
-                const response = await AxiosRequest.get(
-                    '/commerce/usuario'
-                );
-
+                const response = await AxiosRequest.get('/commerce/usuario');
+                console.log(response.data);
                 const comercioData = Array.isArray(response.data)
                     ? response.data.map((item) => ({
                         id: item.id,
@@ -128,7 +112,7 @@ const NavbarComercio: React.FC = () => {
                         },
                     ];
                 setComercioName(comercioData[0]?.nomeDoComercio || 'Nome não disponível');
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } catch (error: any) {
                 console.log(error);
                 if (error.response && error.response.status === 403) {
@@ -137,93 +121,67 @@ const NavbarComercio: React.FC = () => {
                 }
                 toast.error('Erro ao carregar o comércio', { theme: 'colored' });
             }
-
         }
 
         loadComercio();
-    }, []);
+    }, [dispatch, navigate]);
+
+    const handleLogout = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        e.preventDefault();
+        dispatch(actions.loginFailure({ error: 'Unauthorized' }));
+        navigate('/');
+        toast.info('Você fez Logout no Sistema', { theme: 'colored' });
+    };
+
+    const handleToggleTheme = () => {
+        dispatch(toggleTheme());
+    };
 
     return (
-        <Container>
+        <Container $active={theme}>
             <Links>
                 <LogoSaas>
                     <a href="/"><img src={logo} alt="logo" /></a>
                 </LogoSaas>
-
                 <Profile>
                     <div className='foto'></div>
                     <h4>{comercioName}</h4>
                 </Profile>
                 <br />
-                <StyledLink
-                    to="/comercio"
-                    $active={location.pathname === '/comercio'}
-                >
+                <StyledLink to="/comercio" $active={location.pathname === '/comercio'}>
                     Dashboard
                 </StyledLink>
-                <StyledLink
-                    to="/comercio/cadastrar-produtos"
-                    $active={location.pathname === '/comercio/cadastrar-produtos'}
-                >
-                    Cadastrar Produto
-                </StyledLink>
-                <StyledLink
-                    to="/comercio/controle-de-estoque"
-                    $active={location.pathname === '/comercio/controle-de-estoque'}
-                >
+                <StyledLink to="/comercio/controle-de-estoque" $active={location.pathname === '/comercio/controle-de-estoque'}>
                     Estoque
                 </StyledLink>
-                <StyledLink
-                    to="/comercio/realizar-venda"
-                    $active={location.pathname === '/comercio/realizar-venda'}
-                >
+                <StyledLink to="/comercio/realizar-venda" $active={location.pathname === '/comercio/realizar-venda'}>
                     Realizar venda
                 </StyledLink>
-                <StyledLink
-                    to="/comercio/relatorios"
-                    $active={location.pathname === '/comercio/relatorios'}
-                >
+                <StyledLink to="/comercio/relatorios" $active={location.pathname === '/comercio/relatorios'}>
                     Relatorio Mensal
                 </StyledLink>
-                {/* <a href="/comercio/controle-de-produtos">Controle de produtos</a> */}
-                {/* Entradas de produtos seria a venda realizada, teria q ter a qnt de venda e qnt de valor em R$ */}
-                {/* saida de faturamento, seria despesas mensais que vc vai poder cadastrar */}
-                {/* <a href="/comercio/relatorios">Entrada </a> */}
-                {/* <a href="/comercio/notifications">Pedidos Online</a> */}
-                {/* <a href="/comercio/gestao-comercio">Pedidos Historico</a> */}
-                {/* <a href="/comercio/gestao-ticket">Clientes</a> */}
             </Links>
+
             <Links>
                 <div>
-                    <p>
-                        Modo Dark
-                    </p>
+                    <p>Modo {theme === true ? 'escuro ativo' : 'escuro desativado' }</p>
                     <label className="switch">
-                        <input type="checkbox" />
+                        <input type="checkbox" checked={theme === true} onChange={handleToggleTheme} />
                         <span className="slider round"></span>
                     </label>
                 </div>
-                <StyledLink
-                    to="/comercio/configuracao"
-                    $active={location.pathname === '/comercio/configuracao'}
-                >
+                <StyledLink to="/comercio/configuracao" $active={location.pathname === '/comercio/configuracao'}>
                     Configurações
                 </StyledLink>
-                <StyledLink
-                    to="/comercio/perfil"
-                    $active={location.pathname === '/comercio/perfil'}
-                >
+                <StyledLink to="/comercio/perfil" $active={location.pathname === '/comercio/perfil'}>
                     Perfil
                 </StyledLink>
-                <StyledLink
-                    to="/comercio/perfil"
-                    onClick={handleLogout}
-                    $active={false}
-                >
+                <StyledLink to="/comercio/perfil" onClick={handleLogout} $active={false}>
                     Sair
                 </StyledLink>
             </Links>
         </Container>
     );
 };
+
 export default NavbarComercio;

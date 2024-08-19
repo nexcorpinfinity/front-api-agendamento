@@ -23,7 +23,6 @@ import ComercioConfiguration from '../pages/Comercio/ComercioConfiguration';
 import ComercioPerfil from '../pages/Comercio/ComercioPerfil';
 import ComercioControleDeEstoque from '../pages/Comercio/ComercioControleDeEstoque';
 import ComercioRelatorioMensal from '../pages/Comercio/ComercioRelatorioMensal';
-import ComercioCadastrarProdutos from '../pages/Comercio/ComercioCadastrarProdutos';
 import Unauthorized from '../pages/Unauthorized';
 import Redirect from '../pages/Redirect';
 
@@ -115,14 +114,6 @@ const RotasRegistradas: React.FC = () => {
                 element={
                     <PrivateRoute isClosed={true} requiredPermission="costumer">
                         <Comercio />
-                    </PrivateRoute>
-                }
-            />
-            <Route
-                path="/comercio/cadastrar-produtos"
-                element={
-                    <PrivateRoute isClosed={true} requiredPermission="costumer">
-                        <ComercioCadastrarProdutos />
                     </PrivateRoute>
                 }
             />

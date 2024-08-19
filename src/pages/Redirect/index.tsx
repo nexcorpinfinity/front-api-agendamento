@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { RootState } from '../../store/modules/rootReducer';
 
 const Title = styled.h1`
     margin-top: 50px;
@@ -8,7 +10,9 @@ const Title = styled.h1`
     text-align: center;
 `;
 
-const Container = styled.div`
+export const Container = styled.nav<{ $active: string | boolean }>`
+    background-color: ${(props) => (props.$active ? '#4267ce' : 'white')};
+    color: ${(props) => (props.$active ? 'white' : 'black')};
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -26,6 +30,7 @@ const Container = styled.div`
 const Redirect: React.FC = () => {
     const [time, setTime] = useState<number>(3);
     const navigate = useNavigate();
+    const theme = useSelector((state: RootState) => state.theme.theme);
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -42,7 +47,7 @@ const Redirect: React.FC = () => {
     }, [time, navigate]);
 
     return (
-        <Container>
+        <Container $active={theme}>
             <Title>
                 Você não está logado! <br /> Será redirecionado em: {time}
             </Title>

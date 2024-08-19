@@ -11,9 +11,7 @@ import { Provider } from 'react-redux';
 import store, { persistor } from './store';
 
 const App: React.FC = () => {
-
     return (
-
         <Provider store={store}>
             <PersistGate persistor={persistor}>
                 <BrowserRouter>
@@ -21,7 +19,6 @@ const App: React.FC = () => {
                     <ToastContainer autoClose={3000} className={'toast-container'} />
                     <GlobalStyled />
                 </BrowserRouter>
-
             </PersistGate>
         </Provider>
     );

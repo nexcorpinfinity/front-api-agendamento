@@ -10,8 +10,6 @@ export const GlobalStyled = createGlobalStyle`
 }
 
 body {
-    /* background-color: rgb(26, 36, 46); */
-    font-family: "Poppins", sans-serif;
 
     .Toastify {
         font-family: 'Roboto', sans-serif;
@@ -20,9 +18,6 @@ body {
             width: auto;
             margin-top: 4%;
         }
-    }
-    .container {
-        display: flex;
     }
 }
 
