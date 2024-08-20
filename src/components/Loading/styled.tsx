@@ -8,10 +8,11 @@ export const Container = styled.div`
     top: 0;
     left: 0;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     font-size: 3rem;
-    color: #fff;
+    color: #ffffff;
     font-weight: bold;
     font-family: 'ValorantFont', sans-serif;
 
@@ -23,6 +24,8 @@ export const Container = styled.div`
         background-color: #05050571;
     }
     span {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
         z-index: 2;
     }
 `;

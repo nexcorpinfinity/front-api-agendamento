@@ -4,6 +4,7 @@ import AxiosRequest from '../../../services/axios/AxiosRequest';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/modules/rootReducer';
 import { temaGlobal } from '../../../styles/theme';
+import Loading from '../../../components/Loading';
 
 export const Container = styled.div<{ $active: string | boolean }>`
     width: 100%;
@@ -200,6 +201,8 @@ interface IEstoque {
 }
 
 const ComercioControleDeEstoque: React.FC = () => {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
     const [estoque, setEstoque] = useState<IEstoque[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [itemsPerPage] = useState<number>(8);
@@ -211,8 +214,10 @@ const ComercioControleDeEstoque: React.FC = () => {
 
     useEffect(() => {
         async function fetchProducts() {
+            setIsLoading(true);
             const response = await AxiosRequest.get('/commerce/meus-produtos-cadastrados');
             setEstoque(response.data.todosProdutos);
+            setIsLoading(false);
         }
         fetchProducts();
     }, []);
@@ -242,12 +247,12 @@ const ComercioControleDeEstoque: React.FC = () => {
 
     return (
         <Container $active={theme}>
-
+            <Loading isLoading={isLoading} />
             <Main>
                 <div>
                     <h3>Estoque</h3>
                 </div>
-
+                <h4>pegar o preço base, e colocar uma % </h4>
                 <ContainerProdutos>
                     <div>
                         <div>

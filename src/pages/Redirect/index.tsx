@@ -20,6 +20,11 @@ export const Container = styled.nav<{ $active: string | boolean }>`
     align-items: center;
     margin-top: 150px;
     border: 1px solid #ccc;
+    width: 100%;
+    height: 96vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+
     img {
         width: 500px;
         height: 500px;
@@ -34,6 +39,8 @@ const Redirect: React.FC = () => {
     const theme = useSelector((state: RootState) => state.theme.theme);
 
     useEffect(() => {
+        document.title = 'Redirect';
+
         const timer = setInterval(() => {
             setTime((prevTime) => prevTime - 1);
         }, 1000);

@@ -35,7 +35,7 @@ export default App;
 const Navbar: React.FC = () => {
     const token = useSelector((state: any) => state.auth.token);
 
-    if(token === null){
+    if (token === null) {
         return (
             <>
                 <NavbarHome />

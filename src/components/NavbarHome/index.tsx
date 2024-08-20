@@ -43,7 +43,6 @@ const NavbarHome: React.FC = () => {
                 ) : (
                     <>
                         <a href="/login">Login</a>
-                        <a href="/criar-conta">Registre-se</a>
                     </>
                 )}
             </div>

@@ -13,6 +13,7 @@ import { toggleTheme } from '../../store/modules/theme/actions';
 import { temaGlobal } from '../../styles/theme';
 
 import { FaHome, FaBox, FaShoppingCart, FaFileAlt, FaCog, FaUser, FaSignOutAlt } from 'react-icons/fa';
+import ButtonDarkTheme from '../ButtonDarkTheme';
 
 export const Container = styled.div<{ $active: string | boolean }>`
     background-color: ${(props) => (props.$active ? temaGlobal.backgroundDark : temaGlobal.backgroundLight)};
@@ -25,6 +26,7 @@ export const Container = styled.div<{ $active: string | boolean }>`
     justify-content: space-between;
     transition: width 0.3s ease-in-out;
     overflow: hidden;
+    padding: 10px;
 `;
 
 export const Links = styled.div`
@@ -60,7 +62,7 @@ export const Profile = styled.div`
 
 `;
 
-export const StyledLink = styled(Link) <{ $active: boolean }>`
+export const StyledLink = styled(Link) <{ $active?: boolean }>`
     display: flex;
     align-items: center;
     padding: 10px;
@@ -142,7 +144,7 @@ const NavbarComercio: React.FC = () => {
         <Container $active={theme}>
             <Links>
                 <LogoSaas>
-                    <a href="/"><img src={logo} alt="logo" /></a>
+                    <img src={logo} alt="logo" />
                 </LogoSaas>
                 <Profile className='perfil'>
                     <div className='foto'></div>
@@ -165,16 +167,16 @@ const NavbarComercio: React.FC = () => {
                     <FaFileAlt className="icon" />
                     <span>Relatórios</span>
                 </StyledLink>
+                <StyledLink to="/comercio/relatorios" $active={location.pathname === '/comercio/relatorios'}>
+                    <FaFileAlt className="icon" />
+                    <span>Relatórios</span>
+                </StyledLink>
             </Links>
 
             <Links>
-                <div>
-                    <p>Modo {theme === true ? 'escuro ativo' : 'escuro desativado' }</p>
-                    <label className="switch">
-                        <input type="checkbox" checked={theme === true} onChange={handleToggleTheme} />
-                        <span className="slider round"></span>
-                    </label>
-                </div>
+
+                <ButtonDarkTheme theme={theme === true} handleToggleTheme={handleToggleTheme}/>
+
                 <StyledLink to="/comercio/configuracao" $active={location.pathname === '/comercio/configuracao'}>
                     <FaCog className="icon" />
                     <span>Configurações</span>

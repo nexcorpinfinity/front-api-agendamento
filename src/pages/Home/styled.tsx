@@ -7,4 +7,7 @@ export const Container = styled.nav<{ $active: string | boolean }>`
     border: 1px solid black;
     margin: 0 auto;
     width: 100%;
+    height: 96vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
 `;

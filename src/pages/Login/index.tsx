@@ -1,6 +1,6 @@
 import React, { useState, useEffect, FormEvent } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Container } from './styled';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Container, FormLogin } from './styled';
 import { get } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../store/modules/auth/actions';
@@ -10,6 +10,8 @@ import Loading from '../../components/Loading';
 
 import { Decoded } from '../../Routers/RotaPrivada';
 import { jwtDecode } from 'jwt-decode';
+import { MdAlternateEmail } from 'react-icons/md';
+import { HiOutlineLockClosed } from 'react-icons/hi';
 
 const Login: React.FC = () => {
     const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
@@ -46,6 +48,9 @@ const Login: React.FC = () => {
 
     useEffect(() => {
         // se o usuario estiverr logado, redireciona para a home
+
+        document.title = 'Login';
+
         if (user) {
             const decoded: Decoded = jwtDecode(user);
             const permission = decoded.permission;
@@ -69,27 +74,31 @@ const Login: React.FC = () => {
         <>
             <Container $active={theme}>
                 <Loading isLoading={isLoading} />
-                <div>
 
-                    <form onSubmit={handleSubmit}>
-                        <h1>faça login </h1>
-                        <input
-                            type="text"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Digite seu email"
-                        />
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="Digite a sua Senha"
-                        />
-                        <a href="#">Esqueceu a senha?</a>
-                        <button>Entrar</button>
-                    </form>
+                <FormLogin className="form" onSubmit={handleSubmit}>
+                    <h1 className='fazer-login'>Faça login </h1>
+                    <div className="flex-column">
+                        <label>Email </label>
+                    </div>
+                    <div className="inputForm">
+                        <MdAlternateEmail color='black' size={22} />
+                        <input type="text" className="input" placeholder="Digite seu Email" value={email}
+                            onChange={(e) => setEmail(e.target.value)} autoComplete='email'/>
+                    </div>
 
-                </div>
+                    <div className="flex-column">
+                        <label>Senha</label>
+                    </div>
+                    <div className="inputForm">
+                        <HiOutlineLockClosed color='black' size={22} />
+                        <input type="password" className="input" placeholder="Digite Sua senha"  value={password}
+                            onChange={(e) => setPassword(e.target.value)} />
+                    </div>
+                    <button className="button-submit">Entrar</button>
+                    <a href="#">Esqueceu a senha?</a>
+                    <p className="p">Não possui conta ?<Link to={'/criar-conta'}><span className="span">Criar Conta</span></Link></p>
+
+                </FormLogin>
             </Container>
         </>
     );
