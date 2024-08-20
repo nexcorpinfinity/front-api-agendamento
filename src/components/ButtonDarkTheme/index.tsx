@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { temaGlobal } from '../../styles/theme';
 interface ButtonDarkThemeProps {
-    theme: boolean;
+    theme: boolean | string;
     handleToggleTheme: () => void;
 }
 

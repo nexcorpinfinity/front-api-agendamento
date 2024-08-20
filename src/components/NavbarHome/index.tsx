@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/modules/rootReducer';
 import { AppDispatch } from '../../store';
 import { toggleTheme } from '../../store/modules/theme/actions';
+import ButtonDarkTheme from '../ButtonDarkTheme';
 
 const NavbarHome: React.FC = () => {
     const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
@@ -29,13 +30,8 @@ const NavbarHome: React.FC = () => {
                 <a href="/contato">Contato</a>
             </div>
 
-            <div>
-                <p>Modo {theme === true ? 'escuro ativo' : 'escuro desativado' }</p>
-                <label className="switch">
-                    <input type="checkbox" checked={theme === true} onChange={handleToggleTheme} />
-                    <span className="slider round"></span>
-                </label>
-            </div>
+            <div><ButtonDarkTheme theme={theme} handleToggleTheme={handleToggleTheme} /></div>
+
             <div className='auth'>
 
                 {isLoggedIn ? (

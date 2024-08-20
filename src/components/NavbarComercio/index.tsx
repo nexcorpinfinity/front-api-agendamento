@@ -12,13 +12,13 @@ import { RootState } from '../../store/modules/rootReducer';
 import { toggleTheme } from '../../store/modules/theme/actions';
 import { temaGlobal } from '../../styles/theme';
 
-import { FaHome, FaBox, FaShoppingCart, FaFileAlt, FaCog, FaUser, FaSignOutAlt } from 'react-icons/fa';
+import { FaHome, FaBox, FaShoppingCart, FaFileAlt, FaCog, FaSignOutAlt } from 'react-icons/fa';
 import ButtonDarkTheme from '../ButtonDarkTheme';
 
 export const Container = styled.div<{ $active: string | boolean }>`
     background-color: ${(props) => (props.$active ? temaGlobal.backgroundDark : temaGlobal.backgroundLight)};
     color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
-    border: 1px solid #000;
+    border-right: 1px solid ${(props) => (props.$active ? temaGlobal.bordaNavbarDark : temaGlobal.bordaNavbarLight)};
     width: 300px;
     height: 100vh;
     display: flex;
@@ -44,6 +44,7 @@ export const LogoSaas = styled.div`
         text-decoration: none;
         color: black;
         border: none;
+
     }
     img {
         width: 100px;
@@ -52,7 +53,7 @@ export const LogoSaas = styled.div`
 
 export const Profile = styled.div`
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     gap: 10px;
     align-items: center;
@@ -93,6 +94,9 @@ export const StyledLink = styled(Link) <{ $active?: boolean }>`
         color: #000000;
 
     }
+    &:active {
+            transform: scale(0.98);
+        }
 `;
 const NavbarComercio: React.FC = () => {
     const navigate = useNavigate();
@@ -147,8 +151,14 @@ const NavbarComercio: React.FC = () => {
                     <img src={logo} alt="logo" />
                 </LogoSaas>
                 <Profile className='perfil'>
-                    <div className='foto'></div>
-                    <h4>{comercioName}</h4>
+                    <div>
+                        <div className='foto'></div>
+                        <h4>{comercioName}</h4>
+                    </div>
+                    <div>
+                        <p>Assinatura Ativa</p>
+                    </div>
+                    <Link to={'/comercio/perfil'}>Ver Perfil</Link>
                 </Profile>
                 <br />
                 <StyledLink to="/comercio" $active={location.pathname === '/comercio'}>
@@ -167,23 +177,19 @@ const NavbarComercio: React.FC = () => {
                     <FaFileAlt className="icon" />
                     <span>Relatórios</span>
                 </StyledLink>
-                <StyledLink to="/comercio/relatorios" $active={location.pathname === '/comercio/relatorios'}>
+                <StyledLink to="/comercio/tickets" $active={location.pathname === '/comercio/tickets'}>
                     <FaFileAlt className="icon" />
-                    <span>Relatórios</span>
+                    <span>Ticket</span>
                 </StyledLink>
             </Links>
 
             <Links>
 
-                <ButtonDarkTheme theme={theme === true} handleToggleTheme={handleToggleTheme}/>
+                <ButtonDarkTheme theme={theme === true} handleToggleTheme={handleToggleTheme} />
 
                 <StyledLink to="/comercio/configuracao" $active={location.pathname === '/comercio/configuracao'}>
                     <FaCog className="icon" />
                     <span>Configurações</span>
-                </StyledLink>
-                <StyledLink to="/comercio/perfil" $active={location.pathname === '/comercio/perfil'}>
-                    <FaUser className="icon" />
-                    <span>Perfil</span>
                 </StyledLink>
                 <StyledLink to="/comercio/perfil" onClick={handleLogout} $active={false}>
                     <FaSignOutAlt className="icon" />

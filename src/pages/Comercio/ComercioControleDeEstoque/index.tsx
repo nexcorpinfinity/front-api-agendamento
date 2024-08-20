@@ -13,16 +13,17 @@ export const Container = styled.div<{ $active: string | boolean }>`
     color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
     display: flex;
     flex-direction: row;
+    padding: 1.5rem 2rem;
 `;
 
 export const Main = styled.div`
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
-    border: 1px solid black;
+    /* border: 1px solid black; */
 `;
 
 export const ContainerProdutos = styled.div`
-    border: 1px solid black;
+    /* border: 1px solid black; */
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -42,7 +43,7 @@ export const Produto = styled.div`
 `;
 
 export const ProdutoFlag = styled.div`
-    border: 1px solid #00000047;
+    /* border: 1px solid #00000047; */
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -82,8 +83,7 @@ export const ProdutoButtons = styled.div`
 export const Pagination = styled.div`
     display: flex;
     justify-content: center;
-    margin-top: 20px;
-    padding-bottom: 10px;
+    margin-top: 10px;
     button {
         padding: 10px 20px;
         margin: 0 5px;
@@ -98,6 +98,9 @@ export const Pagination = styled.div`
     button:hover {
         background-color: #0056b3;
     }
+    button:active {
+        transform: scale(0.98);
+    }
 
     button:disabled {
         background-color: #ccc;
@@ -108,7 +111,7 @@ export const Pagination = styled.div`
 const SearchInput = styled.input`
     padding: 10px;
     margin: 10px 0;
-    width: 100%;
+    width: 65%;
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 16px;
@@ -137,7 +140,7 @@ export const BoxContent = styled.div`
 
 export const Input = styled.input`
     width: 100%;
-    padding: 10px;
+    padding: 5px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -191,6 +194,27 @@ export const TitlePoup = styled.div`
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 10px;
+`;
+
+export const PesquisaECadastro = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+    button {
+        padding:15px;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 10px;
+        &:active {
+            transform: scale(0.98);
+        }
+    }
+`;
+
+export const TituloPage = styled.div`
+    /* padding: 15px 2.7rem; */
 `;
 
 interface IEstoque {
@@ -249,23 +273,19 @@ const ComercioControleDeEstoque: React.FC = () => {
         <Container $active={theme}>
             <Loading isLoading={isLoading} />
             <Main>
-                <div>
-                    <h3>Estoque</h3>
-                </div>
-                <h4>pegar o preço base, e colocar uma % </h4>
+                <TituloPage>
+                    <h2>Estoque</h2>
+                </TituloPage>
                 <ContainerProdutos>
-                    <div>
-                        <div>
-
-                            <SearchInput
-                                type="text"
-                                placeholder="Digite o nome do produto..."
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                            />
-                            <button onClick={handleCadastrarTask}>Cadastrar novo produto</button>
-                        </div>
-                    </div>
+                    <PesquisaECadastro>
+                        <SearchInput
+                            type="text"
+                            placeholder="Digite o nome do produto..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                        <button onClick={handleCadastrarTask}>Cadastrar novo produto</button>
+                    </PesquisaECadastro>
 
                     {currentProducts.map((item) => (
                         <Produto key={item.id}>

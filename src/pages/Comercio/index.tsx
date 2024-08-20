@@ -12,6 +12,7 @@ export const Container = styled.div<{ $active: string | boolean }>`
     transition: background-color 0.3s ease, color 0.3s ease;
     background-color: ${(props) => (props.$active ? temaGlobal.backgroundDark : temaGlobal.backgroundLight)};
     color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
+    padding: 2rem;
  `;
 
 export const Card = styled.div`
@@ -25,7 +26,10 @@ export const Card = styled.div`
 `;
 
 export const CardContainers = styled.div`
-    border: 2px solid #ddd;
+    background-color: white;
+    /* border: 2px solid #afafaf; */
+    border-radius: 20px;
+    box-shadow: 0px 0px 0px #000;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
@@ -98,7 +102,7 @@ const Comercio: React.FC = () => {
                 <div>
                     <div>
                         <h3>Dashboard</h3>
-                        <p>status da assinatura Ativo</p>
+                        <h3>Notificacoes</h3>
                     </div>
                     <CardContainers>
                         {obj.map((obj) => (

@@ -8,21 +8,20 @@ interface ICard {
 }
 
 export const Container = styled.div`
-    border: 1px solid red;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 10px;
-    border-radius: 10px;
-    padding: 10px;
-
+    padding: 30px 10px;
+    box-shadow: 1px 1px 20px #00000032;
+    border-radius: 15px;
 `;
 
 const CardDashboardComercio: React.FC<ICard> = ({ nome, valor, quantidade }) => {
     return (
         <Container>
-            <h2>{nome}</h2>
+            <h4>{nome}</h4>
             {valor && <h2>{'R$ ' + valor}</h2>}
             <h2>{quantidade}</h2>
         </Container>
