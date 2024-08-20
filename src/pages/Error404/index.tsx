@@ -1,5 +1,4 @@
 import React from 'react';
-import NavbarHome from '../../components/NavbarHome';
 import styled from 'styled-components';
 import { RootState } from '../../store/modules/rootReducer';
 import { useSelector } from 'react-redux';
@@ -17,7 +16,6 @@ const Error404: React.FC = () => {
 
     return (
         <Container $active={theme}>
-            <NavbarHome />
             <h1>Error404</h1>
         </Container>
     );

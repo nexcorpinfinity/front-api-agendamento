@@ -1,5 +1,4 @@
 import React from 'react';
-import NavbarHome from '../../components/NavbarHome';
 import { Helmet } from 'react-helmet';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/modules/rootReducer';
@@ -21,7 +20,6 @@ const Register: React.FC = () => {
             <Helmet>
                 <title>Registre-se</title>
             </Helmet>
-            <NavbarHome />
             <h1>Pagina Register </h1>
             <h1>dashboard</h1>
         </Container>

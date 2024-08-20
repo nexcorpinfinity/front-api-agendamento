@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import NavbarComercio from '../../../components/NavbarComercio';
 import AxiosRequest from '../../../services/axios/AxiosRequest';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/modules/rootReducer';
@@ -243,7 +242,6 @@ const ComercioControleDeEstoque: React.FC = () => {
 
     return (
         <Container $active={theme}>
-            <NavbarComercio />
 
             <Main>
                 <div>

@@ -1,5 +1,4 @@
 import React from 'react';
-import NavbarComercio from '../../components/NavbarComercio';
 import styled from 'styled-components';
 import { RootState } from '../../store/modules/rootReducer';
 import { useSelector } from 'react-redux';
@@ -10,9 +9,6 @@ export const Container = styled.div<{ $active: string | boolean }>`
     transition: background-color 0.3s ease, color 0.3s ease;
     background-color: ${(props) => (props.$active ? temaGlobal.backgroundDark : temaGlobal.backgroundLight)};
     color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
-    position: absolute;
-    display: flex;
-    flex-direction: row;
  `;
 
 export const Card = styled.div`
@@ -38,7 +34,6 @@ const Comercio: React.FC = () => {
 
     return (
         <Container $active={theme}>
-            <NavbarComercio />
             <div>
 
                 <h1>Cadastre o seu comercio</h1>

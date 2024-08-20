@@ -10,7 +10,6 @@ import Loading from '../../components/Loading';
 
 import { Decoded } from '../../Routers/RotaPrivada';
 import { jwtDecode } from 'jwt-decode';
-import NavbarHome from '../../components/NavbarHome';
 
 const Login: React.FC = () => {
     const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
@@ -68,7 +67,6 @@ const Login: React.FC = () => {
 
     return (
         <>
-            <NavbarHome />
             <Container $active={theme}>
                 <Loading isLoading={isLoading} />
                 <div>

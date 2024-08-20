@@ -1,5 +1,4 @@
 import React from 'react';
-import NavbarHome from '../../components/NavbarHome';
 import { RootState } from '../../store/modules/rootReducer';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -20,7 +19,6 @@ const Unauthorized: React.FC = () => {
     return (
         <Container $active={theme}>
 
-            <NavbarHome />
             <h1>Pagina Unauthorized </h1>
             <div>
                 <h1>Unauthorized Access</h1>

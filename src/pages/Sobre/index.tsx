@@ -1,5 +1,4 @@
 import React from 'react';
-import NavbarHome from '../../components/NavbarHome';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/modules/rootReducer';
 import styled from 'styled-components';
@@ -19,7 +18,6 @@ const Sobre: React.FC = () => {
     return (
         <Container $active={theme}>
 
-            <NavbarHome />
             <h1>Pagina Sobre </h1>
             <h1>dashboard</h1>
         </Container>

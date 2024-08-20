@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import NavbarComercio from '../../../components/NavbarComercio';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/modules/rootReducer';
 import { temaGlobal } from '../../../styles/theme';
@@ -19,7 +18,6 @@ const ComercioRelatorioMensal: React.FC = () => {
 
     return (
         <Container $active={theme}>
-            <NavbarComercio />
             <h1>Pagina ComercioRelatorioMensal </h1>
         </Container>
     );

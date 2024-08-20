@@ -1,5 +1,4 @@
 import React from 'react';
-import NavbarHome from '../../components/NavbarHome';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
@@ -21,7 +20,6 @@ const Planos: React.FC = () => {
             <Helmet>
                 <title>Planos</title>
             </Helmet>
-            <NavbarHome />
             <h1>Pagina Planos </h1>
             <h1>dashboard</h1>
         </Container>
