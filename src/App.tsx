@@ -53,7 +53,6 @@ const Navbar: React.FC = () => {
     return (
         <>
             {permission === 'admin' ? (
-
                 <ContainerApp>
                     <NavbarAdmin />
                     <RotasRegistradas />

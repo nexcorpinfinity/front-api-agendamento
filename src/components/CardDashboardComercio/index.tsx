@@ -1,29 +1,67 @@
 import React from 'react';
+import { IconType } from 'react-icons';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { temaGlobal } from '../../styles/theme';
 
 interface ICard {
     nome: string,
     quantidade?: string | number,
     valor?: string | number,
+    Icon: IconType;
+    theme: boolean | string
 }
 
-export const Container = styled.div`
+export const Container = styled.div<{ $active: boolean | string }>`
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
     gap: 10px;
-    padding: 30px 10px;
-    box-shadow: 1px 1px 20px #00000032;
-    border-radius: 15px;
+    color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
+    padding: 5px 20px;
+    .dados-valores{
+        padding: 10px 0px;
+        color: black;
+
+    }
+    h1{
+        color: black;
+        font-size: 2rem;
+    }
 `;
 
-const CardDashboardComercio: React.FC<ICard> = ({ nome, valor, quantidade }) => {
+export const Titulo = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px 0;
+
+
+`;
+
+export const LinkStyled = styled(Link)`
+    box-shadow: 1px 1px 10px #00000030;
+    padding: 8px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: #1184d1;
+    &:active {
+        transform: scale(0.95);
+    }
+`;
+
+const CardDashboardComercio: React.FC<ICard> = ({ nome, valor, quantidade, Icon, theme }) => {
     return (
-        <Container>
-            <h4>{nome}</h4>
-            {valor && <h2>{'R$ ' + valor}</h2>}
-            <h2>{quantidade}</h2>
+        <Container $active={theme} className={'container-carddash'}>
+            <Titulo>
+                {valor ? <h1>{'R$ ' + valor}</h1> : <h1>{quantidade}</h1>}
+                <LinkStyled to={''}><Icon size={27} /></LinkStyled>
+            </Titulo>
+            <div className='dados-valores'>
+                <h4>{nome}</h4>
+            </div>
         </Container>
     );
 };

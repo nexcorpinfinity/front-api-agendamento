@@ -10,8 +10,8 @@ import ButtonDarkTheme from '../ButtonDarkTheme';
 const NavbarHome: React.FC = () => {
     const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
     const theme = useSelector((state: RootState) => state.theme.theme);
-    const dispatch = useDispatch<AppDispatch>();
 
+    const dispatch = useDispatch<AppDispatch>();
     const handleToggleTheme = () => {
         dispatch(toggleTheme());
     };

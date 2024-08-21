@@ -18,7 +18,8 @@ import ButtonDarkTheme from '../ButtonDarkTheme';
 export const Container = styled.div<{ $active: string | boolean }>`
     background-color: ${(props) => (props.$active ? temaGlobal.backgroundDark : temaGlobal.backgroundLight)};
     color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
-    border-right: 1px solid ${(props) => (props.$active ? temaGlobal.bordaNavbarDark : temaGlobal.bordaNavbarLight)};
+    /* border-right: 3px solid ${(props) => (props.$active ? temaGlobal.bordaNavbarDark : temaGlobal.bordaNavbarLight)}; */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     width: 300px;
     height: 100vh;
     display: flex;

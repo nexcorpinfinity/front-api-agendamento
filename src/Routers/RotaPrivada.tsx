@@ -3,6 +3,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 import React, { ReactNode } from 'react';
 import { useSelector } from 'react-redux';
 import { jwtDecode } from 'jwt-decode';
+import { RootState } from '../store/modules/rootReducer';
 
 interface MyRouteProps {
     children: ReactNode | (() => ReactNode);
@@ -23,8 +24,8 @@ export interface Decoded {
 }
 
 const PrivateRoute: React.FC<MyRouteProps> = ({ children, isClosed = false, requiredPermission }) => {
-    const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
-    const token = useSelector((state: any) => state.auth.token);
+    const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+    const token = useSelector((state: RootState) => state.auth.token);
 
     if (token === null) {
         return <Navigate to="/unauthorized" />;

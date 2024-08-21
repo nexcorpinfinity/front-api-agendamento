@@ -26,5 +26,6 @@ body {
 `;
 
 export const ContainerApp = styled.div`
-  display: flex;
-`;
+        display: flex;
+        flex-direction: row;
+    `;
