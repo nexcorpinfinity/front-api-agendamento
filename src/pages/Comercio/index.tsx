@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux';
 import { jwtDecode } from 'jwt-decode';
 import { Decoded } from '../../Routers/RotaPrivada';
 import CardDashboardComercio from '../../components/CardDashboardComercio';
-import { FaBell, FaBoxOpen, FaShoppingCart } from 'react-icons/fa';
-import { Container, CardContainers, EstoqueBaixoCard } from './styled';
+import { FaBoxOpen, FaShoppingCart } from 'react-icons/fa';
+import { Container, CardContainers, Content, NotificationContainer, Badge, BellIcon } from './styled';
 import { TbChartInfographic } from 'react-icons/tb';
 import { GrMoney } from 'react-icons/gr';
 import AxiosRequest from '../../services/axios/AxiosRequest';
@@ -29,8 +29,6 @@ const Comercio: React.FC = () => {
 
     const decoded: Decoded = jwtDecode(user);
 
-    // console.log(decoded);
-
     const nome = decoded.nomeDoUsuario;
 
     useEffect(() => {
@@ -43,8 +41,6 @@ const Comercio: React.FC = () => {
         };
 
         fetchProdutos();
-        // const response = await AxiosRequest.get('/commerce/meus-produtos-cadastrados');
-        // setEstoque(response.data.todosProdutos);
     }, []);
 
     const obj = [
@@ -92,63 +88,28 @@ const Comercio: React.FC = () => {
         flex-direction: row;
         justify-content: space-between;
 
+        .noti-poupap{
+            position: absolute;
+            top: 110px;
+            right: 115px;
+            width: 300px;
+            height: 200px;
+            border: 1px solid black;
+            background-color: white;
+            border-radius: 10px;
+        }
     `;
 
     const nomeFormatado = nome.charAt(0).toUpperCase() + nome.slice(1).toLowerCase();
 
-    const Content = styled.div`
-
-        background-color: #ffffff;
-        border-radius: 20px;
-        padding: 30px;
-
-    `;
-
-    const NotificationContainer = styled.div`
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-`;
-
-    const BellIcon = styled(FaBell)`
-    font-size: 24px;
-    color: #333;
-`;
-
-    const Badge = styled.div`
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background-color: red;
-    color: white;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-`;
     const handleNotificationClick = () => {
 
         setToggleNotification(!toggleNotification);
-        alert('Notificações clicadas!' + toggleNotification);
-    };
 
-    const cores = [
-        { corHexadecimal: '#BAE2FF' },
-        { corHexadecimal: '#B9FFDD' },
-        { corHexadecimal: '#FFE8AC' },
-        { corHexadecimal: '#FFCAB9' },
-        { corHexadecimal: '#F99494' },
-        { corHexadecimal: '#9DD6FF' },
-        { corHexadecimal: '#ECA1FF' },
-        { corHexadecimal: '#DAFF8B' },
-        { corHexadecimal: '#FFA285' },
-        { corHexadecimal: '#CDCDCD' },
-        { corHexadecimal: '#979797' },
-        { corHexadecimal: '#A99A7C' },
-    ];
+    };
+    const fecharpop = () => {
+        setToggleNotification(!toggleNotification);
+    };
 
     return (
         <Container $active={theme}>
@@ -162,9 +123,15 @@ const Comercio: React.FC = () => {
                                 <Badge>{notifications}</Badge>
                             )}
                         </NotificationContainer>
-
+                        {toggleNotification && (
+                            <div className='noti-poupap'>
+                                <p>Notificações</p>
+                                <button onClick={fecharpop}>X</button>
+                            </div>
+                        )}
                     </IntroductionAndButton>
                     <div>
+
                         <p>Veja todo resumo do seu painel aqui</p>
 
                     </div>
@@ -178,16 +145,6 @@ const Comercio: React.FC = () => {
 
                 <DashboardCompoent />
 
-                <EstoqueBaixoCard>
-                    <h3>Links Uteis</h3>
-                    <p>estoque baixo, ultima venda, produtos mais vendidos</p>
-                    <div>
-                        <h3>Estoque baixo</h3>
-                        <p>produto 1</p>
-                        <p>produto 2</p>
-                        <p>produto 3</p>
-                    </div>
-                </EstoqueBaixoCard>
             </Content>
         </Container>
     );

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { temaGlobal } from '../../styles/theme';
+import { FaBell } from 'react-icons/fa';
 
 export const Container = styled.div<{ $active: string | boolean }>`
     width: 100%;
@@ -35,10 +36,40 @@ export const CardContainers = styled.div`
 }
 `;
 
-export const EstoqueBaixoCard = styled.div`
-    border: 1px solid white;
-`;
-
 export const ButtonsNotifications = styled.div`
 
+`;
+
+export const Content = styled.div`
+
+background-color: #ffffff;
+border-radius: 20px;
+padding: 30px;
+
+`;
+
+export const NotificationContainer = styled.div`
+position: relative;
+display: inline-block;
+cursor: pointer;
+`;
+
+export const BellIcon = styled(FaBell)`
+font-size: 24px;
+color: #333;
+`;
+
+export const Badge = styled.div`
+position: absolute;
+top: -5px;
+right: -5px;
+background-color: red;
+color: white;
+border-radius: 50%;
+width: 20px;
+height: 20px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 12px;
 `;

@@ -6,9 +6,12 @@ export const Container = styled.div`
     background-color: white;
     padding: 10px;
     width: 100%;
-    max-width: 1000px;
+    max-width: 1200px;
     border-radius: 10px;
     margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
 `;
 
 const DashboardCompoent: React.FC = () => {
@@ -38,6 +41,11 @@ const DashboardCompoent: React.FC = () => {
         return null;
     };
 
+    const EstoqueBaixoCard = styled.div`
+        border: 1px solid white;
+        width: 200px;
+`;
+
     return (
         <Container>
             <ResponsiveContainer width="100%" height={400}>
@@ -52,6 +60,16 @@ const DashboardCompoent: React.FC = () => {
                     <Line type="monotone" dataKey="saldoTotal" stroke="#82ca9d" dot={false} name="Saldo Total" />
                 </LineChart>
             </ResponsiveContainer>
+
+            <EstoqueBaixoCard>
+                <h3>Estoque baixo</h3>
+                <p>produto 1</p>
+                <p>produto 2</p>
+                <p>produto 3</p>
+                <p>produto 4</p>
+                <p>produto 5</p>
+                <p>produto 6</p>
+            </EstoqueBaixoCard>
         </Container>
     );
 };
