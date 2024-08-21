@@ -11,7 +11,7 @@ import { TbChartInfographic } from 'react-icons/tb';
 import { GrMoney } from 'react-icons/gr';
 import AxiosRequest from '../../services/axios/AxiosRequest';
 import styled from 'styled-components';
-import DashboardCompoent from './DashboardCompoent';
+import DashboardCompoent from './DashboardComponent';
 
 const Comercio: React.FC = () => {
     const [prdutosCadastrados, setProdutosCadastrados] = useState<number>(0);
