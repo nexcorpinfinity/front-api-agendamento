@@ -8,7 +8,7 @@ export const Container = styled.div<{ $active: string | boolean }>`
     box-shadow: inset 7px 2px 13px rgba(0, 0, 0, 0.1);
     background-color: ${(props) => (props.$active ? temaGlobal.backgroundDark : temaGlobal.backgroundLight)};
     color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
-    padding: 2rem;
+    padding: 1.5rem;
     @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
     display: flex;
     flex-direction: column;

@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/modules/rootReducer';
 import { temaGlobal } from '../../../styles/theme';
 import Loading from '../../../components/Loading';
+import { toast } from 'react-toastify';
 
 export const Container = styled.div<{ $active: string | boolean }>`
     width: 100%;
@@ -236,6 +237,10 @@ const ComercioControleDeEstoque: React.FC = () => {
     const [isDelete, setIsDelete] = useState<boolean>(false);
     const [isCadastro, setIsCadastro] = useState<boolean>(false);
 
+    const [nomeDoProduto, setNomeDoProduto] = useState('');
+    const [precoDoProduto, setPrecoDoProduto] = useState('');
+    const [quantidadeDoProduto, setQuantidadeDoProduto] = useState<number>(0);
+
     useEffect(() => {
         async function fetchProducts() {
             setIsLoading(true);
@@ -268,6 +273,55 @@ const ComercioControleDeEstoque: React.FC = () => {
         setIsCadastro(!isCadastro);
     };
     const theme = useSelector((state: RootState) => state.theme.theme);
+
+    const cadastrarProduto = () => {
+
+        if (nomeDoProduto === '') {
+            return toast.error('Preencha o nome do produto', { theme: 'colored' });
+        }
+        if (precoDoProduto === '') {
+            return toast.error('Preencha o preço do produto', { theme: 'colored' });
+        }
+
+        if (quantidadeDoProduto === 0) {
+            toast.info('Produto está sendo cadastrado sem estoque', { theme: 'colored' });
+        }
+
+        console.log(nomeDoProduto, precoDoProduto, quantidadeDoProduto);
+
+        try {
+            AxiosRequest.post('/commerce/cadastrar-produtos', {
+                product_name: nomeDoProduto,
+                price: precoDoProduto,
+                quantidade: quantidadeDoProduto
+            });
+
+            toast.success('Produto cadastrado com sucesso', { theme: 'colored' });
+
+            setIsCadastro(false);
+
+            setNomeDoProduto('');
+            setPrecoDoProduto('');
+            setQuantidadeDoProduto(0);
+
+            window.location.reload();
+
+        } catch (error) {
+            console.log(error);
+            if (error) {
+                toast.error('Erro ao cadastrar produto', { theme: 'colored' });
+            }
+        }
+
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = Number(e.target.value);
+        // Garante que não permite números negativos
+        if (value >= 0) {
+            setQuantidadeDoProduto(value);
+        }
+    };
 
     return (
         <Container $active={theme}>
@@ -344,10 +398,12 @@ const ComercioControleDeEstoque: React.FC = () => {
 
                             <button onClick={() => setIsEdit(false)}> fechar </button>
                         </TitlePoup>
+
                         <Input type="text" placeholder='Produto' />
                         <Input type="text" placeholder='preço' />
                         <Input type="text" placeholder='Quantidade' />
-                        <Button>Salvar</Button>
+                        <Button >Salvar</Button>
+
                     </BoxContent>
                 </BoxEdit>
             )}
@@ -372,10 +428,10 @@ const ComercioControleDeEstoque: React.FC = () => {
 
                             <button onClick={() => setIsCadastro(false)}> fechar </button>
                         </TitlePoup>
-                        <Input type="text" placeholder='Produto' />
-                        <Input type="text" placeholder='preço' />
-                        <Input type="text" placeholder='Quantidade' />
-                        <Button>Cadastrar</Button>
+                        <Input type="text" placeholder='Produto' value={nomeDoProduto} onChange={(e) => setNomeDoProduto(e.target.value)} />
+                        <Input type="text" placeholder='0.00' value={precoDoProduto} onChange={(e) => setPrecoDoProduto(e.target.value)} />
+                        <Input type="number" placeholder='Quantidade' value={quantidadeDoProduto} onChange={handleChange} min="0" />
+                        <Button onClick={cadastrarProduto}>Cadastrar</Button>
                     </BoxContent>
                 </BoxEdit>
             )}

@@ -10,6 +10,7 @@ interface ICard {
     valor?: string | number,
     Icon: IconType;
     theme: boolean | string
+    link: string
 }
 
 export const Container = styled.div<{ $active: boolean | string }>`
@@ -52,12 +53,12 @@ export const LinkStyled = styled(Link)`
     }
 `;
 
-const CardDashboardComercio: React.FC<ICard> = ({ nome, valor, quantidade, Icon, theme }) => {
+const CardDashboardComercio: React.FC<ICard> = ({ nome, valor, quantidade, Icon, theme, link }) => {
     return (
         <Container $active={theme} className={'container-carddash'}>
             <Titulo>
                 {valor ? <h1>{'R$ ' + valor}</h1> : <h1>{quantidade}</h1>}
-                <LinkStyled to={''}><Icon size={27} /></LinkStyled>
+                <LinkStyled to={link}><Icon size={27} /></LinkStyled>
             </Titulo>
             <div className='dados-valores'>
                 <h4>{nome}</h4>

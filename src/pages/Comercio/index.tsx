@@ -13,12 +13,49 @@ import AxiosRequest from '../../services/axios/AxiosRequest';
 import styled from 'styled-components';
 import DashboardCompoent from './DashboardComponent';
 
+const Titulo = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+gap: 10px;
+font-family: "Inter", sans-serif;
+padding: 20px 30px 0px 30px;
+p {
+    padding-left: 5px;
+}
+`;
+const IntroductionAndButton = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+
+.noti-poupap{
+    position: absolute;
+    top: 110px;
+    right: 115px;
+    width: 300px;
+    height: 200px;
+    border: 1px solid black;
+    background-color: white;
+    border-radius: 10px;
+}
+`;
+const DivEmbaixoDoDashboard = styled.div`
+border: 2px solid white;
+margin-top: 10px;
+display: flex;
+justify-content: space-between;
+flex-direction: row;
+padding: 10px 20px;
+margin: 10px 20px;
+`;
+
 const Comercio: React.FC = () => {
     const [prdutosCadastrados, setProdutosCadastrados] = useState<number>(0);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [notifications, setNotifications] = useState<number>(10);
 
-    const [toggleNotification, setToggleNotification ] = useState<boolean>(false);
+    const [notifications] = useState<number>(10);
+
+    const [toggleNotification, setToggleNotification] = useState<boolean>(false);
 
     const theme = useSelector((state: RootState) => state.theme.theme);
     const user = useSelector((state: RootState) => state.auth.token);
@@ -38,6 +75,11 @@ const Comercio: React.FC = () => {
             const response = await AxiosRequest.get('/commerce/meus-produtos-cadastrados');
             const produtosCadastrados = response.data.todosProdutos;
             setProdutosCadastrados(produtosCadastrados.length);
+
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const produtosBaixoEstoque = produtosCadastrados.filter((produto: any) => parseInt(produto.quantidade, 10) < 10);
+
+            console.log(produtosBaixoEstoque);
         };
 
         fetchProdutos();
@@ -49,64 +91,37 @@ const Comercio: React.FC = () => {
             nome: 'Produtos cadastrados',
             quantidade: prdutosCadastrados,
             icon: FaBoxOpen,
+            path: '/comercio/controle-de-estoque'
         },
         {
             id: 2,
             nome: 'Vendas Hoje',
             quantidade: 5,
             icon: FaShoppingCart,
-
+            path: ''
         },
         {
             id: 3,
             nome: 'Total Hoje',
             valor: 500,
             icon: GrMoney,
-
+            path: ''
         },
         {
             id: 4,
             nome: 'Faturamento Mensal ',
             valor: 3000,
             icon: TbChartInfographic,
+            path: ''
         }
     ];
-
-    const Titulo = styled.div`
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 10px;
-        font-family: "Inter", sans-serif;
-        padding: 20px 40px 0px 40px;
-        p {
-            padding-left: 5px;
-        }
-    `;
-    const IntroductionAndButton = styled.div`
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-
-        .noti-poupap{
-            position: absolute;
-            top: 110px;
-            right: 115px;
-            width: 300px;
-            height: 200px;
-            border: 1px solid black;
-            background-color: white;
-            border-radius: 10px;
-        }
-    `;
 
     const nomeFormatado = nome.charAt(0).toUpperCase() + nome.slice(1).toLowerCase();
 
     const handleNotificationClick = () => {
-
         setToggleNotification(!toggleNotification);
-
     };
+
     const fecharpop = () => {
         setToggleNotification(!toggleNotification);
     };
@@ -131,20 +146,42 @@ const Comercio: React.FC = () => {
                         )}
                     </IntroductionAndButton>
                     <div>
-
                         <p>Veja todo resumo do seu painel aqui</p>
-
                     </div>
                 </Titulo>
 
                 <CardContainers>
                     {obj.map((obj) => (
-                        <CardDashboardComercio key={obj.id} nome={obj.nome} quantidade={obj.quantidade} valor={obj.valor} Icon={obj.icon} theme={theme} />
+                        <CardDashboardComercio key={obj.id} nome={obj.nome} quantidade={obj.quantidade} valor={obj.valor} Icon={obj.icon} theme={theme} link={obj.path}/>
                     ))}
                 </CardContainers>
 
                 <DashboardCompoent />
+                <h1>Ultimos pedidos</h1>
+                <DivEmbaixoDoDashboard>
 
+                    <div>
+                        <p>id do pedido</p>
+                        <p>81y283y172y31</p>
+                    </div>
+                    <div>
+                        <p>Data do pedido</p>
+                        <p>26/09/2023</p>
+                    </div>
+                    <div>
+                        <p>Total</p>
+                        <p>R$ 550,00</p>
+                    </div>
+                    <div>
+                        <p>Produtos</p>
+                        <p>[array, araay, array]</p>
+                    </div>
+                    <div>
+                        <p>Status</p>
+                        <p>Finalizada </p>
+                    </div>
+
+                </DivEmbaixoDoDashboard>
             </Content>
         </Container>
     );

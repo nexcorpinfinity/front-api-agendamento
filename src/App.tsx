@@ -12,8 +12,7 @@ import { Provider, useSelector } from 'react-redux';
 import store, { persistor } from './store';
 import { jwtDecode } from 'jwt-decode';
 import { Decoded } from './Routers/RotaPrivada';
-import NavbarAdmin from './components/NavbarAdmin';
-import NavbarComercio from './components/NavbarComercio';
+import NavbarCostumerAndAdmin from './components/NavbarCostumerAndAdmin';
 import NavbarHome from './components/NavbarHome';
 
 const App: React.FC = () => {
@@ -52,25 +51,18 @@ const Navbar: React.FC = () => {
 
     return (
         <>
-            {permission === 'admin' ? (
+            {permission === 'costumer' || permission === 'admin'? (
                 <ContainerApp>
-                    <NavbarAdmin />
+                    <NavbarCostumerAndAdmin />
                     <RotasRegistradas />
                 </ContainerApp>
-            ) : (
-                permission === 'costumer' ? (
+            ) :
+                <>
+                    <NavbarHome />
+                    <RotasRegistradas />
+                </>
 
-                    <ContainerApp>
-                        <NavbarComercio />
-                        <RotasRegistradas />
-                    </ContainerApp>
-                ) : (
-                    <>
-                        {/* <NavbarHome /> */}
-                        <RotasRegistradas />
-                    </>
-                )
-            )}
+            }
         </>
     );
 };
