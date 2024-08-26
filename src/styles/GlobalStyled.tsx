@@ -1,7 +1,8 @@
-import styled, { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 import 'react-toastify/dist/ReactToastify.css';
+import { temaGlobal } from './theme';
 
-export const GlobalStyled = createGlobalStyle`
+export const GlobalStyled = createGlobalStyle<{ $active: string | boolean }>`
 
 * {
     margin: 0;
@@ -10,6 +11,9 @@ export const GlobalStyled = createGlobalStyle`
 }
 
 body {
+
+    background-color: ${(props) => (props.$active ? temaGlobal.backgroundDark : temaGlobal.backgroundLight)};
+    color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
     .Toastify {
         font-family: 'Roboto', sans-serif;
 
@@ -17,15 +21,11 @@ body {
             width: auto;
             margin-top: 4%;
         }
-        .container-app{
-            display: flex;
-            border:2px solid red;
-        }
+    }
+
+    .logo {
+
     }
 }
 `;
 
-export const ContainerApp = styled.div`
-        display: flex;
-        flex-direction: row;
-    `;

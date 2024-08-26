@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import AxiosRequest from '../../../services/axios/AxiosRequest';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store/modules/rootReducer';
 import { temaGlobal } from '../../../styles/theme';
 import Loading from '../../../components/Loading';
 import { toast } from 'react-toastify';
+
+import * as actions from '../../../store/modules/auth/actions';
+import { useNavigate } from 'react-router-dom';
+import { AppDispatch } from '../../../store';
 
 export const Container = styled.div<{ $active: string | boolean }>`
     width: 100%;
@@ -241,12 +245,25 @@ const ComercioControleDeEstoque: React.FC = () => {
     const [precoDoProduto, setPrecoDoProduto] = useState('');
     const [quantidadeDoProduto, setQuantidadeDoProduto] = useState<number>(0);
 
+    const dispatch = useDispatch<AppDispatch>();
+
+    const navigate = useNavigate();
+
     useEffect(() => {
         async function fetchProducts() {
-            setIsLoading(true);
-            const response = await AxiosRequest.get('/commerce/meus-produtos-cadastrados');
-            setEstoque(response.data.todosProdutos);
-            setIsLoading(false);
+            try {
+                setIsLoading(true);
+                const response = await AxiosRequest.get('/commerce/meus-produtos-cadastrados');
+                setEstoque(response.data.todosProdutos);
+                setIsLoading(false);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            } catch (error: any) {
+                if (error.response.status === 401) {
+                    dispatch(actions.loginFailure({ error: 'Você não está logado' }));
+                    toast.error('Você não está logado', { theme: 'colored' });
+                    navigate('/login');
+                }
+            }
         }
         fetchProducts();
     }, []);
@@ -343,9 +360,9 @@ const ComercioControleDeEstoque: React.FC = () => {
 
                     {currentProducts.map((item) => (
                         <Produto key={item.id}>
-                            <div>
+                            {/* <div>
                                 <h1>foto</h1>
-                            </div>
+                            </div> */}
                             <ProdutoFlag>
                                 <h4>Produto</h4>
                                 <p>{item.product_name}</p>

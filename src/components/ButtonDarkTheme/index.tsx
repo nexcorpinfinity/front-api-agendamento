@@ -8,15 +8,14 @@ interface ButtonDarkThemeProps {
 
 export const ButtonDarkThemeStyled = styled.div<{ $active: string | boolean }>`
 
-display: flex;
-flex-direction: row;
-padding: 5px 20px ;
-justify-content: space-between;
-align-items: center;
-h4 {
-    color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 
-}
+    h4 {
+        color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
+    }
 
 .switch {
   position: relative;
@@ -24,8 +23,6 @@ h4 {
   width: 45px;
   height: 20px;
 }
-
-
 
 .slider {
   position: absolute;
@@ -70,7 +67,7 @@ input:checked + .slider:before {
 const ButtonDarkTheme: React.FC<ButtonDarkThemeProps> = ({ theme, handleToggleTheme }) => {
     return (
         <ButtonDarkThemeStyled $active={theme}>
-            <h4>Tema {theme === false ? 'escuro' : 'claro'}</h4>
+            {/* <h4>Tema {theme === false ? 'escuro' : 'claro'}</h4> */}
             <label className="switch">
                 <input type="checkbox" checked={theme === true} onChange={handleToggleTheme} className="checkbox" />
                 <span className="slider"></span>

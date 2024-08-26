@@ -28,7 +28,7 @@ const PrivateRoute: React.FC<MyRouteProps> = ({ children, isClosed = false, requ
     const token = useSelector((state: RootState) => state.auth.token);
 
     if (token === null) {
-        return <Navigate to="/unauthorized" />;
+        return <Navigate to="/login" />;
     }
 
     const decoded: Decoded = jwtDecode(token);

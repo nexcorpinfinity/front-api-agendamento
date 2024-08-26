@@ -3,9 +3,12 @@ import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'rec
 import styled from 'styled-components';
 import AxiosRequest from '../../../services/axios/AxiosRequest';
 import { TooltipProps } from 'recharts';
+import { temaGlobal } from '../../../styles/theme';
 
-export const Container = styled.div`
-    background-color: white;
+export const Container = styled.div<{ $active: string | boolean }>`
+    transition: background-color 0.3s ease, color 0.3s ease;
+    background-color: ${(props) => (props.$active ? temaGlobal.backgroundDark : temaGlobal.backgroundLight)};
+    color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
     padding: 10px;
     width: 100%;
     max-width: 1200px;
@@ -79,9 +82,13 @@ interface IEstoque {
     quantidade: number;
 }
 
+type ThemeProps = {
+    theme: boolean | string;
+}
+
 type ICustomTooltipProps = TooltipProps<number, string>;
 
-const DashboardComponent: React.FC = () => {
+const DashboardComponent: React.FC<ThemeProps> = ({ theme }) => {
     const [produtosComEstoqueBaixo, setProdutosComEstoqueBaixo] = useState<IEstoque[]>([]);
     const [paginaAtual, setPaginaAtual] = useState(1);
     const produtosPorPagina = 5;
@@ -141,7 +148,7 @@ const DashboardComponent: React.FC = () => {
     };
 
     return (
-        <Container>
+        <Container $active={theme}>
             <ResponsiveContainer width="100%" height={400}>
                 <LineChart data={dadosVendas} margin={{ top: 50, right: 30, bottom: 20, left: 20 }}>
                     <XAxis dataKey="dia" />

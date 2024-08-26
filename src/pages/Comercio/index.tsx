@@ -1,61 +1,61 @@
 import React, { useEffect, useState } from 'react';
-
 import { RootState } from '../../store/modules/rootReducer';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { jwtDecode } from 'jwt-decode';
 import { Decoded } from '../../Routers/RotaPrivada';
 import CardDashboardComercio from '../../components/CardDashboardComercio';
 import { FaBoxOpen, FaShoppingCart } from 'react-icons/fa';
-import { Container, CardContainers, Content, NotificationContainer, Badge, BellIcon } from './styled';
+import { Container, CardContainers, Content } from './styled';
 import { TbChartInfographic } from 'react-icons/tb';
 import { GrMoney } from 'react-icons/gr';
 import AxiosRequest from '../../services/axios/AxiosRequest';
 import styled from 'styled-components';
 import DashboardCompoent from './DashboardComponent';
+import { AppDispatch } from '../../store';
+import { useNavigate } from 'react-router-dom';
+
+import * as actions from '../../store/modules/auth/actions';
+import { toast } from 'react-toastify';
 
 const Titulo = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: center;
-gap: 10px;
-font-family: "Inter", sans-serif;
-padding: 20px 30px 0px 30px;
-p {
-    padding-left: 5px;
-}
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    font-family: "Inter", sans-serif;
+    padding: 20px 30px 0px 30px;
+    p {
+        padding-left: 5px;
+    }
 `;
 const IntroductionAndButton = styled.div`
-display: flex;
-flex-direction: row;
-justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 
-.noti-poupap{
-    position: absolute;
-    top: 110px;
-    right: 115px;
-    width: 300px;
-    height: 200px;
-    border: 1px solid black;
-    background-color: white;
-    border-radius: 10px;
-}
+    .noti-poupap{
+        position: absolute;
+        top: 110px;
+        right: 115px;
+        width: 300px;
+        height: 200px;
+        border: 1px solid black;
+        background-color: white;
+        border-radius: 10px;
+    }
 `;
 const DivEmbaixoDoDashboard = styled.div`
-border: 2px solid white;
-margin-top: 10px;
-display: flex;
-justify-content: space-between;
-flex-direction: row;
-padding: 10px 20px;
-margin: 10px 20px;
+    border: 2px solid white;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    padding: 10px 20px;
+    margin: 10px 20px;
 `;
 
 const Comercio: React.FC = () => {
-    const [prdutosCadastrados, setProdutosCadastrados] = useState<number>(0);
-
-    const [notifications] = useState<number>(10);
-
-    const [toggleNotification, setToggleNotification] = useState<boolean>(false);
+    const [produtosCadastrados, setProdutosCadastrados] = useState<number>(0);
 
     const theme = useSelector((state: RootState) => state.theme.theme);
     const user = useSelector((state: RootState) => state.auth.token);
@@ -63,6 +63,10 @@ const Comercio: React.FC = () => {
     if (user === null) {
         return null;
     }
+
+    const dispatch = useDispatch<AppDispatch>();
+
+    const navigate = useNavigate();
 
     const decoded: Decoded = jwtDecode(user);
 
@@ -72,14 +76,21 @@ const Comercio: React.FC = () => {
         document.title = 'Comercio';
 
         const fetchProdutos = async () => {
-            const response = await AxiosRequest.get('/commerce/meus-produtos-cadastrados');
-            const produtosCadastrados = response.data.todosProdutos;
-            setProdutosCadastrados(produtosCadastrados.length);
+            try {
+                const response = await AxiosRequest.get('/commerce/meus-produtos-cadastrados');
+                const produtosCadastrados = response.data.todosProdutos;
+                setProdutosCadastrados(produtosCadastrados.length);
+
+            }
 
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const produtosBaixoEstoque = produtosCadastrados.filter((produto: any) => parseInt(produto.quantidade, 10) < 10);
-
-            console.log(produtosBaixoEstoque);
+            catch (error: any) {
+                if (error.response.status === 401) {
+                    dispatch(actions.loginFailure({ error: 'Você não está logado' }));
+                    toast.error('Você não está logado', { theme: 'colored' });
+                    navigate('/login');
+                }
+            }
         };
 
         fetchProdutos();
@@ -89,7 +100,7 @@ const Comercio: React.FC = () => {
         {
             id: 1,
             nome: 'Produtos cadastrados',
-            quantidade: prdutosCadastrados,
+            quantidade: produtosCadastrados,
             icon: FaBoxOpen,
             path: '/comercio/controle-de-estoque'
         },
@@ -118,45 +129,26 @@ const Comercio: React.FC = () => {
 
     const nomeFormatado = nome.charAt(0).toUpperCase() + nome.slice(1).toLowerCase();
 
-    const handleNotificationClick = () => {
-        setToggleNotification(!toggleNotification);
-    };
-
-    const fecharpop = () => {
-        setToggleNotification(!toggleNotification);
-    };
-
     return (
         <Container $active={theme}>
-            <Content>
+            <Content $active={theme}>
                 <Titulo>
                     <IntroductionAndButton>
                         <h2>Bem vindo novamente, {nomeFormatado} </h2>
-                        <NotificationContainer onClick={handleNotificationClick}>
-                            <BellIcon />
-                            {notifications > 0 && (
-                                <Badge>{notifications}</Badge>
-                            )}
-                        </NotificationContainer>
-                        {toggleNotification && (
-                            <div className='noti-poupap'>
-                                <p>Notificações</p>
-                                <button onClick={fecharpop}>X</button>
-                            </div>
-                        )}
+
                     </IntroductionAndButton>
                     <div>
                         <p>Veja todo resumo do seu painel aqui</p>
                     </div>
                 </Titulo>
 
-                <CardContainers>
+                <CardContainers >
                     {obj.map((obj) => (
-                        <CardDashboardComercio key={obj.id} nome={obj.nome} quantidade={obj.quantidade} valor={obj.valor} Icon={obj.icon} theme={theme} link={obj.path}/>
+                        <CardDashboardComercio key={obj.id} nome={obj.nome} quantidade={obj.quantidade} valor={obj.valor} Icon={obj.icon} theme={theme} link={obj.path} />
                     ))}
                 </CardContainers>
 
-                <DashboardCompoent />
+                <DashboardCompoent theme={theme}/>
                 <h1>Ultimos pedidos</h1>
                 <DivEmbaixoDoDashboard>
 
@@ -182,6 +174,7 @@ const Comercio: React.FC = () => {
                     </div>
 
                 </DivEmbaixoDoDashboard>
+
             </Content>
         </Container>
     );

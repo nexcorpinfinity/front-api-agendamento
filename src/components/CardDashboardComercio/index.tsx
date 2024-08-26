@@ -22,11 +22,11 @@ export const Container = styled.div<{ $active: boolean | string }>`
     padding: 5px 20px;
     .dados-valores{
         padding: 10px 0px;
-        color: black;
+        color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
 
     }
     h1{
-        color: black;
+        color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
         font-size: 2rem;
     }
 `;
@@ -35,7 +35,8 @@ export const Titulo = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 20px 0;
+    padding: 20px;
+    gap: 2rem;
 
 
 `;

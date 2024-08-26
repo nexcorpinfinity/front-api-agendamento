@@ -5,50 +5,14 @@ import { Link } from 'react-router-dom';
 export const Container = styled.div<{ $active: string | boolean }>`
     background-color: ${(props) => (props.$active ? temaGlobal.backgroundDark : temaGlobal.backgroundLight)};
     color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
-    /* border-right: 3px solid ${(props) => (props.$active ? temaGlobal.bordaNavbarDark : temaGlobal.bordaNavbarLight)}; */
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     width: 320px;
-    height: 100vh;
+    border: 1px solid black;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    transition: width 0.3s ease-in-out;
-    overflow: hidden;
-    padding: 10px;
-`;
-
-export const Links = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 7px;
-`;
-
-export const LogoSaas = styled.div`
-    display: flex;
-    justify-content: center;
-    a {
-        padding: 0;
-        text-decoration: none;
-        color: black;
-        border: none;
-
-    }
-    img {
-        width: 100px;
-    }
-`;
-
-export const Profile = styled.div`
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    gap: 10px;
-    align-items: center;
-    margin: 15px 0px;
-    padding: 10px 0;
-    border-radius: 5px;
-
+    /* justify-content: space-between; */
+    gap: 1rem;
+    transition: width 0.3s ease;
+    height: 93vh;
 `;
 
 export const StyledLink = styled(Link) <{ $active?: boolean }>`
@@ -85,4 +49,29 @@ export const StyledLink = styled(Link) <{ $active?: boolean }>`
     &:active {
             transform: scale(0.98);
         }
+`;
+
+export const ComercioTitle = styled.div`
+    /* border: 1px solid black; */
+    margin-top: 1rem;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+
+    div:nth-child(3) {
+        cursor: pointer;
+    }
+`;
+
+export const LinksNavLateral = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px;
+    small {
+        padding-left: 7px;
+        font-size: 1rem;
+    }
 `;

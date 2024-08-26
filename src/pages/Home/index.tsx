@@ -13,7 +13,6 @@ const Home: React.FC = () => {
     return (
         <Container $active={theme}>
             <h1>Home page</h1>
-            <br />
 
         </Container>
     );
