@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useEffect, useState } from 'react';
 
 import { ComercioTitle, Container, LinksNavLateral, StyledLink } from './styled';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/modules/rootReducer';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { IoMdArrowDropdown } from 'react-icons/io';
-// import { Decoded } from '../../Routers/RotaPrivada';
-// import { jwtDecode } from 'jwt-decode';
+import AxiosRequest from '../../services/axios/AxiosRequest';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Decoded } from '../../Routers/RotaPrivada';
+import { AppDispatch } from '../../store';
+import * as actions from '../../store/modules/auth/actions';
+import { toast } from 'react-toastify';
+import { jwtDecode } from 'jwt-decode';
 
 type NavbarLateralProps = {
     setMenuLateral: (value: boolean) => void;
@@ -15,18 +21,66 @@ type NavbarLateralProps = {
 const NavbarLateral: React.FC<NavbarLateralProps> = ({ setMenuLateral }) => {
     const theme = useSelector((state: RootState) => state.theme.theme);
     const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
-    // const token = useSelector((state: RootState) => state.auth.token);
-
     const [perfilOptions, setPerfilOptions] = useState<boolean>(false);
-
-    // const decoded: Decoded = jwtDecode(token);
-
-    const permission: string = 'costumer';
+    const [comercioName, setComercioName] = useState<string | null>(null);
+    const [comercioEmail, setComercioEmail] = useState<string | null>(null);
 
     const handleOptionsProfile = () => {
         setPerfilOptions(!perfilOptions);
     };
 
+    // ta com bug qnd o token é invalido
+
+    const location = useLocation();
+    const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
+
+    const token = useSelector((state: RootState) => state.auth.token);
+
+    if (token === null) {
+        return <Navigate to="/redirect" />;
+    }
+
+    const decoded: Decoded = jwtDecode(token);
+    const permission = decoded.permission;
+
+    useEffect(() => {
+        if (permission === 'costumer') {
+            async function loadComercio() {
+                try {
+                    const response = await AxiosRequest.get('/commerce/usuario');
+
+                    if (response.status !== 200) {
+                        return <Navigate to="/redirect" />;
+                    }
+
+                    const comercioData = Array.isArray(response.data)
+                        ? response.data.map((item) => ({
+                            id: item.id,
+                            nomeDoComercio: item.Comercio.comercio_name,
+                        }))
+                        : [
+                            {
+                                id: response.data.id,
+                                nomeDoComercio: response.data.Comercio.comercio_name,
+                            },
+                        ];
+
+                    setComercioEmail(response.data.email || 'Email não disponível');
+                    setComercioName(comercioData[0]?.nomeDoComercio || 'Nome não disponível');
+                } catch (error: any) {
+                    if (error.response && error.response.status === 403) {
+                        dispatch(actions.loginFailure({ error: 'Unauthorized' }));
+                        navigate('/redirect');
+                        window.location.reload();
+                    }
+
+                    toast.error('Erro ao carregar o comércio', { theme: 'colored' });
+                }
+            }
+            loadComercio();
+        }
+    }, [dispatch, navigate, permission]);
     return (
         <Container $active={theme}>
 
@@ -35,20 +89,20 @@ const NavbarLateral: React.FC<NavbarLateralProps> = ({ setMenuLateral }) => {
                     <FaRegUserCircle size={32} />
                 </div>
                 <div>
-                    <h4>Nome do comercio</h4>
-                    <p>email@email.com</p>
+                    <h4>{comercioName}</h4>
+                    <p>{comercioEmail}</p>
                 </div>
                 <div onClick={handleOptionsProfile}>
-                    <IoMdArrowDropdown size={25}/>
+                    <IoMdArrowDropdown size={25} />
                 </div>
             </ComercioTitle>
             {perfilOptions && (
                 <>
                     {isLoggedIn === true && permission === 'costumer' ? (
                         <LinksNavLateral>
-                            <StyledLink to="/comercio/configuracao" $active={location.pathname === '/comercio/configuracao'} onClick={() => setMenuLateral(false)}>
+                            {/* <StyledLink to="/comercio/configuracao" $active={location.pathname === '/comercio/configuracao'} onClick={() => setMenuLateral(false)}>
                                 <span>Configuração</span>
-                            </StyledLink>
+                            </StyledLink> */}
                             <StyledLink to="/comercio/perfil" $active={location.pathname === '/comercio/perfil'} onClick={() => setMenuLateral(false)}>
                                 <span>Perfil</span>
                             </StyledLink>
@@ -81,11 +135,11 @@ const NavbarLateral: React.FC<NavbarLateralProps> = ({ setMenuLateral }) => {
                         <span>Realizar Venda</span>
                     </StyledLink>
                     <StyledLink to="/comercio/relatorios" $active={location.pathname === '/comercio/relatorios'} onClick={() => setMenuLateral(false)}>
-                        <span>Relatórios</span>
+                        <span>Entradas / Saidas </span>
                     </StyledLink>
-                    <StyledLink to="/comercio/tickets" $active={location.pathname === '/comercio/tickets'} onClick={() => setMenuLateral(false)}>
+                    {/* <StyledLink to="/comercio/tickets" $active={location.pathname === '/comercio/tickets'} onClick={() => setMenuLateral(false)}>
                         <span>Ticket</span>
-                    </StyledLink>
+                    </StyledLink> */}
                 </LinksNavLateral>
 
             ) : (

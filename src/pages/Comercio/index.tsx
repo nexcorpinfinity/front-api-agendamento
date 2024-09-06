@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { RootState } from '../../store/modules/rootReducer';
 import { useDispatch, useSelector } from 'react-redux';
@@ -149,7 +150,7 @@ const Comercio: React.FC = () => {
                 </CardContainers>
 
                 <DashboardCompoent theme={theme}/>
-                <h1>Ultimos pedidos</h1>
+                {/* <h1>Ultimos pedidos</h1>
                 <DivEmbaixoDoDashboard>
 
                     <div>
@@ -173,7 +174,7 @@ const Comercio: React.FC = () => {
                         <p>Finalizada </p>
                     </div>
 
-                </DivEmbaixoDoDashboard>
+                </DivEmbaixoDoDashboard> */}
 
             </Content>
         </Container>

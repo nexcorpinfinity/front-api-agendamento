@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Navigate, useLocation } from 'react-router-dom';
 import React, { ReactNode } from 'react';
 import { useSelector } from 'react-redux';
@@ -32,8 +31,6 @@ const PrivateRoute: React.FC<MyRouteProps> = ({ children, isClosed = false, requ
     }
 
     const decoded: Decoded = jwtDecode(token);
-
-    // console.log(decoded);
 
     const userPermission = decoded.permission;
 

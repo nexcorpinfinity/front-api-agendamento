@@ -61,7 +61,8 @@ const Login: React.FC = () => {
                 } else if (permission === 'costumer') {
                     navigate('/comercio');
                 } else if (permission === 'user') {
-                    navigate('/');
+                    // corrigir aqui quando o usuario apenas criar a conta e nao fazer login
+                    navigate('/criar-conta');
                 }
             }
         }

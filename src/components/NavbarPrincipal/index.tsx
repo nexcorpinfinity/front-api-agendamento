@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/modules/rootReducer';
 import React, { useState } from 'react';
@@ -49,9 +50,10 @@ const NavbarPrincipal: React.FC = () => {
     };
 
     return (
-        <Container>
+        <Container $active={theme}>
             <Nav>
                 <Logo>
+                    {/* fazer a verificacao se  a permissao dele é igual a user para, se for oculta o meunu lateral */}
                     {isLoggedIn && (
                         <span>
                             <IoMenuSharp onClick={toggleMenuLateral} size={30} />
@@ -60,13 +62,13 @@ const NavbarPrincipal: React.FC = () => {
                     <h2>Saas</h2>
                 </Logo>
                 {isLoggedIn === false && (
-                    <LinksHomeNotLogin>
-                        <Links to='/'>Home</Links>
-                        <Links to="/sobre">Sobre</Links>
+                    <LinksHomeNotLogin $active={theme} >
+                        <Links $active={theme}  to='/'>Home</Links>
+                        <Links $active={theme} to="/sobre">Sobre</Links>
                     </LinksHomeNotLogin>
                 )}
                 <ContentRight>
-                    {isLoggedIn === true && (
+                    {/* {isLoggedIn === true && (
                         <IntroductionAndButton>
                             <NotificationContainer onClick={handleNotificationClick}>
                                 <NotificationDiv>
@@ -83,29 +85,36 @@ const NavbarPrincipal: React.FC = () => {
                                 </div>
                             )}
                         </IntroductionAndButton>
-                    )}
+                    )} */}
 
                     <ButtonDarkTheme theme={theme} handleToggleTheme={handleToggleTheme} />
 
                     {isLoggedIn === true && (
                         <>
-                            <ProfileDiv onClick={() => setPerfilOptions(!perfilOptions)}>
+                            {/* <ProfileDiv onClick={() => setPerfilOptions(!perfilOptions)}>
                                 <FaRegUserCircle size={25} />
 
-                            </ProfileDiv>
-                            {perfilOptions && (
+                            </ProfileDiv> */}
+                            {/* {perfilOptions && (
                                 <>
-                                    <Links to="" onClick={(e) => {
+                                    <Links $active={theme} to="" onClick={(e) => {
                                         handleLogout(e);
                                         setPerfilOptions(false);
                                     }}>Sair</Links>
                                 </>
-                            )}
+                            )} */}
+                            <Links $active={theme} to="" onClick={(e) => {
+                                handleLogout(e);
+                                setPerfilOptions(false);
+                            }}>Sair</Links>
                         </>
                     )}
 
                     {isLoggedIn === false && (
-                        <Links to="/login">Login</Links>
+                        <>
+                            <Links $active={theme} to="/login">Login</Links>
+                            <Links $active={theme} to="/criar-conta">Registre-se</Links>
+                        </>
                     )}
 
                 </ContentRight>

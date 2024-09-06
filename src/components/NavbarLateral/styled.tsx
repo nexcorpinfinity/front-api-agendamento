@@ -6,13 +6,15 @@ export const Container = styled.div<{ $active: string | boolean }>`
     background-color: ${(props) => (props.$active ? temaGlobal.backgroundDark : temaGlobal.backgroundLight)};
     color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
     width: 320px;
-    border: 1px solid black;
+    border-right: 1px solid #ccc;
     display: flex;
     flex-direction: column;
     /* justify-content: space-between; */
     gap: 1rem;
     transition: width 0.3s ease;
-    height: 93vh;
+    height: 93.5vh;
+    @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+    font-family: "Inter", sans-serif;
 `;
 
 export const StyledLink = styled(Link) <{ $active?: boolean }>`
@@ -24,7 +26,8 @@ export const StyledLink = styled(Link) <{ $active?: boolean }>`
     text-decoration: none;
     color: #000000;
     background-color: ${(props) => (props.$active ? '#4267ce' : 'white')};
-    border: 1px solid ${(props) => (props.$active ? 'blue' : 'black')};
+    color: ${(props) => (props.$active ? '#ffffff' : 'black')};
+    border: 1px solid ${(props) => (props.$active ? 'blue' : '#ccc')};
     font-size: 0.9rem;
     transition: background-color 0.3s ease, color 0.3s ease;
 

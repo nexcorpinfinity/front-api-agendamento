@@ -11,32 +11,56 @@ export const Container = styled.div<{ $active: string | boolean }>`
     color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
     padding: 10px;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1250px;
     border-radius: 10px;
     margin: 0 auto;
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 25px;
 `;
 
 const EstoqueBaixoCard = styled.div`
-    border: 1px solid white;
+    border: 1px solid #ccc;
+    padding: 10px 20px;
     width: 300px;
+    text-align: center;
+    border-radius: 10px;
+
+    h3{
+    font-size: 1rem;
+    }
+
+    .baixo-stoque{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .title-baixo-estoque {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding:  5px 10px;
+        font-size: 0.8rem;
+    }
 `;
 
 const Produtos = styled.div`
-    border: 1px solid white;
     width: 300px;
 `;
 
 const TitleProdutos = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    border: 1px solid black;
-    border-radius: 20px;
-    padding: 10px 0px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px 20px;
+    margin: 0 10px;
+
 
     div:nth-child(1) {
         display: flex;
@@ -91,7 +115,7 @@ type ICustomTooltipProps = TooltipProps<number, string>;
 const DashboardComponent: React.FC<ThemeProps> = ({ theme }) => {
     const [produtosComEstoqueBaixo, setProdutosComEstoqueBaixo] = useState<IEstoque[]>([]);
     const [paginaAtual, setPaginaAtual] = useState(1);
-    const produtosPorPagina = 5;
+    const produtosPorPagina = 9;
 
     const dadosVendas = [
         { dia: 'Segunda', vendas: 150, saldoTotal: 1500 },
@@ -150,7 +174,7 @@ const DashboardComponent: React.FC<ThemeProps> = ({ theme }) => {
     return (
         <Container $active={theme}>
             <ResponsiveContainer width="100%" height={400}>
-                <LineChart data={dadosVendas} margin={{ top: 50, right: 30, bottom: 20, left: 20 }}>
+                <LineChart data={dadosVendas} margin={{ top: 50, right: 35, bottom: 20, left: 20 }}>
                     <XAxis dataKey="dia" />
                     <YAxis />
                     <Tooltip content={<CustomTooltip />} />
@@ -161,20 +185,26 @@ const DashboardComponent: React.FC<ThemeProps> = ({ theme }) => {
 
             <EstoqueBaixoCard>
                 <h3>Produtos com Estoque baixo: {produtosComEstoqueBaixo.length}</h3>
-                {produtosExibidos.map((produto) => (
-                    <Produtos key={produto.id}>
-                        <TitleProdutos>
-                            <div>
-                                <p>Nome</p>
-                                <p>{produto.product_name}</p>
-                            </div>
-                            <div>
-                                <p>Quantidade</p>
-                                <p>{produto.quantidade}</p>
-                            </div>
-                        </TitleProdutos>
-                    </Produtos>
-                ))}
+                <div className='title-baixo-estoque'>
+                    <p>Nome</p>
+                    <p>Quantidade</p>
+                </div>
+                <div className='baixo-stoque'>
+                    {produtosExibidos.map((produto) => (
+                        <Produtos key={produto.id}>
+                            <TitleProdutos>
+                                <div>
+
+                                    <p>{produto.product_name}</p>
+                                </div>
+                                <div>
+
+                                    <p>{produto.quantidade}</p>
+                                </div>
+                            </TitleProdutos>
+                        </Produtos>
+                    ))}
+                </div>
 
                 <PaginationButtons>
                     <button onClick={handlePaginaAnterior} disabled={paginaAtual === 1}>
