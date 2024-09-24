@@ -149,12 +149,12 @@ const Register: React.FC = () => {
                 setIsLoading(false);
                 toast.info('Por favor, Faça login novamente');
                 dispatch(actions.loginFailure({ error: 'Faça login novamente' }));
-                return navigate('/login');
+                return navigate('/');//retorna para a pagina de login o path de login por padrao é '/'
 
             } else if (cadastrandocomercio?.status === 200) {
                 setTimeout(() => {
                     dispatch(actions.loginRequest({ email: email, password: senha, prevPath }));
-                    navigate('/login');
+                    navigate('/');//retorna para a pagina de login o path de login por padrao é '/'
                     setIsLoading(false);
                 }, 2000);
             };

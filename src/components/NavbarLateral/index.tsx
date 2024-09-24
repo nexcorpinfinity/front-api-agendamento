@@ -13,6 +13,8 @@ import { AppDispatch } from '../../store';
 import * as actions from '../../store/modules/auth/actions';
 import { toast } from 'react-toastify';
 import { jwtDecode } from 'jwt-decode';
+import ButtonDarkTheme from '../ButtonDarkTheme';
+import { toggleTheme } from '../../store/modules/theme/actions';
 
 type NavbarLateralProps = {
     setMenuLateral: (value: boolean) => void;
@@ -81,6 +83,19 @@ const NavbarLateral: React.FC<NavbarLateralProps> = ({ setMenuLateral }) => {
             loadComercio();
         }
     }, [dispatch, navigate, permission]);
+
+    const handleToggleTheme = () => {
+        dispatch(toggleTheme());
+    };
+
+    const handleLogout = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        e.preventDefault();
+        dispatch(actions.loginFailure({ error: 'Unauthorized' }));
+        setMenuLateral(false);
+        navigate('/');
+        toast.info('Você fez Logout no Sistema', { theme: 'colored' });
+    };
+
     return (
         <Container $active={theme}>
 
@@ -165,6 +180,20 @@ const NavbarLateral: React.FC<NavbarLateralProps> = ({ setMenuLateral }) => {
                 )
             )}
 
+            <div>
+                <div>
+                    trocar tema
+                    <ButtonDarkTheme theme={theme} handleToggleTheme={handleToggleTheme} />
+
+                </div>
+
+                <LinksNavLateral>
+                    <StyledLink to="" onClick={(e) => {
+                        handleLogout(e);
+                        setPerfilOptions(false);
+                    }}>Sair</StyledLink>
+                </LinksNavLateral>
+            </div>
         </Container>
     );
 };

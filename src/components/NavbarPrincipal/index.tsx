@@ -20,109 +20,50 @@ const NavbarPrincipal: React.FC = () => {
     const theme = useSelector((state: RootState) => state.theme.theme);
 
     const [menuLateral, setMenuLateral] = useState<boolean>(false);
-    const [notifications] = useState<number>(10);
-    const [toggleNotification, setToggleNotification] = useState<boolean>(false);
-
-    const [perfilOptions, setPerfilOptions] = useState<boolean>(false);
 
     const toggleMenuLateral = () => {
         setMenuLateral(!menuLateral);
     };
 
-    const dispatch = useDispatch<AppDispatch>();
-
-    const handleToggleTheme = () => {
-        dispatch(toggleTheme());
-    };
-
-    const navigate = useNavigate();
-
-    const handleLogout = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-        e.preventDefault();
-        dispatch(actions.loginFailure({ error: 'Unauthorized' }));
-        setMenuLateral(false);
-        navigate('/');
-        toast.info('Você fez Logout no Sistema', { theme: 'colored' });
-    };
-
-    const handleNotificationClick = () => {
-        setToggleNotification(!toggleNotification);
-    };
+    // const handleNotificationClick = () => {
+    //     setToggleNotification(!toggleNotification);
+    // };
 
     return (
         <Container $active={theme}>
-            <Nav>
-                <Logo>
+
+            {isLoggedIn === true ? (
+                <MenuLateral>
+                    <NavbarLateral setMenuLateral={setMenuLateral}/>
+                    <RotasRegistradas />
+                </MenuLateral>
+            ) : (
+
+                <>
                     {/* fazer a verificacao se  a permissao dele é igual a user para, se for oculta o meunu lateral */}
-                    {isLoggedIn && (
-                        <span>
-                            <IoMenuSharp onClick={toggleMenuLateral} size={30} />
-                        </span>
-                    )}
-                    <h2>Saas</h2>
-                </Logo>
-                {isLoggedIn === false && (
-                    <LinksHomeNotLogin $active={theme} >
-                        <Links $active={theme}  to='/'>Home</Links>
-                        <Links $active={theme} to="/sobre">Sobre</Links>
-                    </LinksHomeNotLogin>
-                )}
-                <ContentRight>
-                    {/* {isLoggedIn === true && (
-                        <IntroductionAndButton>
-                            <NotificationContainer onClick={handleNotificationClick}>
-                                <NotificationDiv>
-                                    <FaBell size={20} />
-                                </NotificationDiv>
-                                {notifications > 0 && (
-                                    <Badge>{notifications}</Badge>
-                                )}
-                            </NotificationContainer>
-                            {toggleNotification && (
-                                <div className='noti-poupap'>
-                                    <p>Notificações</p>
-                                    <button onClick={() => setToggleNotification(false)}>X</button>
-                                </div>
+                    <Nav>
+                        <Logo>
+                            {isLoggedIn && (
+                                <span>
+                                    <IoMenuSharp onClick={toggleMenuLateral} size={30} />
+                                </span>
                             )}
-                        </IntroductionAndButton>
-                    )} */}
+                            <h2>Saas</h2>
+                        </Logo>
 
-                    <ButtonDarkTheme theme={theme} handleToggleTheme={handleToggleTheme} />
+                        <ContentRight>
 
-                    {isLoggedIn === true && (
-                        <>
-                            {/* <ProfileDiv onClick={() => setPerfilOptions(!perfilOptions)}>
-                                <FaRegUserCircle size={25} />
-
-                            </ProfileDiv> */}
-                            {/* {perfilOptions && (
-                                <>
-                                    <Links $active={theme} to="" onClick={(e) => {
-                                        handleLogout(e);
-                                        setPerfilOptions(false);
-                                    }}>Sair</Links>
-                                </>
-                            )} */}
-                            <Links $active={theme} to="" onClick={(e) => {
-                                handleLogout(e);
-                                setPerfilOptions(false);
-                            }}>Sair</Links>
-                        </>
-                    )}
-
-                    {isLoggedIn === false && (
-                        <>
-                            <Links $active={theme} to="/login">Login</Links>
+                            <Links $active={theme} to="/">Login</Links>
                             <Links $active={theme} to="/criar-conta">Registre-se</Links>
-                        </>
-                    )}
 
-                </ContentRight>
-            </Nav>
-            <MenuLateral>
-                {menuLateral && <NavbarLateral setMenuLateral={setMenuLateral}/>}
-                <RotasRegistradas />
-            </MenuLateral>
+                        </ContentRight>
+
+                    </Nav>
+                    <RotasRegistradas />
+
+                </>
+            )}
+
         </Container>
     );
 };

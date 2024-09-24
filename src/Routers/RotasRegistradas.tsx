@@ -1,14 +1,9 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import PrivateRoute from './RotaPrivada';
-import Home from '../pages/Home';
 import Error404 from '../pages/Error404';
-import Comercio from '../pages/Comercio';
-import Sobre from '../pages/Sobre';
 import Register from '../pages/Registrer';
-import Login from '../pages/Login';
-import Contato from '../pages/Contato';
-import Planos from '../pages/Planos';
+
 import Admin from '../pages/Admin';
 import AdminNotifications from '../pages/Admin/AdminNotifications';
 import AdminGestaoDeComercios from '../pages/Admin/AdminGestaoDeComercios';
@@ -27,6 +22,8 @@ import Redirect from '../pages/Redirect';
 import { GlobalStyled } from '../styles/GlobalStyled';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/modules/rootReducer';
+import Login from '../pages/Login';
+import Comercio from '../pages/Comercio';
 
 const RotasRegistradas: React.FC = () => {
     const theme = useSelector((state: RootState) => state.theme.theme);
@@ -36,11 +33,7 @@ const RotasRegistradas: React.FC = () => {
             <GlobalStyled $active={theme}/>
             <Routes>
 
-                <Route path="/" element={<Home />} />
-                <Route path="/sobre" element={<Sobre />} />
-                <Route path="/contato" element={<Contato />} />
-                <Route path="/planos" element={<Planos />} />
-                <Route path="/login" element={<Login />} />
+                <Route path="/" element={<Login />} />
                 <Route path="/criar-conta" element={<Register />} />
 
                 <Route
