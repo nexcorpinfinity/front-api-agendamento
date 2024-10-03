@@ -203,7 +203,7 @@ const Register: React.FC = () => {
                         </div>
 
                         <button className="button-submit">Cadastrar</button>
-                        <p className="p">Já possui conta ?<Link to={'/login'}><span className="span">Faça Login</span></Link></p>
+                        <p className="p">Já possui conta ?<Link to={'/'}><span className="span">Faça Login</span></Link></p>
 
                     </Form>
                 </Container>

@@ -26,7 +26,6 @@ export const Nav = styled.nav`
 `;
 
 export const LinksHomeNotLogin = styled.div<{ $active: string | boolean }>`
-
     display: flex;
     flex-direction: row;
     gap: 1rem;

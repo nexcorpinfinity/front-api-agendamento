@@ -2,17 +2,15 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/modules/rootReducer';
 import React, { useState } from 'react';
-import { AppDispatch } from '../../store';
-import { toggleTheme } from '../../store/modules/theme/actions';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+
 import * as actions from '../../store/modules/auth/actions';
 import { Badge, Container, ContentRight, IntroductionAndButton, Links, LinksHomeNotLogin, Logo, MenuLateral, Nav, NotificationContainer, NotificationDiv, ProfileDiv } from './styled';
 import { IoMenuSharp } from 'react-icons/io5';
 import RotasRegistradas from '../../Routers/RotasRegistradas';
 import NavbarLateral from '../NavbarLateral';
+import { AppDispatch } from '../../store';
+import { toggleTheme } from '../../store/modules/theme/actions';
 import ButtonDarkTheme from '../ButtonDarkTheme';
-import { FaBell, FaRegUserCircle } from 'react-icons/fa';
 
 const NavbarPrincipal: React.FC = () => {
     const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
@@ -28,6 +26,11 @@ const NavbarPrincipal: React.FC = () => {
     // const handleNotificationClick = () => {
     //     setToggleNotification(!toggleNotification);
     // };
+    const dispatch = useDispatch<AppDispatch>();
+
+    const handleToggleTheme = () => {
+        dispatch(toggleTheme());
+    };
 
     return (
         <Container $active={theme}>
@@ -52,7 +55,7 @@ const NavbarPrincipal: React.FC = () => {
                         </Logo>
 
                         <ContentRight>
-
+                            <ButtonDarkTheme theme={theme} handleToggleTheme={handleToggleTheme} />
                             <Links $active={theme} to="/">Login</Links>
                             <Links $active={theme} to="/criar-conta">Registre-se</Links>
 

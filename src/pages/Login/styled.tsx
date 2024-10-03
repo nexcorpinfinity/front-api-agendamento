@@ -4,7 +4,7 @@ import { temaGlobal } from '../../styles/theme';
 export const Container = styled.nav<{ $active: string | boolean }>`
     background-color: ${(props) => (props.$active ? temaGlobal.backgroundDark : temaGlobal.backgroundLight)};
     color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
-    height: 96vh;
+    height: 94vh;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -32,7 +32,7 @@ export const FormLogin = styled.form`
   width: 450px;
   border-radius: 20px;
   font-family: 'Roboto', sans-serif;
-  border: 1px solid black;    
+  border: 1px solid black;
   ::placeholder {
     font-family: 'Roboto', sans-serif;
 }

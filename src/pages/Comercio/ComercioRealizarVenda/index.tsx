@@ -94,6 +94,17 @@ const ComercioRealizarVenda: React.FC = () => {
 
     console.log(carrinho);
 
+    const handleSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+
+        const enviarArrayDeProdutos = await AxiosRequest.post('/commerce/realizar-vendas', {
+            produtos: carrinho
+        });
+
+        console.log(enviarArrayDeProdutos.data);
+
+    };
+
     return (
         <Container $active={theme}>
             <div className="esquerda">
@@ -131,7 +142,7 @@ const ComercioRealizarVenda: React.FC = () => {
                     <h1>Total</h1>
                     <p>R$ {calcularTotal()}</p>
                     <button
-                        onClick={() => alert('Venda finalizada!')}
+                        onClick={handleSubmit}
                         disabled={carrinho.length === 0}
                         style={{
                             backgroundColor: carrinho.length === 0 ? '#ccc' : '#4CAF50',

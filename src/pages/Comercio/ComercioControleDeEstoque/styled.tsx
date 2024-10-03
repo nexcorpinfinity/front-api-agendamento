@@ -207,10 +207,16 @@ export const PesquisaECadastro = styled.div`
     gap: 20px;
     align-items: center;
     button {
-        padding:15px;
-        font-weight: bold;
+        border: none;
+        padding: 15px 20px;
+        font-size: 1rem;
         cursor: pointer;
-        border-radius: 10px;
+        background-color: #007BFF;
+        color: #fff;
+        letter-spacing: 0.5px;
+        transition: 0.2s;
+        border-radius: 5px 5px 8px 8px;
+
         &:active {
             transform: scale(0.98);
         }
