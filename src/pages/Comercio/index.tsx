@@ -32,7 +32,8 @@ const Comercio: React.FC = () => {
 
     const decoded: Decoded = jwtDecode(user);
 
-    const nome = decoded.nomeDoUsuario;
+    const nome = decoded.name;
+    console.log(decoded);
 
     useEffect(() => {
         document.title = 'Comercio';
@@ -89,14 +90,12 @@ const Comercio: React.FC = () => {
         }
     ];
 
-    const nomeFormatado = nome.charAt(0).toUpperCase() + nome.slice(1).toLowerCase();
-
     return (
         <Container $active={theme}>
             <Content $active={theme}>
                 <Titulo>
                     <IntroductionAndButton>
-                        <h2>Bem vindo novamente, {nomeFormatado} </h2>
+                        <h2>Bem vindo novamente, {nome} </h2>
 
                     </IntroductionAndButton>
                     <div>

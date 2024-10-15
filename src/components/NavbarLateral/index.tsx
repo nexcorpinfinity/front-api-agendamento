@@ -46,24 +46,25 @@ const NavbarLateral: React.FC<NavbarLateralProps> = ({ setMenuLateral }) => {
                 try {
                     const response = await AxiosRequest.get('/commerce/usuario');
 
+                    console.log(response.data);
                     if (response.status !== 200) {
                         return <Navigate to="/redirect" />;
                     }
 
-                    const comercioData = Array.isArray(response.data)
-                        ? response.data.map((item) => ({
-                            id: item.id,
-                            nomeDoComercio: item.Comercio.comercio_name,
-                        }))
-                        : [
-                            {
-                                id: response.data.id,
-                                nomeDoComercio: response.data.Comercio.comercio_name,
-                            },
-                        ];
+                    // const comercioData = Array.isArray(response.data)
+                    //     ? response.data.map((item) => ({
+                    //         id: item.id,
+                    //         nomeDoComercio: item.Comercio.comercio_name,
+                    //     }))
+                    //     : [
+                    //         {
+                    //             id: response.data.id,
+                    //             nomeDoComercio: response.data.Comercio.comercio_name,
+                    //         },
+                    //     ];
 
                     setComercioEmail(response.data.email || 'Email não disponível');
-                    setComercioName(comercioData[0]?.nomeDoComercio || 'Nome não disponível');
+                    setComercioName(response.data.Business.name || 'Nome não disponível');
                 } catch (error: any) {
                     if (error.response && error.response.status === 403) {
                         dispatch(actions.loginFailure({ error: 'Unauthorized' }));

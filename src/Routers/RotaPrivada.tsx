@@ -15,8 +15,8 @@ interface LocationState {
 }
 
 export interface Decoded {
-    idUser: string;
-    nomeDoUsuario: string;
+    id: string;
+    name: string;
     permission: string;
     exp: number;
     iat: number;
