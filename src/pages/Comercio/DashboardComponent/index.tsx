@@ -101,9 +101,9 @@ const PaginationButtons = styled.div`
 
 interface IEstoque {
     id: string;
-    product_name: string;
+    name: string;
     price: number;
-    quantidade: number;
+    stock: number;
 }
 
 type ThemeProps = {
@@ -149,7 +149,7 @@ const DashboardComponent: React.FC<ThemeProps> = ({ theme }) => {
             const produtosCadastrados = response.data.todosProdutos;
 
             const produtosBaixoEstoque = produtosCadastrados.filter(
-                (produto: IEstoque) => parseInt(produto.quantidade.toString(), 10) < 10
+                (produto: IEstoque) => parseInt(produto.stock.toString(), 10) < 10
             );
             setProdutosComEstoqueBaixo(produtosBaixoEstoque);
         };
@@ -195,11 +195,11 @@ const DashboardComponent: React.FC<ThemeProps> = ({ theme }) => {
                             <TitleProdutos>
                                 <div>
 
-                                    <p>{produto.product_name}</p>
+                                    <p>{produto.name}</p>
                                 </div>
                                 <div>
 
-                                    <p>{produto.quantidade}</p>
+                                    <p>{produto.stock}</p>
                                 </div>
                             </TitleProdutos>
                         </Produtos>

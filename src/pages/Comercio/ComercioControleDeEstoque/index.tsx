@@ -14,9 +14,10 @@ import { Container, ContainerProdutos, Main, PesquisaECadastro, TituloPage, Sear
 
 interface IEstoque {
     id: string;
-    product_name: string;
+    name: string;
     price: number;
-    quantidade: number;
+    stock: number;
+
 }
 
 const ComercioControleDeEstoque: React.FC = () => {
@@ -50,6 +51,9 @@ const ComercioControleDeEstoque: React.FC = () => {
             try {
                 setIsLoading(true);
                 const response = await AxiosRequest.get('/commerce/meus-produtos-cadastrados');
+
+                // console.log(response.data.todosProdutos)
+
                 setEstoque(response.data.todosProdutos);
                 setIsLoading(false);
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -64,7 +68,7 @@ const ComercioControleDeEstoque: React.FC = () => {
         fetchProducts();
     }, []);
 
-    const filteredProducts = estoque.filter((item) => item.product_name.toLowerCase().includes(searchTerm.toLowerCase()));
+    const filteredProducts = estoque.filter((item) => item.name.toLowerCase().includes(searchTerm.toLowerCase()));
 
     const indexOfLastProduct = currentPage * itemsPerPage;
     const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
@@ -111,9 +115,9 @@ const ComercioControleDeEstoque: React.FC = () => {
 
         try {
             AxiosRequest.post('/commerce/cadastrar-produtos', {
-                product_name: newNomeDoProduto,
+                name: newNomeDoProduto,
                 price: newPrecoDoProduto,
-                quantidade: newQuantidadeDoProduto
+                stock: newQuantidadeDoProduto
             });
 
             toast.success('Produto cadastrado com sucesso', { theme: 'colored' });
@@ -144,9 +148,9 @@ const ComercioControleDeEstoque: React.FC = () => {
 
     const handleEditTask = (product: IEstoque) => {
         setProdutoEditando(product);
-        setNomeDoProduto(product.product_name);
+        setNomeDoProduto(product.name);
         setPrecoDoProduto(product.price.toString());
-        setQuantidadeDoProduto(product.quantidade);
+        setQuantidadeDoProduto(product.stock);
         setIsEdit(true);
     };
 
@@ -174,9 +178,9 @@ const ComercioControleDeEstoque: React.FC = () => {
 
         try {
             AxiosRequest.put(`/commerce/atualizar-produto/${produtoEditando.id}`, {
-                product_name: nomeDoProduto,
+                name: nomeDoProduto,
                 price: precoDoProduto,
-                quantidade: quantidadeDoProduto
+                stock: quantidadeDoProduto
             });
 
             toast.success('Produto atualizado com sucesso', { theme: 'colored' });
@@ -233,7 +237,7 @@ const ComercioControleDeEstoque: React.FC = () => {
                         <Produto key={index}>
                             <ProdutoFlag>
                                 <h4>Produto</h4>
-                                <p>{item.product_name}</p>
+                                <p>{item.name}</p>
                             </ProdutoFlag>
                             <ProdutoFlag>
                                 <h4>Preço do Produto</h4>
@@ -241,7 +245,7 @@ const ComercioControleDeEstoque: React.FC = () => {
                             </ProdutoFlag>
                             <ProdutoFlag>
                                 <h4>Quantidade no estoque</h4>
-                                <p>{item.quantidade}</p>
+                                <p>{item.stock}</p>
                             </ProdutoFlag>
                             <ProdutoButtons>
                                 <button onClick={() => {

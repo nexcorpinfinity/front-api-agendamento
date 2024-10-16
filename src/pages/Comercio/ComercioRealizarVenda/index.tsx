@@ -10,21 +10,14 @@ import { toast } from 'react-toastify';
 
 interface IEstoque {
     id: string;
-    product_name: string;
+    name: string;
     price: number;
-    quantidade: number;
-}
-
-interface ICarrinho {
-    id: string;
-    nome: string;
-    preco: number;
-    quantidade: number;
+    stock: number;
 }
 
 const ComercioRealizarVenda: React.FC = () => {
     const [pesquisa, setPesquisa] = useState('');
-    const [carrinho, setCarrinho] = useState<ICarrinho[]>([]);
+    const [carrinho, setCarrinho] = useState<IEstoque[]>([]);
     const [estoque, setEstoque] = useState<IEstoque[]>([]);
 
     const theme = useSelector((state: RootState) => state.theme.theme);
@@ -32,7 +25,7 @@ const ComercioRealizarVenda: React.FC = () => {
     const navigate = useNavigate();
 
     const produtosFiltrados = estoque.filter((produto) =>
-        produto.product_name.toLowerCase().includes(pesquisa.toLowerCase())
+        produto.name.toLowerCase().includes(pesquisa.toLowerCase())
     );
 
     const adicionarAoCarrinho = (produto: IEstoque) => {
@@ -40,11 +33,11 @@ const ComercioRealizarVenda: React.FC = () => {
         if (produtoExistente) {
             setCarrinho(
                 carrinho.map((item) =>
-                    item.id === produto.id ? { ...item, quantidade: item.quantidade + 1 } : item
+                    item.id === produto.id ? { ...item, stock: item.stock + 1 } : item
                 )
             );
         } else {
-            setCarrinho([...carrinho, { id: produto.id, nome: produto.product_name, preco: produto.price, quantidade: 1 }]);
+            setCarrinho([...carrinho, { id: produto.id, name: produto.name, price: produto.price, stock: 1 }]);
         }
     };
 
@@ -55,7 +48,7 @@ const ComercioRealizarVenda: React.FC = () => {
     const aumentarQuantidade = (produtoId: string) => {
         setCarrinho(
             carrinho.map((item) =>
-                item.id === produtoId ? { ...item, quantidade: item.quantidade + 1 } : item
+                item.id === produtoId ? { ...item, stock: item.stock + 1 } : item
             )
         );
     };
@@ -63,15 +56,15 @@ const ComercioRealizarVenda: React.FC = () => {
     const diminuirQuantidade = (produtoId: string) => {
         setCarrinho(
             carrinho.map((item) =>
-                item.id === produtoId && item.quantidade > 1
-                    ? { ...item, quantidade: item.quantidade - 1 }
+                item.id === produtoId && item.stock > 1
+                    ? { ...item, stock: item.stock - 1 }
                     : item
             )
         );
     };
 
     const calcularTotal = (): number => {
-        return carrinho.reduce((total, item) => total + item.preco * item.quantidade, 0);
+        return carrinho.reduce((total, item) => total + item.price * item.stock, 0);
     };
 
     useEffect(() => {
@@ -118,7 +111,7 @@ const ComercioRealizarVenda: React.FC = () => {
                 <div>
                     {produtosFiltrados.map((produto) => (
                         <div key={produto.id}>
-                            <p>{produto.product_name} - R${produto.price}</p>
+                            <p>{produto.name} - R${produto.price}</p>
                             <button onClick={() => adicionarAoCarrinho(produto)}>Adicionar ao carrinho</button>
                         </div>
                     ))}
@@ -130,7 +123,7 @@ const ComercioRealizarVenda: React.FC = () => {
                     {carrinho.map((item) => (
                         <div key={item.id}>
                             <p>
-                                {item.nome} - R${item.preco} x {item.quantidade}
+                                {item.name} - R${item.price} x {item.stock}
                             </p>
                             <button onClick={() => diminuirQuantidade(item.id)}>-</button>
                             <button onClick={() => aumentarQuantidade(item.id)}>+</button>
