@@ -217,7 +217,7 @@ const ComercioControleDeEstoque: React.FC = () => {
 
     return (
         <Container $active={theme}>
-            <Loading isLoading={isLoading} />
+            {/* <Loading isLoading={isLoading} /> */}
             <Main>
                 <TituloPage>
                     <h2>Estoque</h2>

@@ -37,10 +37,10 @@ interface UpdateProfileRequestAction {
 function* loginRequest({ payload }: LoginRequestAction) {
     try {
         const response: AxiosResponse = yield call(AxiosRequest.post, '/auth', payload);
-        yield put(actions.loginSuccess({ ...response.data }));
+        yield put(actions.loginSuccess({ ...response.data.resource }));
         toast.success('Login efetuado com sucesso!');
 
-        AxiosRequest.defaults.headers.Authorization = `Bearer ${response.data.token}`;
+        AxiosRequest.defaults.headers.Authorization = `Bearer ${response.data.resource.token}`;
     } catch (e) {
         console.log(e);
         yield put(actions.loginFailure({ error: 'Usuário ou senha inválidos.' }));

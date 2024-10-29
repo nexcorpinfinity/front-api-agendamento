@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import { ComercioTitle, Container, LinksNavLateral, StyledLink } from './styled';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,15 +16,16 @@ import { toggleTheme } from '../../store/modules/theme/actions';
 
 type NavbarLateralProps = {
     setMenuLateral: (value: boolean) => void;
-}
+};
 
 const NavbarLateral: React.FC<NavbarLateralProps> = ({ setMenuLateral }) => {
     const theme = useSelector((state: RootState) => state.theme.theme);
     const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
-    const [comercioName, setComercioName] = useState<string | null>(null);
-    const [comercioEmail, setComercioEmail] = useState<string | null>(null);
 
-    // ta com bug qnd o token é invalido
+    // const [comercioName, setComercioName] = useState<string | null>(null);
+    // const [comercioEmail, setComercioEmail] = useState<string | null>(null);
+
+    // // ta com bug qnd o token é invalido
 
     const location = useLocation();
     const dispatch = useDispatch<AppDispatch>();
@@ -41,12 +41,12 @@ const NavbarLateral: React.FC<NavbarLateralProps> = ({ setMenuLateral }) => {
     const permission = decoded.permission;
 
     useEffect(() => {
+
         if (permission === 'costumer') {
             async function loadComercio() {
                 try {
                     const response = await AxiosRequest.get('/commerce/usuario');
 
-                    console.log(response.data);
                     if (response.status !== 200) {
                         return <Navigate to="/redirect" />;
                     }
@@ -63,8 +63,9 @@ const NavbarLateral: React.FC<NavbarLateralProps> = ({ setMenuLateral }) => {
                     //         },
                     //     ];
 
-                    setComercioEmail(response.data.email || 'Email não disponível');
-                    setComercioName(response.data.Business.name || 'Nome não disponível');
+                    // setComercioEmail(response.data.email || 'Email não disponível');
+                    // setComercioName(response.data.Business.name || 'Nome não disponível');
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 } catch (error: any) {
                     if (error.response && error.response.status === 403) {
                         dispatch(actions.loginFailure({ error: 'Unauthorized' }));
@@ -93,15 +94,14 @@ const NavbarLateral: React.FC<NavbarLateralProps> = ({ setMenuLateral }) => {
 
     return (
         <Container $active={theme}>
-
             <div>
                 <ComercioTitle>
                     <div>
                         <FaRegUserCircle size={32} />
                     </div>
                     <div>
-                        <h4>{comercioName}</h4>
-                        <p>{comercioEmail}</p>
+                        {/* <h4>{comercioName}</h4> */}
+                        {/* <p>{comercioEmail}</p> */}
                     </div>
                     {/* <div onClick={handleOptionsProfile}>
                         <IoMdArrowDropdown size={25} />
@@ -151,13 +151,10 @@ const NavbarLateral: React.FC<NavbarLateralProps> = ({ setMenuLateral }) => {
 
             <div>
                 <LinksNavLateral>
-                    <div className='temas'>
-                        <p>
-                            Trocar Tema
-                        </p>
+                    <div className="temas">
+                        <p>Trocar Tema</p>
                         <ButtonDarkTheme theme={theme} handleToggleTheme={handleToggleTheme} />
                     </div>
-
                 </LinksNavLateral>
 
                 {isLoggedIn === true && permission === 'costumer' ? (
@@ -181,9 +178,14 @@ const NavbarLateral: React.FC<NavbarLateralProps> = ({ setMenuLateral }) => {
                     )
                 )}
                 <LinksNavLateral>
-                    <StyledLink to="" onClick={(e) => {
-                        handleLogout(e);
-                    }}>Sair</StyledLink>
+                    <StyledLink
+                        to=""
+                        onClick={(e) => {
+                            handleLogout(e);
+                        }}
+                    >
+                        Sair
+                    </StyledLink>
                 </LinksNavLateral>
             </div>
         </Container>
