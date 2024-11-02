@@ -1,11 +1,11 @@
-import { call, put, all, takeLatest, fork, AllEffect, ForkEffect } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
-import * as actions from './actions';
-import * as types from '../types';
-
-import { get } from 'lodash';
 import { AxiosResponse } from 'axios';
+import { get } from 'lodash';
+import { toast } from 'react-toastify';
+import { call, put, all, takeLatest, fork, AllEffect, ForkEffect } from 'redux-saga/effects';
+
+import * as actions from './actions';
 import AxiosRequest from '../../../services/axios/AxiosRequest';
+import * as types from '../types';
 
 interface LoginRequestAction {
     type: typeof types.LOGIN_REQUEST_REQUEST;
@@ -78,7 +78,11 @@ function* updateProfileRequest({ payload }: UpdateProfileRequestAction) {
         } else {
             toast.error('Ocorreu um erro ao atualizar o perfil, tente novamente.');
         }
-        yield put(actions.updateFailure({ error: 'Ocorreu um erro ao atualizar o perfil, tente novamente.' }));
+        yield put(
+            actions.updateFailure({
+                error: 'Ocorreu um erro ao atualizar o perfil, tente novamente.',
+            }),
+        );
     }
 }
 
@@ -95,5 +99,9 @@ function* watchUpdateProfileRequest() {
 }
 
 export default function* authSaga(): Generator<AllEffect<ForkEffect<void>>, void, unknown> {
-    yield all([fork(watchLoginRequest), fork(watchPersistRehydrate), fork(watchUpdateProfileRequest)]);
+    yield all([
+        fork(watchLoginRequest),
+        fork(watchPersistRehydrate),
+        fork(watchUpdateProfileRequest),
+    ]);
 }

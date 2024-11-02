@@ -1,7 +1,8 @@
-import { Navigate, useLocation } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 import React, { ReactNode } from 'react';
 import { useSelector } from 'react-redux';
-import { jwtDecode } from 'jwt-decode';
+import { Navigate, useLocation } from 'react-router-dom';
+
 import { RootState } from '../store/modules/rootReducer';
 
 interface MyRouteProps {
@@ -22,7 +23,11 @@ export interface Decoded {
     iat: number;
 }
 
-const PrivateRoute: React.FC<MyRouteProps> = ({ children, isClosed = false, requiredPermission }) => {
+const PrivateRoute: React.FC<MyRouteProps> = ({
+    children,
+    isClosed = false,
+    requiredPermission,
+}) => {
     const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
     const token = useSelector((state: RootState) => state.auth.token);
 
@@ -41,10 +46,13 @@ const PrivateRoute: React.FC<MyRouteProps> = ({ children, isClosed = false, requ
     }
 
     if (requiredPermission && userPermission !== requiredPermission) {
-        return <Navigate to="/unauthorized" state={{ prevPath: location.pathname } as LocationState} />;
+        return (
+            <Navigate to="/unauthorized" state={{ prevPath: location.pathname } as LocationState} />
+        );
     }
 
-    const renderedChildren = typeof children === 'function' ? (children as () => ReactNode)() : children;
+    const renderedChildren =
+        typeof children === 'function' ? (children as () => ReactNode)() : children;
 
     return isLoggedIn ? <>{renderedChildren}</> : <Navigate to="/login" />;
 };

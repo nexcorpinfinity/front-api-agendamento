@@ -1,59 +1,61 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
+
 import { RootState } from '../../../store/modules/rootReducer';
 import { temaGlobal } from '../../../styles/theme';
 
 export const Container = styled.div<{ $active: string | boolean }>`
-  width: 100%;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  background-color: ${(props) =>
+    width: 100%;
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
+    background-color: ${(props) =>
         props.$active ? temaGlobal.backgroundDark : temaGlobal.backgroundLight};
-  color: ${(props) =>
-        props.$active ? temaGlobal.colorDark : temaGlobal.colorLight};
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
+    color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
 `;
 
 export const Button = styled.button`
-  margin: 10px;
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-  background-color: #007bff;
-  color: #ffffff;
-  border-radius: 5px;
-  &:hover {
-    background-color: #0056b3;
-  }
+    margin: 10px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #ffffff;
+    border-radius: 5px;
+    &:hover {
+        background-color: #0056b3;
+    }
 `;
 
 export const Input = styled.input`
-  margin: 5px 0;
-  padding: 10px;
-  border: 1px solid #cccccc;
-  border-radius: 5px;
-  width: 100%;
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    width: 100%;
 `;
 
 export const DespesaContainer = styled.div`
-  margin-top: 20px;
+    margin-top: 20px;
 `;
 
 export const VendaContainer = styled.div`
-  margin-top: 20px;
+    margin-top: 20px;
 `;
 
 export const VendaItem = styled.div`
-  padding: 10px;
-  border-bottom: 1px solid #cccccc;
-  cursor: pointer;
+    padding: 10px;
+    border-bottom: 1px solid #cccccc;
+    cursor: pointer;
 `;
 
 export const VendaDetails = styled.div`
-  padding-left: 20px;
-  margin-top: 10px;
+    padding-left: 20px;
+    margin-top: 10px;
 `;
 
 const mockDespesas = [
@@ -89,11 +91,11 @@ const ComercioRelatorioMensal: React.FC = () => {
             <h2>Relatório Mensal de Comércio</h2>
 
             <Button onClick={() => alert(`Faturamento Mensal: R$ ${faturamentoMensal}`)}>
-        Faturamento Mensal
+                Faturamento Mensal
             </Button>
 
             <Button onClick={() => alert(`Faturamento Diário: R$ ${totalVendas}`)}>
-        Faturamento Diário
+                Faturamento Diário
             </Button>
 
             <DespesaContainer>
@@ -123,7 +125,11 @@ const ComercioRelatorioMensal: React.FC = () => {
                 <h3>Vendas Realizadas</h3>
                 {vendas.map((venda) => (
                     <div key={venda.id}>
-                        <VendaItem onClick={() => setVendaSelecionada(vendaSelecionada === venda.id ? null : venda.id)}>
+                        <VendaItem
+                            onClick={() =>
+                                setVendaSelecionada(vendaSelecionada === venda.id ? null : venda.id)
+                            }
+                        >
                             {`Venda de R$ ${venda.valor} - ${venda.quantidade} produtos`}
                         </VendaItem>
                         {vendaSelecionada === venda.id && (

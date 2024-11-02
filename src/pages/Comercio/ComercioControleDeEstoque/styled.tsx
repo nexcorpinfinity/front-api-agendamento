@@ -1,16 +1,20 @@
-import { temaGlobal } from '../../../styles/theme';
 import styled from 'styled-components';
+
+import { temaGlobal } from '../../../styles/theme';
 
 export const Container = styled.div<{ $active: string | boolean }>`
     width: 100%;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    background-color: ${(props) => (props.$active ? temaGlobal.backgroundDark : temaGlobal.backgroundLight)};
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
+    background-color: ${(props) =>
+        props.$active ? temaGlobal.backgroundDark : temaGlobal.backgroundLight};
     color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
     display: flex;
     flex-direction: row;
     padding: 1.5rem 2rem;
     @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-    font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
 `;
 
 export const Main = styled.div`
@@ -85,7 +89,7 @@ export const Pagination = styled.div`
         padding: 10px 20px;
         margin: 0 5px;
         border: none;
-        background-color: #007BFF;
+        background-color: #007bff;
         color: white;
         cursor: pointer;
         border-radius: 5px;
@@ -126,12 +130,12 @@ export const BoxEdit = styled.div`
     align-items: center;
     justify-content: center;
 
-.btns-delete{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 10px
-}
+    .btns-delete {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 10px;
+    }
 `;
 
 export const BoxContent = styled.div`
@@ -184,7 +188,6 @@ export const Button = styled.button`
     border-radius: 5px 5px 8px 8px;
 
     &:active {
-
         transform: scale(0.95);
     }
 `;
@@ -211,7 +214,7 @@ export const PesquisaECadastro = styled.div`
         padding: 15px 20px;
         font-size: 1rem;
         cursor: pointer;
-        background-color: #007BFF;
+        background-color: #007bff;
         color: #fff;
         letter-spacing: 0.5px;
         transition: 0.2s;

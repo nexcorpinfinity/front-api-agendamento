@@ -27,7 +27,6 @@ interface UpdateRequestPayload {
     password?: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface UpdateSuccessPayload {}
 
 interface UpdateFailurePayload {

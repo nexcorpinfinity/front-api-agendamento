@@ -1,5 +1,6 @@
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
 import { temaGlobal } from '../../styles/theme';
 
 export const MenuLateral = styled.div`
@@ -8,11 +9,9 @@ export const MenuLateral = styled.div`
 `;
 
 export const Container = styled.div<{ $active: string | boolean }>`
-
     width: 100%;
     @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-    font-family: "Inter", sans-serif;
-
+    font-family: 'Inter', sans-serif;
 `;
 export const Nav = styled.nav`
     padding: 13px;
@@ -21,19 +20,16 @@ export const Nav = styled.nav`
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #ccc;
-
-
 `;
 
 export const LinksHomeNotLogin = styled.div<{ $active: string | boolean }>`
     display: flex;
     flex-direction: row;
     gap: 1rem;
-    a{
+    a {
         color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
         font-size: 15px;
     }
-
 `;
 
 export const NotificationContainer = styled.div`
@@ -62,7 +58,7 @@ export const IntroductionAndButton = styled.div`
     flex-direction: row;
     justify-content: space-between;
 
-    .noti-poupap{
+    .noti-poupap {
         position: absolute;
         top: 50px;
         right: 170px;
@@ -120,5 +116,4 @@ export const Links = styled(Link)<{ $active: string | boolean }>`
     &:hover {
         color: blue;
     }
-
 `;

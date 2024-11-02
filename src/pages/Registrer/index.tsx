@@ -1,18 +1,22 @@
+import { get } from 'lodash';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store/modules/rootReducer';
-import { MdAlternateEmail } from 'react-icons/md';
+
 import { HiOutlineLockClosed } from 'react-icons/hi';
 import { IoPersonSharp } from 'react-icons/io5';
+import { MdAlternateEmail } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import * as actions from '../../store/modules/auth/actions';
-import { Container, Form } from './styled';
-import CadastroComercio from './CadastroComercio';
+
 import { toast } from 'react-toastify';
+
+import CadastroComercio from './CadastroComercio';
+import { Container, Form } from './styled';
+
+import Loading from '../../components/Loading';
 import AxiosRequest from '../../services/axios/AxiosRequest';
 import { AppDispatch } from '../../store';
-import { get } from 'lodash';
-import Loading from '../../components/Loading';
+import * as actions from '../../store/modules/auth/actions';
+import { RootState } from '../../store/modules/rootReducer';
 
 const Register: React.FC = () => {
     const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
@@ -62,30 +66,33 @@ const Register: React.FC = () => {
             const token = await fazerLogin(email, senha);
 
             if (token !== null && token !== undefined) {
-
                 setTokenTemporario(token);
                 setPreLogin(true);
                 toast.success('Login realizado com sucesso');
                 setIsLoading(false);
             }
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             toast.error(error.response.data.error[0].message);
             setIsLoading(false);
             console.error(error);
         }
-
     }
 
-    async function cadastrarOUsuario(nome: string, sobrenome: string, email: string, senha: string) {
+    async function cadastrarOUsuario(
+        nome: string,
+        sobrenome: string,
+        email: string,
+        senha: string,
+    ) {
         console.log(nome, sobrenome, email, senha);
 
         const enviarDados = await AxiosRequest.post('/users/cadastrar-usuario', {
             first_name: nome,
             last_name: sobrenome,
             email: email,
-            password: senha
+            password: senha,
         });
 
         console.log(enviarDados);
@@ -98,7 +105,7 @@ const Register: React.FC = () => {
 
         const login = await AxiosRequest.post('/auth', {
             email: email,
-            password: senha
+            password: senha,
         });
 
         return login.data.token;
@@ -119,13 +126,13 @@ const Register: React.FC = () => {
             {
                 comercio_name: nomeDoComercio,
                 cpf_cnpj: cpfouCpnj,
-                endereco: endereco
+                endereco: endereco,
             },
             {
                 headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            }
+                    Authorization: `Bearer ${token}`,
+                },
+            },
         );
 
         return cadastroComercio;
@@ -136,7 +143,7 @@ const Register: React.FC = () => {
         console.log('Dados enviados:', {
             nomeComercio,
             cpfOuCnpj,
-            endereco
+            endereco,
         });
         setIsLoading(true);
 
@@ -145,26 +152,23 @@ const Register: React.FC = () => {
             toast.success('Comercio cadastrado com sucesso');
 
             if (isLoggedIn === true) {
-
                 setIsLoading(false);
                 toast.info('Por favor, Faça login novamente');
                 dispatch(actions.loginFailure({ error: 'Faça login novamente' }));
-                return navigate('/');//retorna para a pagina de login o path de login por padrao é '/'
-
+                return navigate('/'); //retorna para a pagina de login o path de login por padrao é '/'
             } else if (cadastrandocomercio?.status === 200) {
                 setTimeout(() => {
                     dispatch(actions.loginRequest({ email: email, password: senha, prevPath }));
-                    navigate('/');//retorna para a pagina de login o path de login por padrao é '/'
+                    navigate('/'); //retorna para a pagina de login o path de login por padrao é '/'
                     setIsLoading(false);
                 }, 2000);
-            };
-
+            }
         } catch (error) {
             setIsLoading(false);
 
             console.log(error);
         }
-    };
+    }
 
     return (
         <>
@@ -176,35 +180,63 @@ const Register: React.FC = () => {
                             <label>Nome </label>
                         </div>
                         <div className="inputForm">
-                            <IoPersonSharp color='black' size={22} />
-                            <input type="text" className="input" placeholder="Digite seu nome" value={nome} onChange={(e) => setNome(e.target.value)} />
+                            <IoPersonSharp color="black" size={22} />
+                            <input
+                                type="text"
+                                className="input"
+                                placeholder="Digite seu nome"
+                                value={nome}
+                                onChange={(e) => setNome(e.target.value)}
+                            />
                         </div>
                         <div className="flex-column">
                             <label>Sobrenome </label>
                         </div>
                         <div className="inputForm">
-                            <IoPersonSharp color='black' size={22} />
-                            <input type="text" className="input" placeholder="Digite seu sobrenome" value={sobrenome} onChange={(e) => setSobrenome(e.target.value)} />
+                            <IoPersonSharp color="black" size={22} />
+                            <input
+                                type="text"
+                                className="input"
+                                placeholder="Digite seu sobrenome"
+                                value={sobrenome}
+                                onChange={(e) => setSobrenome(e.target.value)}
+                            />
                         </div>
                         <div className="flex-column">
                             <label>Email </label>
                         </div>
                         <div className="inputForm">
-                            <MdAlternateEmail color='black' size={22} />
-                            <input type="email" className="input" placeholder="Digite seu Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                            <MdAlternateEmail color="black" size={22} />
+                            <input
+                                type="email"
+                                className="input"
+                                placeholder="Digite seu Email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
                         </div>
 
                         <div className="flex-column">
                             <label>Senha</label>
                         </div>
                         <div className="inputForm">
-                            <HiOutlineLockClosed color='black' size={22} />
-                            <input type="password" className="input" placeholder="Digite Sua senha" value={senha} onChange={(e) => setSenha(e.target.value)} />
+                            <HiOutlineLockClosed color="black" size={22} />
+                            <input
+                                type="password"
+                                className="input"
+                                placeholder="Digite Sua senha"
+                                value={senha}
+                                onChange={(e) => setSenha(e.target.value)}
+                            />
                         </div>
 
                         <button className="button-submit">Cadastrar</button>
-                        <p className="p">Já possui conta ?<Link to={'/'}><span className="span">Faça Login</span></Link></p>
-
+                        <p className="p">
+                            Já possui conta ?
+                            <Link to="/">
+                                <span className="span">Faça Login</span>
+                            </Link>
+                        </p>
                     </Form>
                 </Container>
             ) : (

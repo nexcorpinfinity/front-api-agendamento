@@ -1,16 +1,20 @@
 import styled from 'styled-components';
+
 import { temaGlobal } from '../../../styles/theme';
 
 export const Container = styled.div<{ $active: string | boolean }>`
     width: 100%;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    background-color: ${(props) => (props.$active ? temaGlobal.backgroundDark : temaGlobal.backgroundLight)};
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
+    background-color: ${(props) =>
+        props.$active ? temaGlobal.backgroundDark : temaGlobal.backgroundLight};
     color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
     display: flex;
     flex-direction: column;
     padding: 20px;
     gap: 20px;
- `;
+`;
 
 export const BasicInfo = styled.div`
     border: 1px solid #ccc;
@@ -19,14 +23,12 @@ export const BasicInfo = styled.div`
     width: 100%;
     margin: 0 auto;
     background-color: #2a2e33;
-
 `;
 
 export const PrincipalInfo = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
-
 `;
 
 export const PlanoDiv = styled.div`
@@ -38,8 +40,6 @@ export const PlanoDiv = styled.div`
     width: 100%;
     margin: 0 auto;
     background-color: #2a2e33;
-
-
 `;
 
 export const CardPrincipalInfo = styled.div`
@@ -69,7 +69,7 @@ export const CardPrincipalInfo = styled.div`
         font-size: 0.9rem;
     }
 
-    a{
+    a {
         color: #26c1d0;
         font-size: 0.85rem;
         text-decoration: none;
@@ -82,7 +82,7 @@ export const Title = styled.div`
         font-size: 1.4rem;
         font-weight: 500;
     }
-    .buttons-planos{
+    .buttons-planos {
         display: flex;
         flex-direction: row;
         gap: 10px;

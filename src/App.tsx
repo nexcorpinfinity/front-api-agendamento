@@ -1,12 +1,13 @@
 import React from 'react';
 
+import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
 import { PersistGate } from 'redux-persist/integration/react';
-import { Provider } from 'react-redux';
-import store, { persistor } from './store';
+
 import NavbarPrincipal from './components/NavbarPrincipal';
+import store, { persistor } from './store';
 
 const App: React.FC = () => {
     return (
@@ -14,7 +15,7 @@ const App: React.FC = () => {
             <PersistGate persistor={persistor}>
                 <BrowserRouter>
                     <NavbarPrincipal />
-                    <ToastContainer autoClose={3000} className={'toast-container'} />
+                    <ToastContainer autoClose={3000} className="toast-container" />
                 </BrowserRouter>
             </PersistGate>
         </Provider>
@@ -22,4 +23,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-

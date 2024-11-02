@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
-import styled from 'styled-components';
-import AxiosRequest from '../../../services/axios/AxiosRequest';
 import { TooltipProps } from 'recharts';
+import styled from 'styled-components';
+
+import AxiosRequest from '../../../services/axios/AxiosRequest';
 import { temaGlobal } from '../../../styles/theme';
 
 export const Container = styled.div<{ $active: string | boolean }>`
-    transition: background-color 0.3s ease, color 0.3s ease;
-    background-color: ${(props) => (props.$active ? temaGlobal.backgroundDark : temaGlobal.backgroundLight)};
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
+    background-color: ${(props) =>
+        props.$active ? temaGlobal.backgroundDark : temaGlobal.backgroundLight};
     color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
     padding: 10px;
     width: 100%;
@@ -26,11 +30,11 @@ const EstoqueBaixoCard = styled.div`
     text-align: center;
     border-radius: 10px;
 
-    h3{
-    font-size: 1rem;
+    h3 {
+        font-size: 1rem;
     }
 
-    .baixo-stoque{
+    .baixo-stoque {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -42,7 +46,7 @@ const EstoqueBaixoCard = styled.div`
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        padding:  5px 10px;
+        padding: 5px 10px;
         font-size: 0.8rem;
     }
 `;
@@ -60,7 +64,6 @@ const TitleProdutos = styled.div`
     border-radius: 5px;
     padding: 5px 20px;
     margin: 0 10px;
-
 
     div:nth-child(1) {
         display: flex;
@@ -106,7 +109,7 @@ interface IEstoque {
     stock: number;
 }
 
-type ThemeProps = {
+interface ThemeProps {
     theme: boolean | string;
 }
 
@@ -149,7 +152,7 @@ const DashboardComponent: React.FC<ThemeProps> = ({ theme }) => {
             const produtosCadastrados = response.data.todosProdutos;
 
             const produtosBaixoEstoque = produtosCadastrados.filter(
-                (produto: IEstoque) => parseInt(produto.stock.toString(), 10) < 10
+                (produto: IEstoque) => parseInt(produto.stock.toString(), 10) < 10,
             );
             setProdutosComEstoqueBaixo(produtosBaixoEstoque);
         };
@@ -159,7 +162,10 @@ const DashboardComponent: React.FC<ThemeProps> = ({ theme }) => {
 
     const indexUltimoProduto = paginaAtual * produtosPorPagina;
     const indexPrimeiroProduto = indexUltimoProduto - produtosPorPagina;
-    const produtosExibidos = produtosComEstoqueBaixo.slice(indexPrimeiroProduto, indexUltimoProduto);
+    const produtosExibidos = produtosComEstoqueBaixo.slice(
+        indexPrimeiroProduto,
+        indexUltimoProduto,
+    );
 
     const totalPaginas = Math.ceil(produtosComEstoqueBaixo.length / produtosPorPagina);
 
@@ -178,27 +184,37 @@ const DashboardComponent: React.FC<ThemeProps> = ({ theme }) => {
                     <XAxis dataKey="dia" />
                     <YAxis />
                     <Tooltip content={<CustomTooltip />} />
-                    <Line type="monotone" dataKey="vendas" stroke="#8884d8" dot={false} name="Vendas" />
-                    <Line type="monotone" dataKey="saldoTotal" stroke="#82ca9d" dot={false} name="Saldo Total" />
+                    <Line
+                        type="monotone"
+                        dataKey="vendas"
+                        stroke="#8884d8"
+                        dot={false}
+                        name="Vendas"
+                    />
+                    <Line
+                        type="monotone"
+                        dataKey="saldoTotal"
+                        stroke="#82ca9d"
+                        dot={false}
+                        name="Saldo Total"
+                    />
                 </LineChart>
             </ResponsiveContainer>
 
             <EstoqueBaixoCard>
                 <h3>Produtos com Estoque baixo: {produtosComEstoqueBaixo.length}</h3>
-                <div className='title-baixo-estoque'>
+                <div className="title-baixo-estoque">
                     <p>Nome</p>
                     <p>Quantidade</p>
                 </div>
-                <div className='baixo-stoque'>
+                <div className="baixo-stoque">
                     {produtosExibidos.map((produto) => (
                         <Produtos key={produto.id}>
                             <TitleProdutos>
                                 <div>
-
                                     <p>{produto.name}</p>
                                 </div>
                                 <div>
-
                                     <p>{produto.stock}</p>
                                 </div>
                             </TitleProdutos>

@@ -1,6 +1,6 @@
-import storage from 'redux-persist/lib/storage';
-import { persistReducer, PersistConfig } from 'redux-persist';
 import { Reducer } from 'redux';
+import { persistReducer, PersistConfig } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 interface AuthState {
     isLoggedIn: boolean;

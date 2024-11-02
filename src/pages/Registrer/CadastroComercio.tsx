@@ -1,16 +1,18 @@
 import React from 'react';
-import { Container, Form } from './styled';
+
 import { FaRegAddressCard } from 'react-icons/fa';
 
+import { Container, Form } from './styled';
+
 interface ThemeProps {
-  theme: string | boolean;
-  nomeDoComercio: string;
-  cpfOuCpnj: string;
-  endereco: string;
-  setNomeDoComercio: (value: string) => void;
-  setCpfOuCpnj: (value: string) => void;
-  setEndereco: (value: string) => void;
-  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+    theme: string | boolean;
+    nomeDoComercio: string;
+    cpfOuCpnj: string;
+    endereco: string;
+    setNomeDoComercio: (value: string) => void;
+    setCpfOuCpnj: (value: string) => void;
+    setEndereco: (value: string) => void;
+    onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
 const CadastroComercio: React.FC<ThemeProps> = ({
@@ -21,7 +23,7 @@ const CadastroComercio: React.FC<ThemeProps> = ({
     setNomeDoComercio,
     setCpfOuCpnj,
     setEndereco,
-    onSubmit
+    onSubmit,
 }) => {
     return (
         <Container $active={theme}>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+
 import { RootState } from '../../store/modules/rootReducer';
 import { temaGlobal } from '../../styles/theme';
 
@@ -12,7 +13,8 @@ const Title = styled.h1`
 `;
 
 export const Container = styled.nav<{ $active: string | boolean }>`
-    background-color: ${(props) => (props.$active ? temaGlobal.backgroundDark : temaGlobal.backgroundLight)};
+    background-color: ${(props) =>
+        props.$active ? temaGlobal.backgroundDark : temaGlobal.backgroundLight};
     color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
     display: flex;
     flex-direction: column;
@@ -22,8 +24,9 @@ export const Container = styled.nav<{ $active: string | boolean }>`
     border: 1px solid #ccc;
     width: 100%;
     height: 96vh;
-    transition: background-color 0.3s ease, color 0.3s ease;
-
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
 
     img {
         width: 500px;

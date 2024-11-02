@@ -1,9 +1,11 @@
-import styled from 'styled-components';
-import { temaGlobal } from '../../styles/theme';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+import { temaGlobal } from '../../styles/theme';
 
 export const Container = styled.div<{ $active: string | boolean }>`
-    background-color: ${(props) => (props.$active ? temaGlobal.backgroundDark : temaGlobal.backgroundLight)};
+    background-color: ${(props) =>
+        props.$active ? temaGlobal.backgroundDark : temaGlobal.backgroundLight};
     color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
     width: 320px;
     border-right: 1px solid #ccc;
@@ -14,10 +16,10 @@ export const Container = styled.div<{ $active: string | boolean }>`
     transition: width 0.3s ease;
     height: 100vh;
     @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-    font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
 `;
 
-export const StyledLink = styled(Link) <{ $active?: boolean }>`
+export const StyledLink = styled(Link)<{ $active?: boolean }>`
     display: flex;
     align-items: center;
     padding: 10px;
@@ -29,7 +31,9 @@ export const StyledLink = styled(Link) <{ $active?: boolean }>`
     color: ${(props) => (props.$active ? '#ffffff' : 'black')};
     border: 1px solid ${(props) => (props.$active ? 'blue' : '#ccc')};
     font-size: 0.9rem;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
 
     .icon {
         font-size: 1.2rem;
@@ -47,11 +51,10 @@ export const StyledLink = styled(Link) <{ $active?: boolean }>`
     &:hover span {
         display: block;
         color: #000000;
-
     }
     &:active {
-            transform: scale(0.98);
-        }
+        transform: scale(0.98);
+    }
 `;
 
 export const ComercioTitle = styled.div`
@@ -77,7 +80,7 @@ export const LinksNavLateral = styled.div<{ $active?: boolean }>`
         font-size: 1rem;
     }
 
-    .temas{
+    .temas {
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -90,7 +93,8 @@ export const LinksNavLateral = styled.div<{ $active?: boolean }>`
         color: ${(props) => (props.$active ? '#ffffff' : 'black')};
         border: 1px solid ${(props) => (props.$active ? 'blue' : '#ccc')};
         font-size: 0.9rem;
-        transition: background-color 0.3s ease, color 0.3s ease;
-
+        transition:
+            background-color 0.3s ease,
+            color 0.3s ease;
     }
 `;

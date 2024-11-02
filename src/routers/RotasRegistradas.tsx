@@ -1,45 +1,45 @@
 import React from 'react';
+
+import { useSelector } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
+
 import PrivateRoute from './RotaPrivada';
-import Error404 from '../pages/Error404';
-import Register from '../pages/Registrer';
 
 import Admin from '../pages/Admin';
-import AdminNotifications from '../pages/Admin/AdminNotifications';
+import AdminConfiguration from '../pages/Admin/AdminConfiguration';
 import AdminGestaoDeComercios from '../pages/Admin/AdminGestaoDeComercios';
 import AdminGestaoDePagamentos from '../pages/Admin/AdminGestaoDePagamentos';
 import AdminGestaoDeUsuarios from '../pages/Admin/AdminGestaoDeUsuarios';
-import AdminConfiguration from '../pages/Admin/AdminConfiguration';
-import AdminTickets from '../pages/Admin/AdminTickets';
+import AdminNotifications from '../pages/Admin/AdminNotifications';
 import AdminPerfil from '../pages/Admin/AdminPerfil';
-import ComercioRealizarVenda from '../pages/Comercio/ComercioRealizarVenda';
-import ComercioConfiguration from '../pages/Comercio/ComercioConfiguration';
-import ComercioPerfil from '../pages/Comercio/ComercioPerfil';
-import ComercioControleDeEstoque from '../pages/Comercio/ComercioControleDeEstoque';
-import ComercioRelatorioMensal from '../pages/Comercio/ComercioRelatorioMensal';
-import Unauthorized from '../pages/Unauthorized';
-import Redirect from '../pages/Redirect';
-import { GlobalStyled } from '../styles/GlobalStyled';
-import { useSelector } from 'react-redux';
-import { RootState } from '../store/modules/rootReducer';
-import Login from '../pages/Login';
+import AdminTickets from '../pages/Admin/AdminTickets';
 import Comercio from '../pages/Comercio';
+import ComercioConfiguration from '../pages/Comercio/ComercioConfiguration';
+import ComercioControleDeEstoque from '../pages/Comercio/ComercioControleDeEstoque';
+import ComercioPerfil from '../pages/Comercio/ComercioPerfil';
+import ComercioRealizarVenda from '../pages/Comercio/ComercioRealizarVenda';
+import ComercioRelatorioMensal from '../pages/Comercio/ComercioRelatorioMensal';
+import Error404 from '../pages/Error404';
+import Login from '../pages/Login';
+import Redirect from '../pages/Redirect';
+import Register from '../pages/Registrer';
+import Unauthorized from '../pages/Unauthorized';
+import { RootState } from '../store/modules/rootReducer';
+import { GlobalStyled } from '../styles/GlobalStyled';
 
 const RotasRegistradas: React.FC = () => {
     const theme = useSelector((state: RootState) => state.theme.theme);
     return (
-
         <>
-            <GlobalStyled $active={theme}/>
+            <GlobalStyled $active={theme} />
             <Routes>
-
                 <Route path="/" element={<Login />} />
                 <Route path="/criar-conta" element={<Register />} />
 
                 <Route
                     path="/admin"
                     element={
-                        <PrivateRoute isClosed={true} requiredPermission="admin">
+                        <PrivateRoute isClosed requiredPermission="admin">
                             <Admin />
                         </PrivateRoute>
                     }
@@ -47,7 +47,7 @@ const RotasRegistradas: React.FC = () => {
                 <Route
                     path="/admin/notifications"
                     element={
-                        <PrivateRoute isClosed={true} requiredPermission="admin">
+                        <PrivateRoute isClosed requiredPermission="admin">
                             <AdminNotifications />
                         </PrivateRoute>
                     }
@@ -55,7 +55,7 @@ const RotasRegistradas: React.FC = () => {
                 <Route
                     path="/admin/gestao-comercio"
                     element={
-                        <PrivateRoute isClosed={true} requiredPermission="admin">
+                        <PrivateRoute isClosed requiredPermission="admin">
                             <AdminGestaoDeComercios />
                         </PrivateRoute>
                     }
@@ -63,7 +63,7 @@ const RotasRegistradas: React.FC = () => {
                 <Route
                     path="/admin/gestao-pagamentos"
                     element={
-                        <PrivateRoute isClosed={true} requiredPermission="admin">
+                        <PrivateRoute isClosed requiredPermission="admin">
                             <AdminGestaoDePagamentos />
                         </PrivateRoute>
                     }
@@ -71,7 +71,7 @@ const RotasRegistradas: React.FC = () => {
                 <Route
                     path="/admin/gestao-usuarios"
                     element={
-                        <PrivateRoute isClosed={true} requiredPermission="admin">
+                        <PrivateRoute isClosed requiredPermission="admin">
                             <AdminGestaoDeUsuarios />
                         </PrivateRoute>
                     }
@@ -79,7 +79,7 @@ const RotasRegistradas: React.FC = () => {
                 <Route
                     path="/admin/gestao-ticket"
                     element={
-                        <PrivateRoute isClosed={true} requiredPermission="admin">
+                        <PrivateRoute isClosed requiredPermission="admin">
                             <AdminTickets />
                         </PrivateRoute>
                     }
@@ -87,7 +87,7 @@ const RotasRegistradas: React.FC = () => {
                 <Route
                     path="/admin/configuracao"
                     element={
-                        <PrivateRoute isClosed={true} requiredPermission="admin">
+                        <PrivateRoute isClosed requiredPermission="admin">
                             <AdminConfiguration />
                         </PrivateRoute>
                     }
@@ -95,7 +95,7 @@ const RotasRegistradas: React.FC = () => {
                 <Route
                     path="/admin/perfil"
                     element={
-                        <PrivateRoute isClosed={true} requiredPermission="admin">
+                        <PrivateRoute isClosed requiredPermission="admin">
                             <AdminPerfil />
                         </PrivateRoute>
                     }
@@ -104,7 +104,7 @@ const RotasRegistradas: React.FC = () => {
                 <Route
                     path="/comercio"
                     element={
-                        <PrivateRoute isClosed={true} requiredPermission="costumer">
+                        <PrivateRoute isClosed requiredPermission="costumer">
                             <Comercio />
                         </PrivateRoute>
                     }
@@ -112,7 +112,7 @@ const RotasRegistradas: React.FC = () => {
                 <Route
                     path="/comercio/realizar-venda"
                     element={
-                        <PrivateRoute isClosed={true} requiredPermission="costumer">
+                        <PrivateRoute isClosed requiredPermission="costumer">
                             <ComercioRealizarVenda />
                         </PrivateRoute>
                     }
@@ -120,7 +120,7 @@ const RotasRegistradas: React.FC = () => {
                 <Route
                     path="/comercio/controle-de-estoque"
                     element={
-                        <PrivateRoute isClosed={true} requiredPermission="costumer">
+                        <PrivateRoute isClosed requiredPermission="costumer">
                             <ComercioControleDeEstoque />
                         </PrivateRoute>
                     }
@@ -128,7 +128,7 @@ const RotasRegistradas: React.FC = () => {
                 <Route
                     path="/comercio/relatorios"
                     element={
-                        <PrivateRoute isClosed={true} requiredPermission="costumer">
+                        <PrivateRoute isClosed requiredPermission="costumer">
                             <ComercioRelatorioMensal />
                         </PrivateRoute>
                     }
@@ -136,7 +136,7 @@ const RotasRegistradas: React.FC = () => {
                 <Route
                     path="/comercio/configuracao"
                     element={
-                        <PrivateRoute isClosed={true} requiredPermission="costumer">
+                        <PrivateRoute isClosed requiredPermission="costumer">
                             <ComercioConfiguration />
                         </PrivateRoute>
                     }
@@ -144,7 +144,7 @@ const RotasRegistradas: React.FC = () => {
                 <Route
                     path="/comercio/perfil"
                     element={
-                        <PrivateRoute isClosed={true} requiredPermission="costumer">
+                        <PrivateRoute isClosed requiredPermission="costumer">
                             <ComercioPerfil />
                         </PrivateRoute>
                     }
@@ -155,7 +155,6 @@ const RotasRegistradas: React.FC = () => {
                 <Route path="*" element={<Error404 />} />
             </Routes>
         </>
-
     );
 };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export type PlanosProps = {
+export interface PlanosProps {
     plano: string;
     preco: string;
     tempo: string;
@@ -75,12 +75,14 @@ const CardPlanosHome: React.FC = () => {
                 <h1>14</h1>
                 <h1>Dias gratis</h1>
             </div>
-            <div className='cards'>
+            <div className="cards">
                 <div>
-                    <h1>
-                        Experimente o plano Pro
-                    </h1>
-                    <p>Crie sua conta agora para utilizar gratuitamente o plano Pro por 14 dias. Após o período de teste, você pode assinar um plano do Nex ou utilizar o plano Grátis. Para testar o plano Premium, entre em contato conosco.</p>
+                    <h1>Experimente o plano Pro</h1>
+                    <p>
+                        Crie sua conta agora para utilizar gratuitamente o plano Pro por 14 dias.
+                        Após o período de teste, você pode assinar um plano do Nex ou utilizar o
+                        plano Grátis. Para testar o plano Premium, entre em contato conosco.
+                    </p>
                 </div>
                 <div>
                     <div>
@@ -96,7 +98,6 @@ const CardPlanosHome: React.FC = () => {
                     <button>Comece grátis</button>
                 </div>
             </div>
-
         </Container>
     );
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import { temaGlobal } from '../../styles/theme';
 interface ButtonDarkThemeProps {
     theme: boolean | string;
@@ -7,7 +8,6 @@ interface ButtonDarkThemeProps {
 }
 
 export const ButtonDarkThemeStyled = styled.div<{ $active: string | boolean }>`
-
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -17,51 +17,50 @@ export const ButtonDarkThemeStyled = styled.div<{ $active: string | boolean }>`
         color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
     }
 
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 45px;
-  height: 20px;
-}
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 45px;
+        height: 20px;
+    }
 
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+    }
 
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 12px;
-  width: 12px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
+    .slider:before {
+        position: absolute;
+        content: '';
+        height: 12px;
+        width: 12px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+    }
 
-input:checked + .slider {
-  background-color: #014c85;
-}
+    input:checked + .slider {
+        background-color: #014c85;
+    }
 
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-}
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196f3;
+    }
 
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
 `;
 
 const ButtonDarkTheme: React.FC<ButtonDarkThemeProps> = ({ theme, handleToggleTheme }) => {
@@ -69,7 +68,12 @@ const ButtonDarkTheme: React.FC<ButtonDarkThemeProps> = ({ theme, handleToggleTh
         <ButtonDarkThemeStyled $active={theme}>
             {/* <h4>Tema {theme === false ? 'escuro' : 'claro'}</h4> */}
             <label className="switch">
-                <input type="checkbox" checked={theme === true} onChange={handleToggleTheme} className="checkbox" />
+                <input
+                    type="checkbox"
+                    checked={theme === true}
+                    onChange={handleToggleTheme}
+                    className="checkbox"
+                />
                 <span className="slider"></span>
             </label>
         </ButtonDarkThemeStyled>

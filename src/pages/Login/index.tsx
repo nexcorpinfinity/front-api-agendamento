@@ -1,17 +1,18 @@
-import React, { useState, useEffect, FormEvent } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Container, FormLogin } from './styled';
+import { jwtDecode } from 'jwt-decode';
 import { get } from 'lodash';
+import React, { useState, useEffect, FormEvent } from 'react';
+import { HiOutlineLockClosed } from 'react-icons/hi';
+import { MdAlternateEmail } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+
+import { Container, FormLogin } from './styled';
+
+import Loading from '../../components/Loading';
+import { Decoded } from '../../routers/RotaPrivada';
+import { AppDispatch } from '../../store';
 import * as actions from '../../store/modules/auth/actions';
 import { RootState } from '../../store/modules/rootReducer';
-import { AppDispatch } from '../../store';
-import Loading from '../../components/Loading';
-
-import { Decoded } from '../../Routers/RotaPrivada';
-import { jwtDecode } from 'jwt-decode';
-import { MdAlternateEmail } from 'react-icons/md';
-import { HiOutlineLockClosed } from 'react-icons/hi';
 
 const Login: React.FC = () => {
     const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
@@ -66,7 +67,6 @@ const Login: React.FC = () => {
                 }
             }
         }
-
     }, [isLoggedIn, user, navigate]);
 
     const theme = useSelector((state: RootState) => state.theme.theme);
@@ -77,28 +77,43 @@ const Login: React.FC = () => {
                 <Loading isLoading={isLoading} />
 
                 <FormLogin className="form" onSubmit={handleSubmit}>
-                    <h1 className='fazer-login'>Faça login </h1>
+                    <h1 className="fazer-login">Faça login </h1>
                     <div className="flex-column">
                         <label>Email </label>
                     </div>
                     <div className="inputForm">
-                        <MdAlternateEmail color='black' size={22} />
-                        <input type="text" className="input" placeholder="Digite seu Email" value={email}
-                            onChange={(e) => setEmail(e.target.value)} autoComplete='email'/>
+                        <MdAlternateEmail color="black" size={22} />
+                        <input
+                            type="text"
+                            className="input"
+                            placeholder="Digite seu Email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            autoComplete="email"
+                        />
                     </div>
 
                     <div className="flex-column">
                         <label>Senha</label>
                     </div>
                     <div className="inputForm">
-                        <HiOutlineLockClosed color='black' size={22} />
-                        <input type="password" className="input" placeholder="Digite Sua senha"  value={password}
-                            onChange={(e) => setPassword(e.target.value)} />
+                        <HiOutlineLockClosed color="black" size={22} />
+                        <input
+                            type="password"
+                            className="input"
+                            placeholder="Digite Sua senha"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
                     </div>
                     <button className="button-submit">Entrar</button>
                     <a href="#">Esqueceu a senha?</a>
-                    <p className="p">Não possui conta ?<Link to={'/criar-conta'}><span className="span">Criar Conta</span></Link></p>
-
+                    <p className="p">
+                        Não possui conta ?
+                        <Link to="/criar-conta">
+                            <span className="span">Criar Conta</span>
+                        </Link>
+                    </p>
                 </FormLogin>
             </Container>
         </>

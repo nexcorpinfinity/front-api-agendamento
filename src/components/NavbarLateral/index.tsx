@@ -1,22 +1,25 @@
+import { jwtDecode } from 'jwt-decode';
 import React, { useEffect } from 'react';
 
-import { ComercioTitle, Container, LinksNavLateral, StyledLink } from './styled';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store/modules/rootReducer';
 import { FaRegUserCircle } from 'react-icons/fa';
-import AxiosRequest from '../../services/axios/AxiosRequest';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
-import { Decoded } from '../../Routers/RotaPrivada';
+
+import { toast } from 'react-toastify';
+
+import { ComercioTitle, Container, LinksNavLateral, StyledLink } from './styled';
+import { Decoded } from '../../routers/RotaPrivada';
+import AxiosRequest from '../../services/axios/AxiosRequest';
 import { AppDispatch } from '../../store';
 import * as actions from '../../store/modules/auth/actions';
-import { toast } from 'react-toastify';
-import { jwtDecode } from 'jwt-decode';
-import ButtonDarkTheme from '../ButtonDarkTheme';
+import { RootState } from '../../store/modules/rootReducer';
 import { toggleTheme } from '../../store/modules/theme/actions';
+import ButtonDarkTheme from '../ButtonDarkTheme';
 
-type NavbarLateralProps = {
+interface NavbarLateralProps {
     setMenuLateral: (value: boolean) => void;
-};
+}
 
 const NavbarLateral: React.FC<NavbarLateralProps> = ({ setMenuLateral }) => {
     const theme = useSelector((state: RootState) => state.theme.theme);
@@ -40,8 +43,7 @@ const NavbarLateral: React.FC<NavbarLateralProps> = ({ setMenuLateral }) => {
     const decoded: Decoded = jwtDecode(token);
     const permission = decoded.permission;
 
-    useEffect(() => {
-
+    useEffect(async () => {
         if (permission === 'costumer') {
             async function loadComercio() {
                 try {
@@ -65,7 +67,6 @@ const NavbarLateral: React.FC<NavbarLateralProps> = ({ setMenuLateral }) => {
 
                     // setComercioEmail(response.data.email || 'Email não disponível');
                     // setComercioName(response.data.Business.name || 'Nome não disponível');
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 } catch (error: any) {
                     if (error.response && error.response.status === 403) {
                         dispatch(actions.loginFailure({ error: 'Unauthorized' }));
@@ -111,37 +112,73 @@ const NavbarLateral: React.FC<NavbarLateralProps> = ({ setMenuLateral }) => {
                 {isLoggedIn === true && permission === 'costumer' ? (
                     <LinksNavLateral>
                         <small>Menu</small>
-                        <StyledLink to="/comercio" $active={location.pathname === '/comercio'} onClick={() => setMenuLateral(false)}>
+                        <StyledLink
+                            to="/comercio"
+                            $active={location.pathname === '/comercio'}
+                            onClick={() => setMenuLateral(false)}
+                        >
                             <span>Dashboard</span>
                         </StyledLink>
-                        <StyledLink to="/comercio/controle-de-estoque" $active={location.pathname === '/comercio/controle-de-estoque'} onClick={() => setMenuLateral(false)}>
+                        <StyledLink
+                            to="/comercio/controle-de-estoque"
+                            $active={location.pathname === '/comercio/controle-de-estoque'}
+                            onClick={() => setMenuLateral(false)}
+                        >
                             <span>Estoque</span>
                         </StyledLink>
-                        <StyledLink to="/comercio/realizar-venda" $active={location.pathname === '/comercio/realizar-venda'} onClick={() => setMenuLateral(false)}>
+                        <StyledLink
+                            to="/comercio/realizar-venda"
+                            $active={location.pathname === '/comercio/realizar-venda'}
+                            onClick={() => setMenuLateral(false)}
+                        >
                             <span>Realizar Venda</span>
                         </StyledLink>
-                        <StyledLink to="/comercio/relatorios" $active={location.pathname === '/comercio/relatorios'} onClick={() => setMenuLateral(false)}>
+                        <StyledLink
+                            to="/comercio/relatorios"
+                            $active={location.pathname === '/comercio/relatorios'}
+                            onClick={() => setMenuLateral(false)}
+                        >
                             <span>Entradas / Saidas </span>
                         </StyledLink>
                     </LinksNavLateral>
-
                 ) : (
-                    isLoggedIn === true && permission === 'admin' && (
+                    isLoggedIn === true &&
+                    permission === 'admin' && (
                         <LinksNavLateral>
                             <small>Menu</small>
-                            <StyledLink to="/admin" $active={location.pathname === '/admin'} onClick={() => setMenuLateral(false)}>
+                            <StyledLink
+                                to="/admin"
+                                $active={location.pathname === '/admin'}
+                                onClick={() => setMenuLateral(false)}
+                            >
                                 <span>Dashboard</span>
                             </StyledLink>
-                            <StyledLink to="/admin/notifications" $active={location.pathname === '/admin/notifications'} onClick={() => setMenuLateral(false)}>
+                            <StyledLink
+                                to="/admin/notifications"
+                                $active={location.pathname === '/admin/notifications'}
+                                onClick={() => setMenuLateral(false)}
+                            >
                                 <span>Notificação</span>
                             </StyledLink>
-                            <StyledLink to="/admin/gestao-comercio" $active={location.pathname === '/admin/gestao-comercio'} onClick={() => setMenuLateral(false)}>
+                            <StyledLink
+                                to="/admin/gestao-comercio"
+                                $active={location.pathname === '/admin/gestao-comercio'}
+                                onClick={() => setMenuLateral(false)}
+                            >
                                 <span>AdminGestaoDeComercios</span>
                             </StyledLink>
-                            <StyledLink to="/admin/gestao-pagamentos" $active={location.pathname === '/admin/gestao-pagamentos'} onClick={() => setMenuLateral(false)}>
+                            <StyledLink
+                                to="/admin/gestao-pagamentos"
+                                $active={location.pathname === '/admin/gestao-pagamentos'}
+                                onClick={() => setMenuLateral(false)}
+                            >
                                 <span>Gestão de Pagamentos</span>
                             </StyledLink>
-                            <StyledLink to="/admin/gestao-ticket" $active={location.pathname === '/admin/gestao-ticket'} onClick={() => setMenuLateral(false)}>
+                            <StyledLink
+                                to="/admin/gestao-ticket"
+                                $active={location.pathname === '/admin/gestao-ticket'}
+                                onClick={() => setMenuLateral(false)}
+                            >
                                 <span>Gestão de ticket</span>
                             </StyledLink>
                         </LinksNavLateral>
@@ -159,19 +196,30 @@ const NavbarLateral: React.FC<NavbarLateralProps> = ({ setMenuLateral }) => {
 
                 {isLoggedIn === true && permission === 'costumer' ? (
                     <LinksNavLateral>
-
-                        <StyledLink to="/comercio/perfil" $active={location.pathname === '/comercio/perfil'} onClick={() => setMenuLateral(false)}>
+                        <StyledLink
+                            to="/comercio/perfil"
+                            $active={location.pathname === '/comercio/perfil'}
+                            onClick={() => setMenuLateral(false)}
+                        >
                             <span>Perfil</span>
                         </StyledLink>
                     </LinksNavLateral>
-
                 ) : (
-                    isLoggedIn === true && permission === 'admin' && (
+                    isLoggedIn === true &&
+                    permission === 'admin' && (
                         <LinksNavLateral>
-                            <StyledLink to="/admin/configuracao" $active={location.pathname === '/admin/configuracao'} onClick={() => setMenuLateral(false)}>
+                            <StyledLink
+                                to="/admin/configuracao"
+                                $active={location.pathname === '/admin/configuracao'}
+                                onClick={() => setMenuLateral(false)}
+                            >
                                 <span>Configuração</span>
                             </StyledLink>
-                            <StyledLink to="/admin/perfil" $active={location.pathname === '/admin/perfil'} onClick={() => setMenuLateral(false)}>
+                            <StyledLink
+                                to="/admin/perfil"
+                                $active={location.pathname === '/admin/perfil'}
+                                onClick={() => setMenuLateral(false)}
+                            >
                                 <span>Perfil</span>
                             </StyledLink>
                         </LinksNavLateral>

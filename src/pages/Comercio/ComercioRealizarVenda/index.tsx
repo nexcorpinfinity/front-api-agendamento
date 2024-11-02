@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../store/modules/rootReducer';
+
+import { useNavigate } from 'react-router-dom';
+
+import { toast } from 'react-toastify';
+
 import { Container } from './styled';
-import * as actions from '../../../store/modules/auth/actions';
 import AxiosRequest from '../../../services/axios/AxiosRequest';
 import { AppDispatch } from '../../../store';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import * as actions from '../../../store/modules/auth/actions';
+
+import { RootState } from '../../../store/modules/rootReducer';
 
 interface IEstoque {
     id: string;
@@ -25,7 +29,7 @@ const ComercioRealizarVenda: React.FC = () => {
     const navigate = useNavigate();
 
     const produtosFiltrados = estoque.filter((produto) =>
-        produto.name.toLowerCase().includes(pesquisa.toLowerCase())
+        produto.name.toLowerCase().includes(pesquisa.toLowerCase()),
     );
 
     const adicionarAoCarrinho = (produto: IEstoque) => {
@@ -33,33 +37,34 @@ const ComercioRealizarVenda: React.FC = () => {
         if (produtoExistente) {
             setCarrinho(
                 carrinho.map((item) =>
-                    item.id === produto.id ? { ...item, stock: item.stock + 1 } : item
-                )
+                    item.id === produto.id ? { ...item, stock: item.stock + 1 } : item,
+                ),
             );
         } else {
-            setCarrinho([...carrinho, { id: produto.id, name: produto.name, price: produto.price, stock: 1 }]);
+            setCarrinho([
+                ...carrinho,
+                { id: produto.id, name: produto.name, price: produto.price, stock: 1 },
+            ]);
         }
     };
 
     const removerDoCarrinho = (produtoId: string) => {
-        setCarrinho(carrinho.filter(item => item.id !== produtoId));
+        setCarrinho(carrinho.filter((item) => item.id !== produtoId));
     };
 
     const aumentarQuantidade = (produtoId: string) => {
         setCarrinho(
             carrinho.map((item) =>
-                item.id === produtoId ? { ...item, stock: item.stock + 1 } : item
-            )
+                item.id === produtoId ? { ...item, stock: item.stock + 1 } : item,
+            ),
         );
     };
 
     const diminuirQuantidade = (produtoId: string) => {
         setCarrinho(
             carrinho.map((item) =>
-                item.id === produtoId && item.stock > 1
-                    ? { ...item, stock: item.stock - 1 }
-                    : item
-            )
+                item.id === produtoId && item.stock > 1 ? { ...item, stock: item.stock - 1 } : item,
+            ),
         );
     };
 
@@ -91,11 +96,10 @@ const ComercioRealizarVenda: React.FC = () => {
         e.preventDefault();
 
         const enviarArrayDeProdutos = await AxiosRequest.post('/commerce/realizar-vendas', {
-            produtos: carrinho
+            produtos: carrinho,
         });
 
         console.log(enviarArrayDeProdutos.data);
-
     };
 
     return (
@@ -111,8 +115,12 @@ const ComercioRealizarVenda: React.FC = () => {
                 <div>
                     {produtosFiltrados.map((produto) => (
                         <div key={produto.id}>
-                            <p>{produto.name} - R${produto.price}</p>
-                            <button onClick={() => adicionarAoCarrinho(produto)}>Adicionar ao carrinho</button>
+                            <p>
+                                {produto.name} - R${produto.price}
+                            </p>
+                            <button onClick={() => adicionarAoCarrinho(produto)}>
+                                Adicionar ao carrinho
+                            </button>
                         </div>
                     ))}
                 </div>
@@ -144,7 +152,7 @@ const ComercioRealizarVenda: React.FC = () => {
                             padding: '10px 20px',
                             border: 'none',
                             borderRadius: '5px',
-                            fontSize: '16px'
+                            fontSize: '16px',
                         }}
                     >
                         Finalizar Venda

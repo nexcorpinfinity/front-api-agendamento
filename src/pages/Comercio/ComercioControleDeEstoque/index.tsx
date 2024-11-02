@@ -1,23 +1,39 @@
 import React, { useEffect, useState } from 'react';
-import AxiosRequest from '../../../services/axios/AxiosRequest';
+
+import { IoClose } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../store/modules/rootReducer';
-import Loading from '../../../components/Loading';
+
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import * as actions from '../../../store/modules/auth/actions';
-import { useNavigate } from 'react-router-dom';
+import {
+    Container,
+    ContainerProdutos,
+    Main,
+    PesquisaECadastro,
+    TituloPage,
+    SearchInput,
+    Produto,
+    ProdutoFlag,
+    ProdutoButtons,
+    Pagination,
+    BoxEdit,
+    BoxContent,
+    TitlePoup,
+    Input,
+    Button,
+} from './styled';
+import Loading from '../../../components/Loading';
+import AxiosRequest from '../../../services/axios/AxiosRequest';
 import { AppDispatch } from '../../../store';
-import { IoClose } from 'react-icons/io5';
-
-import { Container, ContainerProdutos, Main, PesquisaECadastro, TituloPage, SearchInput, Produto, ProdutoFlag, ProdutoButtons, Pagination, BoxEdit, BoxContent, TitlePoup, Input, Button } from './styled';
+import * as actions from '../../../store/modules/auth/actions';
+import { RootState } from '../../../store/modules/rootReducer';
 
 interface IEstoque {
     id: string;
     name: string;
     price: number;
     stock: number;
-
 }
 
 const ComercioControleDeEstoque: React.FC = () => {
@@ -68,7 +84,9 @@ const ComercioControleDeEstoque: React.FC = () => {
         fetchProducts();
     }, []);
 
-    const filteredProducts = estoque.filter((item) => item.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    const filteredProducts = estoque.filter((item) =>
+        item.name.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
 
     const indexOfLastProduct = currentPage * itemsPerPage;
     const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
@@ -91,7 +109,6 @@ const ComercioControleDeEstoque: React.FC = () => {
     const theme = useSelector((state: RootState) => state.theme.theme);
 
     const cadastrarProduto = () => {
-
         const errorMessages = [];
 
         if (newNomeDoProduto === '') {
@@ -103,7 +120,7 @@ const ComercioControleDeEstoque: React.FC = () => {
         }
 
         if (errorMessages.length > 0) {
-            errorMessages.forEach(message => toast.error(message, { theme: 'colored' }));
+            errorMessages.forEach((message) => toast.error(message, { theme: 'colored' }));
             return;
         }
 
@@ -117,7 +134,7 @@ const ComercioControleDeEstoque: React.FC = () => {
             AxiosRequest.post('/commerce/cadastrar-produtos', {
                 name: newNomeDoProduto,
                 price: newPrecoDoProduto,
-                stock: newQuantidadeDoProduto
+                stock: newQuantidadeDoProduto,
             });
 
             toast.success('Produto cadastrado com sucesso', { theme: 'colored' });
@@ -129,14 +146,12 @@ const ComercioControleDeEstoque: React.FC = () => {
             setNewQuantidadeDoProduto(0);
 
             window.location.reload();
-
         } catch (error) {
             console.log(error);
             if (error) {
                 toast.error('Erro ao cadastrar produto', { theme: 'colored' });
             }
         }
-
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -168,7 +183,7 @@ const ComercioControleDeEstoque: React.FC = () => {
         }
 
         if (errorMessages.length > 0) {
-            errorMessages.forEach(message => toast.error(message, { theme: 'colored' }));
+            errorMessages.forEach((message) => toast.error(message, { theme: 'colored' }));
             return;
         }
 
@@ -180,7 +195,7 @@ const ComercioControleDeEstoque: React.FC = () => {
             AxiosRequest.put(`/commerce/atualizar-produto/${produtoEditando.id}`, {
                 name: nomeDoProduto,
                 price: precoDoProduto,
-                stock: quantidadeDoProduto
+                stock: quantidadeDoProduto,
             });
 
             toast.success('Produto atualizado com sucesso', { theme: 'colored' });
@@ -208,7 +223,7 @@ const ComercioControleDeEstoque: React.FC = () => {
             await AxiosRequest.delete(`/commerce/deletar-produto/${product.id}`);
             toast.success('Produto excluído com sucesso', { theme: 'colored' });
             setIsDelete(false);
-            setEstoque(estoque.filter(item => item.id !== product.id));
+            setEstoque(estoque.filter((item) => item.id !== product.id));
         } catch (error) {
             console.log(error);
             toast.error('Erro ao excluir produto', { theme: 'colored' });
@@ -248,9 +263,13 @@ const ComercioControleDeEstoque: React.FC = () => {
                                 <p>{item.stock}</p>
                             </ProdutoFlag>
                             <ProdutoButtons>
-                                <button onClick={() => {
-                                    handleEditTask(item);
-                                }}>Editar</button>
+                                <button
+                                    onClick={() => {
+                                        handleEditTask(item);
+                                    }}
+                                >
+                                    Editar
+                                </button>
                                 <button onClick={() => handleDeleteTask(item)}>Apagar</button>
                             </ProdutoButtons>
                         </Produto>
@@ -292,19 +311,19 @@ const ComercioControleDeEstoque: React.FC = () => {
                         </TitlePoup>
                         <Input
                             type="text"
-                            placeholder='Produto'
+                            placeholder="Produto"
                             value={nomeDoProduto}
                             onChange={(e) => setNomeDoProduto(e.target.value)}
                         />
                         <Input
                             type="text"
-                            placeholder='0.00'
+                            placeholder="0.00"
                             value={precoDoProduto}
                             onChange={(e) => setPrecoDoProduto(e.target.value)}
                         />
                         <Input
                             type="number"
-                            placeholder='Quantidade'
+                            placeholder="Quantidade"
                             value={quantidadeDoProduto}
                             onChange={(e) => setQuantidadeDoProduto(Number(e.target.value))}
                             min="0"
@@ -322,8 +341,10 @@ const ComercioControleDeEstoque: React.FC = () => {
                                 <IoClose size={25} />
                             </span>
                         </TitlePoup>
-                        <div className='btns-delete'>
-                            <Button onClick={() => handleDeleteProduto(produtoEditando)}>Sim</Button>
+                        <div className="btns-delete">
+                            <Button onClick={() => handleDeleteProduto(produtoEditando)}>
+                                Sim
+                            </Button>
                             <Button onClick={() => setIsDelete(false)}>Não</Button>
                         </div>
                     </BoxContent>
@@ -339,9 +360,23 @@ const ComercioControleDeEstoque: React.FC = () => {
                                 <IoClose size={25} />
                             </span>
                         </TitlePoup>
-                        <Input type="text" placeholder='Produto' onChange={(e) => setNewNomeDoProduto(e.target.value)} />
-                        <Input type="text" placeholder='0.00' onChange={(e) => setNewPrecoDoProduto(e.target.value)} />
-                        <Input type="number" placeholder='Quantidade' value={newQuantidadeDoProduto} onChange={handleChange} min="0" />
+                        <Input
+                            type="text"
+                            placeholder="Produto"
+                            onChange={(e) => setNewNomeDoProduto(e.target.value)}
+                        />
+                        <Input
+                            type="text"
+                            placeholder="0.00"
+                            onChange={(e) => setNewPrecoDoProduto(e.target.value)}
+                        />
+                        <Input
+                            type="number"
+                            placeholder="Quantidade"
+                            value={newQuantidadeDoProduto}
+                            onChange={handleChange}
+                            min="0"
+                        />
                         <Button onClick={cadastrarProduto}>Cadastrar</Button>
                     </BoxContent>
                 </BoxEdit>
