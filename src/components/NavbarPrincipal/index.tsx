@@ -18,7 +18,7 @@ import {
     NotificationDiv,
     ProfileDiv,
 } from './styled';
-import RotasRegistradas from '../../routers/RotasRegistradas';
+import { RegistredRouters } from '../../routers/RegistredRouters';
 import { AppDispatch } from '../../store';
 import * as actions from '../../store/modules/auth/actions';
 import { RootState } from '../../store/modules/rootReducer';
@@ -51,7 +51,7 @@ const NavbarPrincipal: React.FC = () => {
             {isLoggedIn === true ? (
                 <MenuLateral>
                     <NavbarLateral setMenuLateral={setMenuLateral} />
-                    <RotasRegistradas />
+                    <RegistredRouters />
                 </MenuLateral>
             ) : (
                 <>
@@ -76,7 +76,7 @@ const NavbarPrincipal: React.FC = () => {
                             </Links>
                         </ContentRight>
                     </Nav>
-                    <RotasRegistradas />
+                    <RegistredRouters />
                 </>
             )}
         </Container>

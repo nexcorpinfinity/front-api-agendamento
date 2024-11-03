@@ -9,7 +9,7 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { ComercioTitle, Container, LinksNavLateral, StyledLink } from './styled';
-import { Decoded } from '../../routers/RotaPrivada';
+import { Decoded } from '../../routers/PrivateRouter';
 import AxiosRequest from '../../services/axios/AxiosRequest';
 import { AppDispatch } from '../../store';
 import * as actions from '../../store/modules/auth/actions';

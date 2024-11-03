@@ -14,7 +14,7 @@ import { toast } from 'react-toastify';
 import DashboardCompoent from './DashboardComponent';
 import { Container, CardContainers, Content, Titulo, IntroductionAndButton } from './styled';
 import CardDashboardComercio from '../../components/CardDashboardComercio';
-import { Decoded } from '../../routers/RotaPrivada';
+import { Decoded } from '../../routers/PrivateRouter';
 import AxiosRequest from '../../services/axios/AxiosRequest';
 import { AppDispatch } from '../../store';
 import * as actions from '../../store/modules/auth/actions';

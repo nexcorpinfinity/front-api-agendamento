@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { RootState } from '../../store/modules/rootReducer';
-import { temaGlobal } from '../../styles/theme';
+import { RootState } from '../../../store/modules/rootReducer';
+import { temaGlobal } from '../../../styles/theme';
 
 const Title = styled.h1`
     margin-top: 50px;
@@ -66,4 +66,4 @@ const Redirect: React.FC = () => {
     );
 };
 
-export default Redirect;
+export { Redirect };

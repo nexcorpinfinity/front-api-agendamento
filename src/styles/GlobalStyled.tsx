@@ -12,20 +12,17 @@ export const GlobalStyled = createGlobalStyle<{ $active: string | boolean }>`
 }
 
 body {
+  background-color: ${(props) => (props.$active ? temaGlobal.backgroundDark : temaGlobal.backgroundLight)};
+  color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
+  transition: background-color 0.3s ease, color 0.3s ease;
 
-    background-color: ${(props) => (props.$active ? temaGlobal.backgroundDark : temaGlobal.backgroundLight)};
-    color: ${(props) => (props.$active ? temaGlobal.colorDark : temaGlobal.colorLight)};
-    .Toastify {
-        font-family: 'Roboto', sans-serif;
+  .Toastify {
+    font-family: 'Roboto', sans-serif;
 
-        .toast-container {
-            width: auto;
-            margin-top: 4%;
-        }
+    .toast-container {
+      width: auto;
+      margin-top: 4%;
     }
-
-    .logo {
-
-    }
+  }
 }
 `;

@@ -10,16 +10,16 @@ import NavbarPrincipal from './components/NavbarPrincipal';
 import store, { persistor } from './store';
 
 const App: React.FC = () => {
-    return (
-        <Provider store={store}>
-            <PersistGate persistor={persistor}>
-                <BrowserRouter>
-                    <NavbarPrincipal />
-                    <ToastContainer autoClose={3000} className="toast-container" />
-                </BrowserRouter>
-            </PersistGate>
-        </Provider>
-    );
+  return (
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <BrowserRouter>
+          <NavbarPrincipal />
+          <ToastContainer autoClose={3000} className="toast-container" />
+        </BrowserRouter>
+      </PersistGate>
+    </Provider>
+  );
 };
 
 export default App;
