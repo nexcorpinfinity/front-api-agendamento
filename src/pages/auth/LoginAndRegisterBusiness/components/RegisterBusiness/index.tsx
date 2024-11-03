@@ -16,11 +16,11 @@ interface Segment {
   name: string;
 }
 
-interface IRegister {
+interface IRegisterBusiness {
   handleAuth(): void;
 }
 
-const Register: React.FC<IRegister> = ({ handleAuth }) => {
+const RegisterBusiness: React.FC<IRegisterBusiness> = ({ handleAuth }) => {
   const [segments, setSegments] = useState<Segment[]>([]);
   const [segmentsTypes, setSegmentsTypes] = useState<Segment[]>([]);
   const [selectedSegmentId, setSelectedSegmentId] = useState<string>('');
@@ -261,4 +261,4 @@ const Register: React.FC<IRegister> = ({ handleAuth }) => {
   );
 };
 
-export { Register };
+export { RegisterBusiness };

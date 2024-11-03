@@ -13,7 +13,8 @@ import AdminGestaoDeUsuarios from '../pages/Admin/AdminGestaoDeUsuarios';
 import AdminNotifications from '../pages/Admin/AdminNotifications';
 import AdminPerfil from '../pages/Admin/AdminPerfil';
 import AdminTickets from '../pages/Admin/AdminTickets';
-import { LoginAndRegister } from '../pages/auth/LoginAndRegister';
+
+import { LoginAndRegisterBusiness } from '../pages/auth/LoginAndRegisterBusiness';
 import { SegmentSelect } from '../pages/auth/SegmentSelect';
 import Comercio from '../pages/Comercio';
 import ComercioConfiguration from '../pages/Comercio/ComercioConfiguration';
@@ -48,7 +49,7 @@ const costumerRoutes = [
 ];
 
 const publicRoutes = [
-  { path: '/', element: <LoginAndRegister /> },
+  { path: '/', element: <LoginAndRegisterBusiness /> },
   { path: '/segments', element: <SegmentSelect /> },
   { path: '/unauthorized', element: <Unauthorized /> },
   { path: '/redirect', element: <Redirect /> },

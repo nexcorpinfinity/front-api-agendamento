@@ -11,8 +11,8 @@ import rootSaga from './modules/rootSaga';
 const sagaMiddleware: SagaMiddleware = createSagaMiddleware();
 
 const store: Store<RootState, Action> = createStore(
-    persistedReducers(rootReducer),
-    applyMiddleware(sagaMiddleware),
+  persistedReducers(rootReducer),
+  applyMiddleware(sagaMiddleware),
 );
 
 sagaMiddleware.run(rootSaga);

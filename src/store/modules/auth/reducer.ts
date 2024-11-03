@@ -1,19 +1,18 @@
 // import { AnyAction } from 'redux';
 import * as types from '../types';
 
-export interface User {
-  id?: string;
-  nome?: string;
-  email?: string;
-  login?: string;
-  permission?: string;
-}
+// export interface User {
+//   id?: string;
+//   nome?: string;
+//   email?: string;
+//   login?: string;
+//   permission?: string;
+// }
 
 export interface AuthState {
   isLoggedIn: boolean;
   token: string | null;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  user: any;
+  // user: any;
   isLoading: boolean;
 }
 
@@ -23,7 +22,7 @@ export interface RootState {
 const initialState: AuthState = {
   isLoggedIn: false,
   token: null,
-  user: {},
+  // user: {},
   isLoading: false,
 };
 
@@ -35,7 +34,7 @@ export default function authReducer(state = initialState, action: any): AuthStat
         ...state,
         isLoggedIn: true,
         token: action.payload.token,
-        user: action.payload.user,
+        // user: action.payload.user,
         isLoading: false,
       };
     }
@@ -65,7 +64,7 @@ export default function authReducer(state = initialState, action: any): AuthStat
       return {
         ...state,
         isLoading: true,
-        user: action.payload,
+        // user: action.payload,
       };
     }
 
