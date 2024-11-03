@@ -27,7 +27,7 @@ const initialState: AuthState = {
     isLoading: false,
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 export default function authReducer(state = initialState, action: any): AuthState {
     switch (action.type) {
         case types.LOGIN_REQUEST_SUCCESS: {

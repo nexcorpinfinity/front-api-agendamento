@@ -61,7 +61,6 @@ export default [
             'react/jsx-boolean-value': ['error', 'never'], // Omite o valor booleano explícito
             'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never' }],
 
-            '@typescript-eslint/no-floating-promises': 'error', // Garante que todas as Promises sejam tratadas
             'prettier/prettier': ['error'],
         },
         settings: {

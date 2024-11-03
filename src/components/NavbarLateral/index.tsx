@@ -43,43 +43,43 @@ const NavbarLateral: React.FC<NavbarLateralProps> = ({ setMenuLateral }) => {
     const decoded: Decoded = jwtDecode(token);
     const permission = decoded.permission;
 
-    useEffect(async () => {
-        if (permission === 'costumer') {
-            async function loadComercio() {
-                try {
-                    const response = await AxiosRequest.get('/commerce/usuario');
+    // useEffect(async () => {
+    //     if (permission === 'costumer') {
+    //         async function loadComercio() {
+    //             try {
+    //                 const response = await AxiosRequest.get('/commerce/usuario');
 
-                    if (response.status !== 200) {
-                        return <Navigate to="/redirect" />;
-                    }
+    //                 if (response.status !== 200) {
+    //                     return <Navigate to="/redirect" />;
+    //                 }
 
-                    // const comercioData = Array.isArray(response.data)
-                    //     ? response.data.map((item) => ({
-                    //         id: item.id,
-                    //         nomeDoComercio: item.Comercio.comercio_name,
-                    //     }))
-                    //     : [
-                    //         {
-                    //             id: response.data.id,
-                    //             nomeDoComercio: response.data.Comercio.comercio_name,
-                    //         },
-                    //     ];
+    //                 // const comercioData = Array.isArray(response.data)
+    //                 //     ? response.data.map((item) => ({
+    //                 //         id: item.id,
+    //                 //         nomeDoComercio: item.Comercio.comercio_name,
+    //                 //     }))
+    //                 //     : [
+    //                 //         {
+    //                 //             id: response.data.id,
+    //                 //             nomeDoComercio: response.data.Comercio.comercio_name,
+    //                 //         },
+    //                 //     ];
 
-                    // setComercioEmail(response.data.email || 'Email não disponível');
-                    // setComercioName(response.data.Business.name || 'Nome não disponível');
-                } catch (error: any) {
-                    if (error.response && error.response.status === 403) {
-                        dispatch(actions.loginFailure({ error: 'Unauthorized' }));
-                        navigate('/redirect');
-                        window.location.reload();
-                    }
+    //                 // setComercioEmail(response.data.email || 'Email não disponível');
+    //                 // setComercioName(response.data.Business.name || 'Nome não disponível');
+    //             } catch (error: any) {
+    //                 if (error.response && error.response.status === 403) {
+    //                     dispatch(actions.loginFailure({ error: 'Unauthorized' }));
+    //                     navigate('/redirect');
+    //                     window.location.reload();
+    //                 }
 
-                    toast.error('Erro ao carregar o comércio', { theme: 'colored' });
-                }
-            }
-            loadComercio();
-        }
-    }, [dispatch, navigate, permission]);
+    //                 toast.error('Erro ao carregar o comércio', { theme: 'colored' });
+    //             }
+    //         }
+    //         loadComercio();
+    //     }
+    // }, [dispatch, navigate, permission]);
 
     const handleToggleTheme = () => {
         dispatch(toggleTheme());

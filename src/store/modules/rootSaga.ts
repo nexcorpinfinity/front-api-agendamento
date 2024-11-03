@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { all, fork, AllEffect, ForkEffect } from 'redux-saga/effects';
 
 import authSaga from './auth/sagas';

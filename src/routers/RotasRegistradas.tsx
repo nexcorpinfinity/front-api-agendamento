@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { useSelector } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 
@@ -27,132 +26,68 @@ import Unauthorized from '../pages/Unauthorized';
 import { RootState } from '../store/modules/rootReducer';
 import { GlobalStyled } from '../styles/GlobalStyled';
 
+const adminRoutes = [
+    { path: '/admin', element: <Admin /> },
+    { path: '/admin/notifications', element: <AdminNotifications /> },
+    { path: '/admin/gestao-comercio', element: <AdminGestaoDeComercios /> },
+    { path: '/admin/gestao-pagamentos', element: <AdminGestaoDePagamentos /> },
+    { path: '/admin/gestao-usuarios', element: <AdminGestaoDeUsuarios /> },
+    { path: '/admin/gestao-ticket', element: <AdminTickets /> },
+    { path: '/admin/configuracao', element: <AdminConfiguration /> },
+    { path: '/admin/perfil', element: <AdminPerfil /> },
+];
+
+const costumerRoutes = [
+    { path: '/comercio', element: <Comercio /> },
+    { path: '/comercio/realizar-venda', element: <ComercioRealizarVenda /> },
+    { path: '/comercio/controle-de-estoque', element: <ComercioControleDeEstoque /> },
+    { path: '/comercio/relatorios', element: <ComercioRelatorioMensal /> },
+    { path: '/comercio/configuracao', element: <ComercioConfiguration /> },
+    { path: '/comercio/perfil', element: <ComercioPerfil /> },
+];
+
+const publicRoutes = [
+    { path: '/', element: <Login /> },
+    { path: '/criar-conta', element: <Register /> },
+    { path: '/unauthorized', element: <Unauthorized /> },
+    { path: '/redirect', element: <Redirect /> },
+    { path: '*', element: <Error404 /> },
+];
+
 const RotasRegistradas: React.FC = () => {
     const theme = useSelector((state: RootState) => state.theme.theme);
+
     return (
         <>
             <GlobalStyled $active={theme} />
             <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/criar-conta" element={<Register />} />
+                {publicRoutes.map(({ path, element }) => (
+                    <Route key={path} path={path} element={element} />
+                ))}
 
-                <Route
-                    path="/admin"
-                    element={
-                        <PrivateRoute isClosed requiredPermission="admin">
-                            <Admin />
-                        </PrivateRoute>
-                    }
-                />
-                <Route
-                    path="/admin/notifications"
-                    element={
-                        <PrivateRoute isClosed requiredPermission="admin">
-                            <AdminNotifications />
-                        </PrivateRoute>
-                    }
-                />
-                <Route
-                    path="/admin/gestao-comercio"
-                    element={
-                        <PrivateRoute isClosed requiredPermission="admin">
-                            <AdminGestaoDeComercios />
-                        </PrivateRoute>
-                    }
-                />
-                <Route
-                    path="/admin/gestao-pagamentos"
-                    element={
-                        <PrivateRoute isClosed requiredPermission="admin">
-                            <AdminGestaoDePagamentos />
-                        </PrivateRoute>
-                    }
-                />
-                <Route
-                    path="/admin/gestao-usuarios"
-                    element={
-                        <PrivateRoute isClosed requiredPermission="admin">
-                            <AdminGestaoDeUsuarios />
-                        </PrivateRoute>
-                    }
-                />
-                <Route
-                    path="/admin/gestao-ticket"
-                    element={
-                        <PrivateRoute isClosed requiredPermission="admin">
-                            <AdminTickets />
-                        </PrivateRoute>
-                    }
-                />
-                <Route
-                    path="/admin/configuracao"
-                    element={
-                        <PrivateRoute isClosed requiredPermission="admin">
-                            <AdminConfiguration />
-                        </PrivateRoute>
-                    }
-                />
-                <Route
-                    path="/admin/perfil"
-                    element={
-                        <PrivateRoute isClosed requiredPermission="admin">
-                            <AdminPerfil />
-                        </PrivateRoute>
-                    }
-                />
+                {adminRoutes.map(({ path, element }) => (
+                    <Route
+                        key={path}
+                        path={path}
+                        element={
+                            <PrivateRoute isClosed requiredPermission="admin">
+                                {element}
+                            </PrivateRoute>
+                        }
+                    />
+                ))}
 
-                <Route
-                    path="/comercio"
-                    element={
-                        <PrivateRoute isClosed requiredPermission="costumer">
-                            <Comercio />
-                        </PrivateRoute>
-                    }
-                />
-                <Route
-                    path="/comercio/realizar-venda"
-                    element={
-                        <PrivateRoute isClosed requiredPermission="costumer">
-                            <ComercioRealizarVenda />
-                        </PrivateRoute>
-                    }
-                />
-                <Route
-                    path="/comercio/controle-de-estoque"
-                    element={
-                        <PrivateRoute isClosed requiredPermission="costumer">
-                            <ComercioControleDeEstoque />
-                        </PrivateRoute>
-                    }
-                />
-                <Route
-                    path="/comercio/relatorios"
-                    element={
-                        <PrivateRoute isClosed requiredPermission="costumer">
-                            <ComercioRelatorioMensal />
-                        </PrivateRoute>
-                    }
-                />
-                <Route
-                    path="/comercio/configuracao"
-                    element={
-                        <PrivateRoute isClosed requiredPermission="costumer">
-                            <ComercioConfiguration />
-                        </PrivateRoute>
-                    }
-                />
-                <Route
-                    path="/comercio/perfil"
-                    element={
-                        <PrivateRoute isClosed requiredPermission="costumer">
-                            <ComercioPerfil />
-                        </PrivateRoute>
-                    }
-                />
-
-                <Route path="/unauthorized" element={<Unauthorized />} />
-                <Route path="/redirect" element={<Redirect />} />
-                <Route path="*" element={<Error404 />} />
+                {costumerRoutes.map(({ path, element }) => (
+                    <Route
+                        key={path}
+                        path={path}
+                        element={
+                            <PrivateRoute isClosed requiredPermission="costumer">
+                                {element}
+                            </PrivateRoute>
+                        }
+                    />
+                ))}
             </Routes>
         </>
     );
