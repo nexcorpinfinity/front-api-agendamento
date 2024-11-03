@@ -14,7 +14,9 @@ export const Container = styled.div`
   overflow: hidden;
 `;
 
-export const Box = styled.div<BoxProps>`
+export const Box = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== 'isSwapped',
+})<BoxProps>`
   width: 50%;
   height: 100vh;
   transition: transform 0.8s ease-out;

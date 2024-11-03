@@ -94,7 +94,11 @@ const LoginAndRegister: React.FC = () => {
       </BlueBox>
 
       <GreenBox isSwapped={isSwapped}>
-        {showRegisterForm ? <Components.Register /> : <Components.Login />}
+        {showRegisterForm ? (
+          <Components.Register handleAuth={handleSwap} />
+        ) : (
+          <Components.Login handleAuth={handleSwap} />
+        )}
       </GreenBox>
     </Container>
   );

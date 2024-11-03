@@ -1,16 +1,26 @@
 import axios from 'axios';
+import { get } from 'lodash';
 import React, { FormEvent, useEffect, useState } from 'react';
 
+import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import * as Styled from './styled';
+
+import { AppDispatch } from '../../../../../store';
+import * as actions from '../../../../../store/modules/auth/actions';
 
 interface Segment {
   id: string;
   name: string;
 }
 
-const Register: React.FC = () => {
+interface IRegister {
+  handleAuth(): void;
+}
+
+const Register: React.FC<IRegister> = ({ handleAuth }) => {
   const [segments, setSegments] = useState<Segment[]>([]);
   const [segmentsTypes, setSegmentsTypes] = useState<Segment[]>([]);
   const [selectedSegmentId, setSelectedSegmentId] = useState<string>('');
@@ -88,6 +98,11 @@ const Register: React.FC = () => {
     return isValid;
   };
 
+  const location = useLocation();
+  const dispatch = useDispatch<AppDispatch>();
+
+  const prevPath = get(location, 'state.prevPath', '/');
+
   const handleSubmitCreated = async (e: FormEvent) => {
     e.preventDefault();
 
@@ -104,12 +119,22 @@ const Register: React.FC = () => {
 
         console.log(data);
 
-        // precisa fazer validacao de campos ainda e fazer login automaticamente
-        // chamar o redux para fazer autenticacao, e redirecionar para o dashboard
+        // precisa fazer validacao de campos ainda
         //
+
+        dispatch(
+          actions.loginRequest({
+            email: formValues.email,
+            password: formValues.password,
+            stay_connected: false,
+            prevPath,
+          }),
+        );
 
         toast.success('Usuário criado com sucesso!');
       } catch (error) {
+        console.log(error);
+
         if (axios.isAxiosError(error) && error.response) {
           const errors = error.response.data.errors;
           if (errors && errors.length > 0) {
@@ -117,7 +142,7 @@ const Register: React.FC = () => {
               toast.error(err.message);
             });
           } else {
-            toast.error('Ocorreu um erro ao criar o usuário.');
+            toast.error(error.response.data.message);
           }
         } else {
           toast.error('Erro na requisição. Tente novamente.');
@@ -230,7 +255,7 @@ const Register: React.FC = () => {
       </Styled.ContainerForm>
       <Styled.AskNewRegister>
         <p>Já possui uma conta?</p>
-        <a href="#">Fazer Login</a>
+        <h1 onClick={handleAuth}>Fazer Login</h1>
       </Styled.AskNewRegister>
     </Styled.Container>
   );

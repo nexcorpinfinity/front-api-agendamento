@@ -60,4 +60,11 @@ export const AskNewRegister = styled.div`
   flex-direction: row;
   justify-content: center;
   gap: 8px;
+
+  h1 {
+    font-size: 14px;
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+  }
 `;
