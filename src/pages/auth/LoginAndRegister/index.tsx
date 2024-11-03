@@ -3,16 +3,17 @@
 import React, { useState } from 'react';
 // import { HiOutlineLockClosed } from 'react-icons/hi';
 // import { MdAlternateEmail } from 'react-icons/md';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 // import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-import { BlueBox, Container, Form, GreenBox, SwapButton } from './styled';
+import * as Components from './components';
+import { BlueBox, Container, GreenBox } from './styled';
 
 // import Loading from '../../components/Loading';
 // import { Decoded } from '../../routers/PrivateRouter';
 // import { AppDispatch } from '../../store';
 // import * as actions from '../../store/modules/auth/actions';
-import { RootState } from '../../../store/modules/rootReducer';
+// import { RootState } from '../../../store/modules/rootReducer';
 
 const LoginAndRegister: React.FC = () => {
   // const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
@@ -69,9 +70,9 @@ const LoginAndRegister: React.FC = () => {
   //     }
   // }, [isLoggedIn, user, navigate]);
 
-  const theme = useSelector((state: RootState) => state.theme.theme);
+  // const theme = useSelector((state: RootState) => state.theme.theme);
   const [isSwapped, setIsSwapped] = useState(false);
-  const [showRegisterForm, setShowRegisterForm] = useState(false); // Estado para alternar entre Login e Registro
+  const [showRegisterForm, setShowRegisterForm] = useState(false);
 
   const handleSwap = () => {
     setIsSwapped(!isSwapped);
@@ -93,24 +94,7 @@ const LoginAndRegister: React.FC = () => {
       </BlueBox>
 
       <GreenBox isSwapped={isSwapped}>
-        <h1>{showRegisterForm ? 'Registro' : 'Login'}</h1>
-
-        {showRegisterForm ? (
-          <Form>
-            <input type="text" placeholder="Nome" />
-            <input type="email" placeholder="Email" />
-            <input type="password" placeholder="Senha" />
-            <button type="submit">Registrar</button>
-          </Form>
-        ) : (
-          <Form>
-            <input type="email" placeholder="Email" />
-            <input type="password" placeholder="Senha" />
-
-            <a href="#">Esqueceu a senha?</a>
-            <button type="submit">Entrar</button>
-          </Form>
-        )}
+        {showRegisterForm ? <Components.Register /> : <Components.Login />}
       </GreenBox>
     </Container>
   );
