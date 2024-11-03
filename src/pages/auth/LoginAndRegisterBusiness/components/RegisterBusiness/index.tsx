@@ -84,9 +84,28 @@ const RegisterBusiness: React.FC<IRegisterBusiness> = ({ handleAuth }) => {
     setSelectedSegmentTypeId(event.target.value);
   };
 
+  const formatPhoneNumber = (value: string) => {
+    // Remove caracteres não numéricos
+    const cleaned = value.replace(/\D/g, '');
+    // Adiciona formatação
+    const match = cleaned.match(/^(\d{2})(\d{4,5})(\d{4})$/);
+    if (match) {
+      const [, ddd, firstPart, secondPart] = match;
+      return `(${ddd}) ${firstPart}-${secondPart}`;
+    }
+    return value; // Retorna sem formatação se não combinar
+  };
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setFormValues((prev) => ({ ...prev, [name]: value }));
+
+    let formattedValue = value;
+
+    // Formatação do número de telefone
+    if (name === 'number_phone') {
+      formattedValue = formatPhoneNumber(value);
+    }
+
+    setFormValues((prev) => ({ ...prev, [name]: formattedValue }));
   };
 
   const isFormValid = () => {
@@ -106,6 +125,14 @@ const RegisterBusiness: React.FC<IRegisterBusiness> = ({ handleAuth }) => {
   const handleSubmitCreated = async (e: FormEvent) => {
     e.preventDefault();
 
+    if (!isFormValid()) {
+      toast.info('Por favor, preencha todos os campos.', {
+        theme: 'colored',
+        position: 'top-left',
+      });
+      return;
+    }
+
     if (isFormValid()) {
       try {
         const { data } = await axios.post('http://localhost:3001/api/v1/users/business', {
@@ -118,9 +145,6 @@ const RegisterBusiness: React.FC<IRegisterBusiness> = ({ handleAuth }) => {
         });
 
         console.log(data);
-
-        // precisa fazer validacao de campos ainda
-        //
 
         dispatch(
           actions.loginRequest({
@@ -153,64 +177,70 @@ const RegisterBusiness: React.FC<IRegisterBusiness> = ({ handleAuth }) => {
   return (
     <Styled.Container>
       <Styled.FormTitle>
-        <h1>Register</h1>
+        <h2>Criar sua conta</h2>
+        <p>FALTA FAZER VALIDACAO DOS INPUTS</p>
       </Styled.FormTitle>
       <Styled.ContainerForm onSubmit={handleSubmitCreated}>
         <Styled.FormContainerInputs>
-          <Styled.LabelAndInput htmlFor="name">
-            Seu nome
+          <Styled.FormsContactGroup>
             <input
               type="text"
               name="name"
-              placeholder="Digite seu Nome"
+              placeholder=" "
               value={formValues.name}
               onChange={handleInputChange}
+              maxLength={50}
             />
-          </Styled.LabelAndInput>
-          <Styled.LabelAndInput htmlFor="name_business">
-            Nome do seu Comércio
+            <label>Seu nome</label>
+          </Styled.FormsContactGroup>
+          <Styled.FormsContactGroup>
             <input
               type="text"
               name="name_business"
-              placeholder="Digite o nome do seu Comércio"
+              placeholder=" "
               value={formValues.name_business}
               onChange={handleInputChange}
+              maxLength={30}
             />
-          </Styled.LabelAndInput>
-          <Styled.LabelAndInput htmlFor="number_phone">
-            Número de telefone / WhatsApp
+            <label>Nome do seu Comércio</label>
+          </Styled.FormsContactGroup>
+          <Styled.FormsContactGroup>
             <input
               type="text"
               name="number_phone"
-              placeholder="Digite o Número de telefone / WhatsApp"
+              placeholder=" "
               value={formValues.number_phone}
               onChange={handleInputChange}
+              maxLength={15}
             />
-          </Styled.LabelAndInput>
-          <Styled.LabelAndInput htmlFor="email">
-            Email
+            <label>Número de telefone / WhatsApp</label>
+          </Styled.FormsContactGroup>
+          <Styled.FormsContactGroup>
             <input
               type="email"
               name="email"
-              placeholder="Digite seu Email"
+              placeholder=" "
               value={formValues.email}
               onChange={handleInputChange}
+              maxLength={255}
             />
-          </Styled.LabelAndInput>
-          <Styled.LabelAndInput htmlFor="password">
-            Senha
+            <label>Email</label>
+          </Styled.FormsContactGroup>
+          <Styled.FormsContactGroup>
             <input
               type="password"
               name="password"
-              placeholder="Digite sua Senha"
+              placeholder=" "
               value={formValues.password}
               onChange={handleInputChange}
+              maxLength={255}
             />
-          </Styled.LabelAndInput>
+            <label>Senha</label>
+          </Styled.FormsContactGroup>
         </Styled.FormContainerInputs>
 
-        <div>
-          Selecionar o seu segmento
+        <>
+          <p>Selecionar o seu segmento: </p>
           <select
             name="segment"
             id="segment"
@@ -226,7 +256,7 @@ const RegisterBusiness: React.FC<IRegisterBusiness> = ({ handleAuth }) => {
               </option>
             ))}
           </select>
-        </div>
+        </>
         {selectedSegmentId && (
           <div>
             <select
@@ -248,14 +278,12 @@ const RegisterBusiness: React.FC<IRegisterBusiness> = ({ handleAuth }) => {
         )}
 
         <Styled.FormButtonSubmit>
-          <button type="submit" disabled={!isFormValid()}>
-            Cadastrar
-          </button>
+          <button type="submit">Cadastrar</button>
         </Styled.FormButtonSubmit>
       </Styled.ContainerForm>
       <Styled.AskNewRegister>
         <p>Já possui uma conta?</p>
-        <h1 onClick={handleAuth}>Fazer Login</h1>
+        <p onClick={handleAuth}>Fazer Login</p>
       </Styled.AskNewRegister>
     </Styled.Container>
   );

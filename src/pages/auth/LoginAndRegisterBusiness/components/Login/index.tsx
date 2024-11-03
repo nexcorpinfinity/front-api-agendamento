@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
+import { toast } from 'react-toastify';
+
 import * as Styled from './styled';
 import { AppDispatch } from '../../../../../store';
 import * as actions from '../../../../../store/modules/auth/actions';
@@ -18,6 +20,11 @@ const Login: React.FC<ILogin> = ({ handleAuth }) => {
     rememberMe: false,
   });
 
+  const location = useLocation();
+  const dispatch = useDispatch<AppDispatch>();
+
+  const prevPath = get(location, 'state.prevPath', '/');
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = event.target;
     setFormData((prevData) => ({
@@ -26,13 +33,22 @@ const Login: React.FC<ILogin> = ({ handleAuth }) => {
     }));
   };
 
-  const location = useLocation();
-  const dispatch = useDispatch<AppDispatch>();
-
-  const prevPath = get(location, 'state.prevPath', '/');
+  const toggleRememberMe = () => {
+    setFormData((prevState) => ({
+      ...prevState,
+      rememberMe: !prevState.rememberMe,
+    }));
+  };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+
+    if (!formData.email || !formData.password) {
+      toast.info('Por favor, preencha todos os campos.', {
+        theme: 'colored',
+      });
+      return;
+    }
 
     try {
       dispatch(
@@ -57,30 +73,31 @@ const Login: React.FC<ILogin> = ({ handleAuth }) => {
   return (
     <Styled.Container>
       <Styled.FormTitle>
-        <h1>Login</h1>
+        <h2>Acessar Painel</h2>
       </Styled.FormTitle>
       <Styled.ContainerForm onSubmit={handleSubmit}>
         <Styled.FormContainerInputs>
-          <Styled.LabelAndInput htmlFor="email">
-            Email
+          <Styled.FormsContactGroup>
             <input
               type="email"
               name="email"
-              placeholder="Digite seu Email"
+              placeholder=" "
               value={formData.email}
               onChange={handleChange}
             />
-          </Styled.LabelAndInput>
-          <Styled.LabelAndInput htmlFor="password">
-            Senha
+            <label>Email</label>
+          </Styled.FormsContactGroup>
+
+          <Styled.FormsContactGroup>
             <input
               type="password"
               name="password"
-              placeholder="Digite sua Senha"
+              placeholder=" "
               value={formData.password}
               onChange={handleChange}
             />
-          </Styled.LabelAndInput>
+            <label>Senha</label>
+          </Styled.FormsContactGroup>
         </Styled.FormContainerInputs>
 
         <Styled.FormAsksContainer>
@@ -91,11 +108,11 @@ const Login: React.FC<ILogin> = ({ handleAuth }) => {
               checked={formData.rememberMe}
               onChange={handleChange}
             />
-            <p>Manter conectado</p>
+            <p onClick={toggleRememberMe}>Manter conectado</p>
           </Styled.FormAskCheck>
-          <div>
-            <a href="#">Esqueceu a senha?</a>
-          </div>
+          <Styled.ForgotPassword>
+            <p>Esqueceu a senha ?</p>
+          </Styled.ForgotPassword>
         </Styled.FormAsksContainer>
 
         <Styled.FormButtonSubmit>
@@ -104,7 +121,7 @@ const Login: React.FC<ILogin> = ({ handleAuth }) => {
       </Styled.ContainerForm>
       <Styled.AskNewRegister>
         <p>Não tem uma conta?</p>
-        <h1 onClick={handleAuth}>Cadastre-se</h1>
+        <p onClick={handleAuth}>Cadastre-se</p>
       </Styled.AskNewRegister>
     </Styled.Container>
   );

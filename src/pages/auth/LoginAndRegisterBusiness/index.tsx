@@ -5,8 +5,9 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import * as Components from './components';
-import { BlueBox, Container, GreenBox } from './styled';
+import * as Styled from './styled';
 
+import { Permissions } from '../../../routers/Permissions';
 import { Decoded } from '../../../routers/PrivateRouter';
 import { RootState } from '../../../store/modules/rootReducer';
 
@@ -24,11 +25,11 @@ const LoginAndRegisterBusiness: React.FC = () => {
       console.log(permission);
 
       if (isLoggedIn) {
-        if (permission === 'admin') {
+        if (permission === Permissions.Admin) {
           navigate('/admin');
-        } else if (permission === 'costumer') {
+        } else if (permission === Permissions.Costumer) {
           navigate('/comercio');
-        } else if (permission === 'client') {
+        } else if (permission === Permissions.Client) {
           navigate('/painel');
         }
       }
@@ -47,24 +48,24 @@ const LoginAndRegisterBusiness: React.FC = () => {
   };
 
   return (
-    <Container>
-      <BlueBox isSwapped={isSwapped} color="blue">
+    <Styled.Container>
+      <Styled.BlueBox isSwapped={isSwapped} color="blue">
         <h1>{showRegisterForm ? 'Cadastrar' : 'Login'}</h1>
         <h3>{showRegisterForm ? '' : 'Acessar o seu painel'}</h3>
 
         <button onClick={handleSwap}>
           {showRegisterForm ? 'Ir para Login' : 'Ir para Registro'}
         </button>
-      </BlueBox>
+      </Styled.BlueBox>
 
-      <GreenBox isSwapped={isSwapped}>
+      <Styled.ContentForms isSwapped={isSwapped}>
         {showRegisterForm ? (
           <Components.RegisterBusiness handleAuth={handleSwap} />
         ) : (
           <Components.Login handleAuth={handleSwap} />
         )}
-      </GreenBox>
-    </Container>
+      </Styled.ContentForms>
+    </Styled.Container>
   );
 };
 

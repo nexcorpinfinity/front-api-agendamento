@@ -45,7 +45,7 @@ export const BlueBox = styled(Box)`
   z-index: 2;
 `;
 
-export const GreenBox = styled(Box)`
+export const ContentForms = styled(Box)`
   right: 0;
   z-index: 1;
   color: #000;
