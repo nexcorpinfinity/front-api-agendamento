@@ -2,7 +2,9 @@ import { jwtDecode } from 'jwt-decode';
 import React, { useEffect, useState } from 'react';
 
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+
+import { toast } from 'react-toastify';
 
 import * as Components from './components';
 import * as Styled from './styled';
@@ -16,6 +18,19 @@ const LoginAndRegisterBusiness: React.FC = () => {
   const user: string | null = useSelector((state: RootState) => state.auth.token);
 
   const navigate = useNavigate();
+
+  const location = useLocation();
+
+  const queryParams = new URLSearchParams(location.search);
+  const error = queryParams.get('error');
+
+  useEffect(() => {
+    if (error) {
+      toast.error('Erro ao fazer login com o Google', {
+        theme: 'colored',
+      });
+    }
+  }, [error]);
 
   useEffect(() => {
     if (user) {

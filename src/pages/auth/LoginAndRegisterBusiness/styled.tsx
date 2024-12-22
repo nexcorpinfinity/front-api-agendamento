@@ -6,9 +6,6 @@ interface BoxProps {
 }
 
 export const Container = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
   height: calc(100vh - 2.6rem - 13px);
   position: relative;
   overflow: hidden;

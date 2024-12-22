@@ -1,13 +1,14 @@
 import { get } from 'lodash';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { toast } from 'react-toastify';
 
 import * as Styled from './styled';
 import { AppDispatch } from '../../../../../store';
 import * as actions from '../../../../../store/modules/auth/actions';
+import { GoogleButton } from '../GoogleButton';
 
 interface ILogin {
   handleAuth(): void;
@@ -20,9 +21,9 @@ const Login: React.FC<ILogin> = ({ handleAuth }) => {
     rememberMe: false,
   });
 
+  const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch<AppDispatch>();
-
   const prevPath = get(location, 'state.prevPath', '/');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,6 +71,10 @@ const Login: React.FC<ILogin> = ({ handleAuth }) => {
     }
   };
 
+  const loginGoogle = () => {
+    window.location.href = 'http://localhost:3001/api/v1/auth/google';
+  };
+
   return (
     <Styled.Container>
       <Styled.FormTitle>
@@ -111,7 +116,7 @@ const Login: React.FC<ILogin> = ({ handleAuth }) => {
             <p onClick={toggleRememberMe}>Manter conectado</p>
           </Styled.FormAskCheck>
           <Styled.ForgotPassword>
-            <p>Esqueceu a senha ?</p>
+            <p onClick={() => navigate('/password/reset')}>Esqueceu a senha ?</p>
           </Styled.ForgotPassword>
         </Styled.FormAsksContainer>
 
@@ -123,6 +128,9 @@ const Login: React.FC<ILogin> = ({ handleAuth }) => {
         <p>Não tem uma conta?</p>
         <p onClick={handleAuth}>Cadastre-se</p>
       </Styled.AskNewRegister>
+      <Styled.LoginWithGoogle>
+        <GoogleButton text="Fazer login com o Google" onClick={loginGoogle} />
+      </Styled.LoginWithGoogle>
     </Styled.Container>
   );
 };

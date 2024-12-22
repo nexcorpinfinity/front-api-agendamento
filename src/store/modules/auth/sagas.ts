@@ -6,7 +6,7 @@ import { call, put, all, takeLatest, fork, AllEffect, ForkEffect } from 'redux-s
 
 import * as actions from './actions';
 import AxiosRequest from '../../../services/axios/AxiosRequest';
-import * as types from '../types';
+import * as types from './types';
 
 interface LoginRequestAction {
   type: typeof types.LOGIN_REQUEST_REQUEST;

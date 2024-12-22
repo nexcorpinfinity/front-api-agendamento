@@ -3,12 +3,12 @@ import styled from 'styled-components';
 export const Container = styled.div`
   border: 1px solid #00000057;
   width: 500px;
-
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
   border-radius: 10px;
+  margin-bottom: 4rem;
 `;
 
 export const ContainerForm = styled.form`
@@ -87,7 +87,6 @@ export const AskNewRegister = styled.div`
   flex-direction: row;
   justify-content: center;
   gap: 8px;
-  margin-bottom: 15px;
   p:nth-child(2) {
     color: #0084ff;
     text-decoration: underline;
@@ -158,4 +157,12 @@ export const ForgotPassword = styled.div`
 
     text-decoration: underline;
   }
+`;
+
+export const LoginWithGoogle = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 `;

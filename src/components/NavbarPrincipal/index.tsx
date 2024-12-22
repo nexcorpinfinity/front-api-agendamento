@@ -48,7 +48,9 @@ const NavbarPrincipal: React.FC = () => {
                   <IoMenuSharp onClick={toggleMenuLateral} size={30} />
                 </span>
               )}
-              <h2>Ejnex</h2>
+              <a href="/">
+                <h2>Ejnex</h2>
+              </a>
             </Logo>
 
             <ContentRight>

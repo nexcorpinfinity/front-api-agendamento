@@ -10,6 +10,7 @@ import * as Styled from './styled';
 
 import { AppDispatch } from '../../../../../store';
 import * as actions from '../../../../../store/modules/auth/actions';
+import { GoogleButton } from '../GoogleButton';
 
 interface Segment {
   id: string;
@@ -174,6 +175,11 @@ const RegisterBusiness: React.FC<IRegisterBusiness> = ({ handleAuth }) => {
       }
     }
   };
+
+  const registereWithGoogle = () => {
+    window.location.href = 'http://localhost:3001/api/v1/auth/google?accountType=business';
+  };
+
   return (
     <Styled.Container>
       <Styled.FormTitle>
@@ -285,6 +291,9 @@ const RegisterBusiness: React.FC<IRegisterBusiness> = ({ handleAuth }) => {
         <p>Já possui uma conta?</p>
         <p onClick={handleAuth}>Fazer Login</p>
       </Styled.AskNewRegister>
+      <Styled.LoginWithGoogle>
+        <GoogleButton text="Cadastrar com o Google" onClick={registereWithGoogle} />
+      </Styled.LoginWithGoogle>
     </Styled.Container>
   );
 };

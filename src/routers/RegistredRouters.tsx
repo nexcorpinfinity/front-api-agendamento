@@ -14,8 +14,9 @@ import AdminNotifications from '../pages/Admin/AdminNotifications';
 import AdminPerfil from '../pages/Admin/AdminPerfil';
 import AdminTickets from '../pages/Admin/AdminTickets';
 
+import { ForgotPassword } from '../pages/auth/ForgotPassword';
 import { LoginAndRegisterBusiness } from '../pages/auth/LoginAndRegisterBusiness';
-import { SegmentSelect } from '../pages/auth/SegmentSelect';
+import { Sucess } from '../pages/auth/Sucess';
 import Comercio from '../pages/Comercio';
 import ComercioConfiguration from '../pages/Comercio/ComercioConfiguration';
 import ComercioControleDeEstoque from '../pages/Comercio/ComercioControleDeEstoque';
@@ -50,7 +51,8 @@ const costumerRoutes = [
 
 const publicRoutes = [
   { path: '/', element: <LoginAndRegisterBusiness /> },
-  { path: '/segments', element: <SegmentSelect /> },
+  { path: '/password/reset', element: <ForgotPassword /> },
+  { path: '/auth/success', element: <Sucess /> },
   { path: '/unauthorized', element: <Unauthorized /> },
   { path: '/redirect', element: <Redirect /> },
   { path: '*', element: <Error404 /> },

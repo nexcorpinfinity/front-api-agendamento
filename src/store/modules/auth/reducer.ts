@@ -1,5 +1,5 @@
 // import { AnyAction } from 'redux';
-import * as types from '../types';
+import * as types from './types';
 
 // export interface User {
 //   id?: string;

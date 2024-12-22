@@ -1,6 +1,4 @@
-export const BOTAO_CLICADO_SUCCESS = 'botao_clicado_sucess' as const;
-export const BOTAO_CLICADO_REQUEST = 'botao_clicado_request' as const;
-export const BOTAO_CLICADO_FAILURE = 'botao_clicado_failure' as const;
+export const AUTH_GOOGLE_SUCCESS = 'AUTH_GOOGLE_SUCCESS' as const;
 
 export const LOGIN_REQUEST_SUCCESS = 'LOGIN_SUCCESS' as const;
 export const LOGIN_REQUEST_REQUEST = 'LOGIN_REQUEST' as const;

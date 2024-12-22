@@ -87,7 +87,6 @@ export const AskNewRegister = styled.div`
   flex-direction: row;
   justify-content: center;
   gap: 8px;
-  margin-bottom: 15px;
   p:nth-child(2) {
     color: #0084ff;
     text-decoration: underline;
@@ -158,4 +157,12 @@ export const ForgotPassword = styled.div`
 
     text-decoration: underline;
   }
+`;
+
+export const LoginWithGoogle = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 `;
